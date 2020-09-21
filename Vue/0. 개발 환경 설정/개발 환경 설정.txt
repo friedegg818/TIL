@@ -22,4 +22,4 @@
 	 - 맥 : cmd + option + i
 
 
-* 인프런 [ Vue.js 시작하기 - Age of Vue.js (장기효) ] 강의 내용을 바탕으로 작성 하였습니다.  
+* 인프런 [ Vue.js 시작하기 - Age of Vue.js (장기효) ] 강의 내용을 바탕으로 작성함 
