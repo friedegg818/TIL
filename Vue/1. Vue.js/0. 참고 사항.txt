@@ -1,0 +1,19 @@
+ 
+- ! + tab | html 기본 태그 자동 입력 
+
+- Reactivity 
+  - 반응성 
+  - Vue 의 핵심 
+  - 데이터의 변화를 library 에서 감지해서 자동으로 화면을 구성 해 줌
+  
+- Reactivity 를 library화 하기 
+  - javaScript 즉시 실행 함수 이용 
+    * 즉시 실행 함수 참고 링크 
+	  https://developer.mozilla.org/ko/docs/Glossary/IIFE
+
+
+* 인프런 [ Vue.js 시작하기 - Age of Vue.js (장기효) ] 강의 내용을 바탕으로 작성 하였습니다.  
+   
+
+
+
