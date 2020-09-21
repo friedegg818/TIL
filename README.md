@@ -12,7 +12,7 @@
  + 기초 명령문 ( 데이터베이스, 정보 확인 등 ) 
 * * * 
 ### Vue 
- + 개발 환경 설정 
+ + [개발 환경 설정](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.txt)
  + Vue 란? 
  > - 정의 
  > - 기존 웹 개발 방식 vs Vue Reactivity 구현 + 코드 라이브러리화 
