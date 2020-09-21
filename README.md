@@ -4,12 +4,12 @@
 
 ## 분류 
 ### Git 
- + 기초적인 Markdown 사용법
+ + [Markdown 사용법](https://github.com/friedegg818/TIL/blob/master/git/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4%20%EC%82%AC%EC%9A%A9%EB%B2%95)
 * * * 
 ### Mysql 
- + 기본 설치 방법 
- + 개발툴 Workbench 설치 
- + 기초 명령문 ( 데이터베이스, 정보 확인 등 ) 
+ + [기본 설치 방법](https://github.com/friedegg818/TIL/blob/master/mysql/0.%20%EA%B8%B0%EB%B3%B8%20%EC%84%A4%EC%B9%98.txt)
+ + [개발툴 Workbench 설치](https://github.com/friedegg818/TIL/blob/master/mysql/1.%20workbench%20%EC%84%A4%EC%B9%98.md)
+ + [기초 명령문](https://github.com/friedegg818/TIL/blob/master/mysql/2.%20%EA%B8%B0%EC%B4%88%20%EB%AA%85%EB%A0%B9%EB%AC%B8.md) ( 데이터베이스, 정보 확인 등 ) 
 * * * 
 ### Vue 
  + [개발 환경 설정](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.txt)
