@@ -18,9 +18,9 @@
 	
 	*// Vue라는 생성자 함수에 미리 logText라는 함수를 넣어놓음*   
 	function Vue() {   
-		>	this.logText = function() {   
-		>		console.log('hello');   
-		>	}   
+	>	this.logText = function() {   
+	>		console.log('hello');   
+	>	}   
 	}   
 	
 	*// 새로 생성한 객체 vm 에서 logText 바로 사용*   
@@ -32,13 +32,13 @@
 ### 인스턴스 옵션 속성 
 - 형식    
 	new Vue({ 	  
-		>	el; ,   
-		>	template: ,   
-		>	data: ,   
-		>	methods: ,   
-		>	created: ,   
-		>	watch: ,      
-	});    
+	>	el; ,   
+	>	template: ,   
+	>	data: ,   
+	>	methods: ,   
+	>	created: ,   
+	>	watch:       
+});    
 
 - el: 인스턴스가 그려지는 화면의 시작점 (특정 HTML 태그)
 - template: 화면에 표시 할 요소 (HTML, CSS)
