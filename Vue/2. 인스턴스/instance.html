@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- ... -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        // Vue() 안에는 객체가 들어감! 
+  
+        var vm = new Vue({
+            el: '#app',       // body 태그 안에서 app 이라는 아이들을 가진 태그를 찾아서 인스턴스를 붙이겠다는 의미 
+            data: {
+                message: 'hi'
+            },
+            methods: {
+
+            },
+            created: function() {
+
+            }
+         });
+    </script>
+</body>
+</html>
