@@ -16,28 +16,31 @@
 
 - 생성자 함수로서 new Vue 를 사용하는 이유 : 생성자 함수로 새로운 **객체를 생성 할 때 마다 미리 정의해 놓은 함수 사용 가능** 
 	
-	*// Vue라는 생성자 함수에 미리 logText라는 함수를 넣어놓음*   
+	*// Vue라는 생성자 함수에 미리 logText라는 함수를 넣어놓음*
+	
 	function Vue() {   
-	>	this.logText = function() {   
-	>		console.log('hello');   
-	>	}   
+		this.logText = function() {   
+		console.log('hello');   
+		}   
 	}   
 	
-	*// 새로 생성한 객체 vm 에서 logText 바로 사용*   
+	
+	*// 새로 생성한 객체 vm 에서 logText 바로 사용*  
+	
 	var vm = new Vue();   
 	vm.logText();    	
 
-* 참고 : [생성자 함수 사용하기](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Obsolete_Pages/Core_JavaScript_1.5_Guide/Creating_New_Objects/Using_a_Constructor_Function)
+** 참고 : [생성자 함수 사용하기](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Obsolete_Pages/Core_JavaScript_1.5_Guide/Creating_New_Objects/Using_a_Constructor_Function)
 #
 ### 인스턴스 옵션 속성 
 - 형식    
 	new Vue({ 	  
-	>	el; ,   
-	>	template: ,   
-	>	data: ,   
-	>	methods: ,   
-	>	created: ,   
-	>	watch:       
+		el; ,   
+		template: ,   
+		data: ,   
+		methods: ,   
+		created: ,   
+		watch:       
 });    
 
 - el: 인스턴스가 그려지는 화면의 시작점 (특정 HTML 태그)
