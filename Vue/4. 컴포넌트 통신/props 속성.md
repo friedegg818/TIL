@@ -3,8 +3,6 @@
  - 형식 
    
    <img src="/Vue/img/props 형식.png">
-   <img src="/Vue/img/props 형식2.png">
- 
+   <img src="/Vue/img/props 형식2.png"> 
 
-- Reactivity 가 props 에도 반영됨 
-  - 상위 컴포넌트의 데이터가 바뀌면 하위 컴포넌트의 데이터도 자동으로 바뀜 
+- props 에 Reactivity 반영  →  상위 컴포넌트의 데이터가 바뀌면 하위 컴포넌트의 데이터도 자동으로 바뀜 
