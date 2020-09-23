@@ -22,8 +22,8 @@
  + [**컴포넌트**](https://github.com/friedegg818/TIL/tree/master/Vue/3.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8)
  > - [정의](https://github.com/friedegg818/TIL/blob/master/Vue/3.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8.md)
  > - [전역 & 지역 컴포넌트](https://github.com/friedegg818/TIL/blob/master/Vue/3.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8.md)
- ### 컴포넌트 동신 - 기본 
- + [**컴포넌트 통신 규칙**](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0%20%EA%B7%9C%EC%B9%99.md)
- + [**props**](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/props%20%EC%86%8D%EC%84%B1.md) / [실습](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/props.html)
- + [event-emit**](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/event%20emit.md) / [실습](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/event-emit.html)
+ + [**컴포넌트 동신 - 기본**](https://github.com/friedegg818/TIL/tree/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0)
+ > - [컴포넌트 통신 규칙](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0%20%EA%B7%9C%EC%B9%99.md)
+ > - [props](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/props%20%EC%86%8D%EC%84%B1.md) / [실습](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/props.html)
+ > - [event-emit](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/event%20emit.md) / [실습](https://github.com/friedegg818/TIL/blob/master/Vue/4.%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%20%ED%86%B5%EC%8B%A0/event-emit.html)
  
