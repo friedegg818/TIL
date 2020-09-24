@@ -33,4 +33,11 @@
  > - 라우터 주입 및 옵션 
  > - router-view 
  > - router-link
+ + [**액시오스**](https://github.com/friedegg818/TIL/blob/master/Vue/6.%20%EC%95%A1%EC%8B%9C%EC%98%A4%EC%8A%A4/%EC%95%A1%EC%8B%9C%EC%98%A4%EC%8A%A4.md)
+ > - 액시오스
+ > - 설치와 사용 
+ > - 참고 사항
+ + [**HTTP 통신 구조**](https://github.com/friedegg818/TIL/blob/master/Vue/7.%20HTTP%20%ED%86%B5%EC%8B%A0%20%EA%B5%AC%EC%A1%B0/HTTP%20%ED%86%B5%EC%8B%A0%20%EA%B5%AC%EC%A1%B0.md)
+ > - 클라이언트-서버간 통신 구조 
+ > - 네트워크 패널 보기
  
