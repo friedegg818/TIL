@@ -28,3 +28,4 @@
 #  
 
 :: 참고 :: [HTTP 프로토콜에 대하여](https://joshua1988.github.io/web-development/http-part1/)
+:: 인프런 [ Vue.js 시작하기 - Age of Vue.js (장기효) ] 강의 내용을 바탕으로 작성함
