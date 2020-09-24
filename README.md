@@ -44,6 +44,4 @@
  > - 데이터 바인딩 
  > > - computed 
  > - 디렉티브 
- > > - v-bind 
- > > - v-if & else 
- > > - v-show 
+ > > - v-bind / v-if & else / v-show 
