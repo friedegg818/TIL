@@ -21,6 +21,9 @@
 
   <img src="/Vue/img/axios8_프리뷰.png">   
 #  
-- Response : 데이터 정보가 담겨 있음 
+- Response : 데이터 정보가 담겨 있음   
 
-:: 참고 :: [HTTP 프로토콜](https://joshua1988.github.io/web-development/http-part1/)
+  <img src="/Vue/img/axios9_리스펀스.png">
+#  
+
+:: 참고 :: [HTTP 프로토콜에 대하여](https://joshua1988.github.io/web-development/http-part1/)
