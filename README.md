@@ -40,4 +40,10 @@
  + [**HTTP 통신 구조**](https://github.com/friedegg818/TIL/blob/master/Vue/7.%20HTTP%20%ED%86%B5%EC%8B%A0%20%EA%B5%AC%EC%A1%B0/HTTP%20%ED%86%B5%EC%8B%A0%20%EA%B5%AC%EC%A1%B0.md)
  > - 클라이언트-서버간 통신 구조 
  > - 네트워크 패널 보기
- 
+ + [**템플릿 문법**](https://github.com/friedegg818/TIL/blob/master/Vue/8.%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95/%EA%B8%B0%EB%B3%B8%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95.md)
+ > - 데이터 바인딩 
+ > > - computed 
+ > - 디렉티브 
+ > > - v-bind 
+ > > - v-if & else 
+ > > - v-show 
