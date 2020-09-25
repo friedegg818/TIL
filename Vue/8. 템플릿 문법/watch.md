@@ -2,7 +2,7 @@
 - data의 변화에 따라 특정 로직을 실행 할 수 있는 뷰의 속성
 - 값의 변화를 추적함   
 
-<img src="/Vue/img/watch2.png">\
+  <img src="/Vue/img/watch2.png">
 
 #
 ### watch vs computed
@@ -16,7 +16,7 @@
 > - 특정 프로퍼티의 **변경 시점에 특정 액션**을 취하고자 할 때 적합함
 
  
-   <img src="/Vue/img/watchvscomputed.png">
+    <img src="/Vue/img/watchvscomputed.png">
    
 
 - watch 보다는 **computed 가 대부분의 서비스에 적합**하다. 
