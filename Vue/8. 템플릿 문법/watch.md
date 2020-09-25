@@ -15,7 +15,7 @@
 > - 매번 실행 되는 것이 부담스러운, 무거운 로직들 사용 
 > - 특정 프로퍼티의 **변경 시점에 특정 액션**을 취하고자 할 때 적합함   
 
-> - <img src="/Vue/img/watchvscomputed.png">
+> <img src="/Vue/img/watchvscomputed.png">
    
 
 - watch 보다는 **computed 가 대부분의 서비스에 적합**하다. 
