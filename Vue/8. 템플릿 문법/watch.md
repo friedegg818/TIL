@@ -5,7 +5,7 @@
   <img src="/Vue/img/watch2.png">
 
 #
-## watch vs computed 
+### watch vs computed 
 - **computed**
 > - 단순한 값의 계산
 > - 로직이 실행 될 때의 기준 값이 data의 속성 
