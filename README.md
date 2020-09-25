@@ -43,6 +43,7 @@
  + [**템플릿 문법**](https://github.com/friedegg818/TIL/blob/master/Vue/8.%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95/%EA%B8%B0%EB%B3%B8%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95.md)
  > - 데이터 바인딩 
  > > - computed 
+ > > - [computed 사용 예시](https://github.com/friedegg818/TIL/blob/master/Vue/8.%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95/computed%EB%A1%9C%20%ED%81%B4%EB%9E%98%EC%8A%A4%EC%BD%94%EB%93%9C%20%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0.md) (클래스 코드 작성)
  > - 디렉티브 
  > > - v-bind / v-if & else / v-show 
  > - [공식 문서 활용법](https://github.com/friedegg818/TIL/blob/master/Vue/8.%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95/%EA%B3%B5%EC%8B%9D%20%EB%AC%B8%EC%84%9C%20%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0.md)
