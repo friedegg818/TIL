@@ -22,4 +22,10 @@
 - watch 보다는 **computed 가 대부분의 서비스에 적합**하다. 
 #
 ### computed 를 이용한 직관적 코드 작성  
-- 클래스 코드 작성 
+- 클래스 코드 작성   
+
+ 
+   <img src="/Vue/img/computed-usage.png">   
+
+#
+:: 인프런 [ Vue.js 시작하기 - Age of Vue.js (장기효) ] 강의 내용을 바탕으로 작성함
