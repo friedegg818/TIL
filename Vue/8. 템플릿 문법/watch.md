@@ -1,8 +1,8 @@
-### watch 속성
+###watch 속성
 - data의 변화에 따라 특정 로직을 실행 할 수 있는 뷰의 속성
 - 값의 변화를 추적함
 #
-### watch vs computed 
+###watch vs computed 
 - computed
 > - 단순한 값의 계산
 > - 로직이 실행 될 때의 기준 값이 data의 속성 
@@ -14,5 +14,5 @@
 
 - watch 보다는 computed 가 대부분의 서비스에 적합하다. 
 #
-### computed 를 이용한 직관적 코드 작성  
+###computed 를 이용한 직관적 코드 작성  
 - 클래스 코드 작성 
