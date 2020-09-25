@@ -8,6 +8,7 @@
 ### watch vs computed
 
    <img src="/Vue/img/watchvscomputed.png">
+   
 - **computed**
 > - 단순한 값의 계산
 > - 로직이 실행 될 때의 기준 값이 data의 속성 
