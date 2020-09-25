@@ -4,11 +4,11 @@
   [ *인스턴스가 다음과 같은 methods 속성을 가지고 있을 때* ]
   
   <img src="/Vue/img/von1.png"> 
-
+#
 - 마우스 이벤트 처리 : **v-on:click="메소드이름"** 
 
   <img src="/Vue/img/von3.png"> 
-
+#
 - 키보드 이벤트 처리 : **v-on:keyup="메소드이름"**
 
   <img src="/Vue/img/von4.png">
