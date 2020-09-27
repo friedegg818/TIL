@@ -14,6 +14,8 @@
  + **주요 함수**
  > - [COALESCE / CONCAT / IF / IFNULL](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%20%ED%95%A8%EC%88%98.md)
  > - [날짜,시간 / DATE_FORMAT 함수](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%ED%95%A8%EC%88%98(%EB%82%A0%EC%A7%9C%2C%EC%8B%9C%EA%B0%84).md)  
+ > - [문자열 관련 함수](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%20%ED%95%A8%EC%88%98%20(%EB%AC%B8%EC%9E%90%EC%97%B4%20%EA%B4%80%EB%A0%A8).md)
+ > - [수학 관련 함수](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%20%ED%95%A8%EC%88%98%20(%EC%88%98%ED%95%99%20%EA%B4%80%EB%A0%A8).md)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
