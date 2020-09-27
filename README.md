@@ -12,6 +12,9 @@
  + [기초 명령문](https://github.com/friedegg818/TIL/blob/master/mysql/2.%20%EA%B8%B0%EC%B4%88%20%EB%AA%85%EB%A0%B9%EB%AC%B8.md) ( 데이터베이스, 정보 확인 등 ) 
  + [주요 자료형](https://github.com/friedegg818/TIL/blob/master/mysql/3.%20%EC%A3%BC%EC%9A%94%20%EC%9E%90%EB%A3%8C%ED%98%95.md)
  + [주요 함수](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%20%ED%95%A8%EC%88%98.md)
+ > - COALESCE / CONCAT 함수 
+ > - 날짜/시간 함수 
+ > - DATE_FORMAT 함수 
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
