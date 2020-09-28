@@ -61,4 +61,4 @@
  + [**싱글 파일 컴포넌트**](https://github.com/friedegg818/TIL/blob/master/Vue/10.%20%EC%8B%B1%EA%B8%80%20%ED%8C%8C%EC%9D%BC%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8/%EC%8B%B1%EA%B8%80%20%ED%8C%8C%EC%9D%BC%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8.md)
  > - 정의 및 구조 
  > - 컴포넌트 등록하기 
- > - [props 속성 사용 / event emit 구현하기] 
+ > - [props 속성 사용 / event emit 구현하기](https://github.com/friedegg818/TIL/tree/master/Vue/10.%20%EC%8B%B1%EA%B8%80%20%ED%8C%8C%EC%9D%BC%20%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8/props-event%20emit%20%EA%B4%80%EB%A0%A8%20%EC%BD%94%EB%93%9C)
