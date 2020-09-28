@@ -1,4 +1,4 @@
-### Vue CLI 프로젝트 
+# Vue CLI 프로젝트 
 - **vue-cli** : 명령어 보조 도구(CLI)로 생성한 프로젝트 (vue create vue-cli)   
 
   <img src="/Vue/img/vc1.png">   
