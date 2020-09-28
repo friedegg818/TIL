@@ -1,0 +1,23 @@
+CLI - 프로젝트 내용 정리 
+
+vue-cli : 명령어 보조 도구(CLI)로 생성한 프로젝트 
+
+npm run serve <- node package manager 를 이용한 실행 명령어
+package.json 파일로 가면 명령어가 실행어로 정리 되어 있음 
+
+
+public > index.html
+components의 내용들이 하나의 파일로 변환이 되어 주입 될 것이라는 의미 (webpack이 주입이 될 것) 
+
+main.js 의 내용을 통해서 app 이나 appHeader의 내용들이 들어갈 수 있다 
+
+app.vue 
+template : tempalte 속성 / html
+script : 인스턴스 옵션 
+- import
+- default 
+	- data 속성 
+	- components 
+	- methods 등등 
+
+
