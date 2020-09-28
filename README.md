@@ -55,3 +55,7 @@
  > - [공식 문서 활용법](https://github.com/friedegg818/TIL/blob/master/Vue/8.%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95/%EA%B3%B5%EC%8B%9D%20%EB%AC%B8%EC%84%9C%20%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0.md)
  > - [v-on](https://github.com/friedegg818/TIL/blob/master/Vue/8.%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95/v-on%20%EC%9C%BC%EB%A1%9C%20%ED%82%A4%EB%B3%B4%EB%93%9C%2C%20%EB%A7%88%EC%9A%B0%EC%8A%A4%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%20%EC%B2%98%EB%A6%AC.md)  _  키보드 / 마우스 이벤트 처리 
  > - [watch](https://github.com/friedegg818/TIL/blob/master/Vue/8.%20%ED%85%9C%ED%94%8C%EB%A6%BF%20%EB%AC%B8%EB%B2%95/watch.md)
+ + **Vue CLI**
+ > - [CLI 설치](https://github.com/friedegg818/TIL/blob/master/Vue/9.%20CLI/0.%20CLI%20%EC%84%A4%EC%B9%98.md)
+ > - [프로젝트 생성](https://github.com/friedegg818/TIL/blob/master/Vue/9.%20CLI/1.%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%83%9D%EC%84%B1.md)
+ 
