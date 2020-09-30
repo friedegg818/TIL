@@ -18,8 +18,8 @@
  > - [수학 관련 함수](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%20%ED%95%A8%EC%88%98%20(%EC%88%98%ED%95%99%20%EA%B4%80%EB%A0%A8).md)
 * * * 
 ### Oracle
- +[**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/1.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
- +[**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/2.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
+ + [**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/1.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
+ + [**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/2.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
