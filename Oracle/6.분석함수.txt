@@ -1,0 +1,141 @@
+[분석 함수]
+
+<분석 함수>
+ - '행 그룹'을 기반으로 집계 값을 계산
+ - 각 그룹에 대해 여러 행을 반환함 
+ - SELECT 절 또는 ORDER BY 절에만 가능
+
+<분석함수 1>
+ - RANK() OVER() 
+   · 순위를 구할 때 사용  
+   · WHERE 절에는 사용 불가 
+   · 동일한 값은 동일한 순위 부여 [1,1,3,4..] 
+   · OVER() → 순위를 구하는 대상
+			  정렬 기준 (ORDER BY)
+			  분할 기준 (PARTITION BY) 입력 
+   · 정렬 결과에서 null 값의 위치 지정 → NULLS FIRST/LAST
+   
+     SELECT name, sal, RANK() OVER(ORDER BY sal DESC) 순위 
+     FROM emp;
+	 
+	 SELECT name, sal, bonus, RANK() OVER(ORDER BY sal DESC, bonus DESC) 순위 
+     FROM emp;
+  
+ - DENSE_RANK() OVER()
+   · 동일한 값에 동일한 순위를 부여하지만, 다음 순위는 순차적으로 출력 [1,1,2,3,3,4..] 
+
+ - ROW_NUMVER() OVER()  
+   · 동일한 값이 있는 경우에도 [1,2,3,...] 순으로 출력 (동일 순위내 순서는 랜덤) 
+   
+   *** 3가지 함수 비교 *** 
+    [100, 100, 90, 80] 의 순위를 정할 경우 
+     - RANK()       → [ 1,1,3,4] 
+	 - DENSE_RANK() → [ 1,1,2,3]
+	 - ROW_NUMBER() → [ 1,2,3,4]
+   
+ - RANK() WITHIN GROUP() 
+   · 조건 값의 순위를 구함 
+     
+	 SELECT RANK(3000000) WITHIN GROUP(ORDER BY sal DESC) 
+	 FROM emp;   -- emp에서 300만원은 몇등정도 되는가? 
+	 
+	 
+<분석함수 2>
+ - ~ () OVER () 함수 
+   · 집계함수가 아니므로 일반 컬럼과 함께 사용 가능 
+   · 그룹에 해당되는 행수를 반환 
+   · OVER(ORDER BY 그룹) 
+      → 그룹별 값 출력하고 그룹이 바뀌면 이전 그룹 값에 누적하여 출력
+	  → 동일한 그룹은 동일한 값을 가짐 	 
+   · OVER(PARTITION BY 그룹) 
+	  → 그룹별 값(누적 X) 	   
+   · OVER에 그룹을 지정하지 않으면 전체 값 출력 
+ 
+ - COUNT() OVER() 
+ - SUM() OVER()
+ - AVG() OVER()
+ - MAX() OVER()
+ - MIN() OVER()
+ 
+   *** 각각의 차이를 잘 인지 할 것 
+    SELECT name, dept, sal, SUM(sal) OVER() FROM emp;   
+    SELECT name, dept, sal, SUM(sal) OVER(ORDER BY empNo) FROM emp; 
+    SELECT name, dept, sal, SUM(sal) OVER(ORDER BY dept) FROM emp; 
+ 
+    SELECT name, dept, sal,
+        SUM(sal) OVER(PARTITION BY dept) FROM emp;  
+    SELECT name, dept, sal, 
+        SUM(sal) OVER(PARTITION BY dept ORDER BY empNo) FROM emp;   
+    SELECT name, dept, sal, 
+        SUM(sal) OVER(PARTITION BY dept ORDER BY sal) FROM emp; 
+    SELECT name, dept, sal, pos,
+        SUM(sal) OVER(PARTITION BY dept ORDER BY pos) FROM emp;
+
+
+<분석함수 3>  
+ - RATION TO_REPORT() OVER() 
+   · 비율을 계산 
+   
+    SELECT dept, ROUND(RATIO_TO_REPORT(COUNT(*)) OVER() * 100) 비율
+	FROM emp
+	GROUP BY dept;
+ 
+ - LISTAGG() WITHIN GROUP()  
+   · 데이터를 정렬 한 후 값들을 연결 
+   
+    SELECT dept, LISTAGG(name, ',') WITHIN GROUP(ORDER BY empNo) 
+	FROM emp
+	GROUP BY dept;
+	  → 개발부 | 이순애, 이기자, 장인철 ....   <- 과 같은 형식으로 출력 됨 
+ 
+ - LAG() OVER() 
+   · 한칸씩 밀어 값을 출력 (위에서 아래로)
+   · LAG(값,n1,n2) 
+     → 값을 n1 만큼 밀고, 빈칸에는 n2를 출력 
+	 
+	  SELECT name, sal, LAG(sal, 1, 0) OVER(ORDER BY sal DESC) lag  
+	  FROM emp;
+ 
+ - LEAD() OVER() 
+   · 한칸씩 당겨서 값을 출력 (아래에서 위로)
+   · LEAD(값,n1,n2) 
+     → 값을 n1 만큼 당기고, 빈칸에는 n2를 출력  
+	 
+	  SELECT name, sal, LEAD(sal, 1, 0) OVER(ORDER BY sal DESC) lead
+	  FROM emp;
+	
+      * 데이터 간의 차이를 구하고자 할 때 사용하면 좋음 	
+	  
+ - NTILE() OVER() 
+   · 전체를 n개의 그룹으로 나눔 
+   · 개수가 완전히 나누어 떨어지지 않으면, 나누고 남은 개수는 위에서부터 하나씩 부여
+      
+	  SELECT name, sal, NTILE(15) OVER(ORDER BY sal DESC) 그룹
+      FROM emp;
+	  
+	 
+<윈도우 함수> 
+ - 윈도우 절 : 파티션으로 분할된 그룹의 부분 집합을 만듦 
+   · ROWS : 로우 단위로 윈도우 절 지정 
+   · RANGE : 논리적인 범위로 행 집합을 지정
+   · BETWEEN ~ AND : 윈도우의 시작과 끝 위치를 지정 
+   · UNBOUNDED PRECEDING : 파티션으로 구분된 첫번째 로우가 시작 지점
+   · UNBOUNDED FOLLOWING : 파티션으로 구분된 마지막 로우가 끝 지점
+   · CURRENT ROW : 시작 및 끝 지점이 현재 로우
+   · value PRECEDING : 끝 지점을 지정할 경우 시작 지점은 value~ 
+   · value FOLLOWING : 시작 지점을 지정할 경우 끝 지점은 value~ 
+
+ - 윈도우 함수 : 윈도우 절을 사용한 함수 (분석 함수 OR 순위 함수)
+ 
+   · FIRST_VALUE() OVER() : 정렬된 값 중 첫번째 값을 반환 
+    
+     SELECT name, dept, sal,
+      FIRST_VALUE(sal) OVER(PARTITION BY dept ORDER BY sal DESC) 첫번째값
+     FROM emp;
+   
+   · LAST_VALUE() OVER() : 정렬된 값 중 마지막 값을 반환. 반드시 윈도우 절을 지정 해야 함
+
+     SELECT name, dept, sal,
+      LAST_VALUE(sal) OVER(ORDER BY sal RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) A FROM emp
+     ORDER BY sal;    
+ 	 

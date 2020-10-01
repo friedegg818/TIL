@@ -1,0 +1,116 @@
+[SQL 함수]
+
+<집계 함수> 
+ - 단일 행이 아닌 행 그룹을 기반으로 단일 결과 행 반환
+		ex) 반 전체의 오라클 점수 평균 구하기 
+ - SELECT/ORDER BY/HAVING 절에서 사용 가능 
+ - WHERE 절에서는 사용 불가 (WHERE 절은 한 줄씩 비교하므로)
+ - 일반적으로 GROUP BY 절과 함께 사용 
+   → 테이블 전체가 하나의 그룹이 되는 경우에는 단독으로 사용 가능 
+        ex) 전체에서 1반의 평균을 구하기 -> GROUP BY 사용 
+		    전체의 평균을 구하기 -> 단독으로 사용 가능
+ - 일반 컬럼과 집계 함수는 절대 같이 쓸 수 없음 
+ - 집계 함수는 NULL 을 무시 
+   → COUNT/GROUPING/GROUPING_ID는 제외 
+   → 인수에서 NVL 함수를 사용하여 대체 가능 
+ - 인수가 NULL 일 경우
+   → COUNT / REGR_COUNT - 숫자 또는 0을 반환
+   → 나머지 - NULL 반환 
+   
+<집계 함수 종류> 
+ - COUNT
+   - 전체 행수 구하기   >   * 사용, 기본키나 not null 있는 키 사용 
+ - MAX
+ - MIN
+ - AVG 
+ - SUM 
+ - VARIANCE
+ - STDDEV  
+ 
+ <GROUP BY>
+  - FROM절과 WHERE절 뒤에 위치 
+  - 데이터들을 작은 그룹으로 분류하여 그룹에 대한 항목별로 통계 정보를 얻을 때 
+  - 별명 사용 불가 
+  - WHERE 절에 사용 불가 
+  - WHERE 절 조건 적용 후 GROUP BY 실행 
+  - GROUP BY 절에서 그룹 단위를 표시 한 것만 SELECT 절에서 사용이 가능  
+  
+ <HAVING>
+  - 집계 함수를 사용한 결과에 조건을 부여 
+  - 일반적으로 GROUP BY 절 뒤에 위치  
+ 
+   *GROUP BY / HAVING 절 실행 과정 
+     1) FROM
+     2) WHERE 
+     3) GROUP BY
+     4) HAVING 
+     5) SELECT 
+     6) ORDER BY 
+	 
+ <ROLLUP> 
+  - GROUP BY 에서만 사용 가능
+  - 분석 할 때 많이 사용 
+  - 소계 및 총계 계산 
+  - 인자(n) + 1 개수만큼 출력 
+    * ROLLUP(a,b) 
+       a+b => a 별 b 의 소계 : GROUP BY a, b 의 결과 
+       a   => a 별 소계 
+       전체 => 마지막에 한 번
+	   
+	   SELECT pos, dept, SUM(sal) 
+	   FROM emp
+	   GROUP BY ROLLUP(pos, dept)
+	   ORDER BY pos;
+	 
+	   SELECT dept, pos, SUM(sal) 
+	   FROM emp
+	   GROUP BY dept, ROLLUP(pos)
+	   ORDER BY dept;
+	   
+ <CUBE>
+  - GROUP BY 에서만 사용 가능
+  - 다차원적인 집계 가능 
+    → 더욱 자세한 내용을 알 수 있음 
+  - 2의 인자(n)승 만큼 출력 
+  
+	   SELECT dept, pos, SUM(sal) 
+	   FROM emp
+	   GROUP BY CUBE(dept, pos)
+	   ORDER BY dept, pos;
+	   
+	   SELECT city, dept, pos, SUM(sal) 
+	   FROM emp
+	   GROUP BY CUBE(city, dept, pos)
+	   ORDER BY city, dept, pos;
+	   
+	   SELECT city, dept, pos, SUM(sal) 
+	   FROM emp
+	   GROUP BY city, CUBE(dept, pos)
+	   ORDER BY city, dept, pos;
+	   
+	   
+ <GROUPING 함수>
+  - ROLLUP 이나 CUBE 와 함께 사용 → 컬럼이 각각의 절에서 사용 되었는지 보여줌 
+  - 참여 했으면 0 , 참여하지 않았으면 1 리턴 
+  
+	   SELECT dept, pos, GROUPING(dept), GROUPING(pos), SUM(sal) 
+	   FROM emp
+	   GROUP BY ROLLUP(dept, pos);
+
+	   SELECT dept, pos, GROUPING(dept), GROUPING(pos), SUM(sal) 
+	   FROM emp
+	   GROUP BY ROLLUP(dept, pos)
+	   HAVING GROUPING(pos) = 1;     
+	   
+	   SELECT dept, pos, SUM(sal) 
+	   FROM emp
+	   GROUP BY ROLLUP(dept, pos)
+	   HAVING GROUPING (pos) = 1;   
+
+ <GROUP_ID 함수> 	   
+  - 복제가 몇 번 일어났는지를 나타냄  
+  - 처음 나타나는 행은 0, 그 다음부터는 1, 2, 3... 
+  
+ <GROUPING SETS> 
+  
+  

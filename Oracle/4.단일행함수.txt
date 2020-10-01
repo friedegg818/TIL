@@ -1,0 +1,235 @@
+[SQL 함수]
+
+[단일행 함수]
+
+<함수>
+ - 데이터 항목을 조작하고 결과를 반환 
+ - 인수 형식 (!= 연산자) 
+ - 내장함수 : 벤더에서 제공
+ - 사용자 정의 함수 
+ - 단일 행 함수 : 결과가 한 행인 함수 
+   · 선택 목록/WHERE/START WITH/CONNECT BY/HAVING 절에 사용 가능
+ 
+<숫자 함수>
+ - 수식 연산을 하는 함수 
+ - 종류 
+   · ABS(n)                | 절대값 
+   · SIGN(n)               | 부호
+   · MOD(n1,n2)            | 나머지
+   · REMAINDER(n1,n2)
+   · CEIL(n)               | 크거나 같은 가장 작은 정수 
+ ★ · FLOOR(n) 		       | 작거나 같은 가장 큰 정수
+ ★ · ROUND(n [,integer])   | 반올림
+ ★ · TRUNC(n1 [,n2])       | 지정 자릿수 이하 절삭
+   · SIN(n) COS(n) TAN(n)  | 삼각함수 
+   · EXP POWER SQRT ...    | 지수 관련 
+   
+<문자 함수> 
+ - 연산 대상이 문자 
+ - 함수에 따라 문자나 숫자 반환 
+ - 종류 
+   · LOWER(char)           | 소문자로
+   · UPPER(char)           | 대문자로
+   · INITCAP(char)         | 첫글자를 대문자로 
+   · CHR()                 | 문자로 
+   · ASCII(char)           | 첫글자의 코드 
+   · ASCIISTR(char)        | 영어는 그대로, 한글은 유니코드로 
+   · SUBSTR()              |
+   · INSTR()               | 검색할 문자열의 위치를 반환. 없으면 0. LIKE 보다 성능 좋음
+   · LENGTH(char)          | 문자열의 길이 (글자수)
+   · LENGTHB(char)         | 문자열의 길이 (byte수) *11g 이상에서 한글은 3byte : UFT-8 
+   · REPLACE()			   | 치환 
+   · CONCAT(char1, char2)  | 문자열 결합 
+   · LPAD / RPAD           | 남는 공간 채우기 *한글을 2byte로 처리 
+   · LTRIM / RTRIM / TRIM  | 공백 제거 / 왼·오·양쪽에서 해당되는 문자 제거 
+   · TRANSLATE()           | 각각의 문자 교체 
+   
+<날짜 함수>  
+ - 연산 대상이 날짜
+ - 반환 값은 대부분 날짜형 
+ - 부하가 커서 사용하지 않는 편이 좋음 
+ - 날짜형 데이터 타입 
+   · DATE : 년월일시분초 까지 저장 
+   · TIMESTAMP : ms 까지 저장 
+ - 날짜형 데이터 연산 
+	SELECT SYSDATE FROM dual;
+	 → 시스템 날짜   
+	SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') FROM dual;
+     → 날짜를 문자로 변환
+	SELECT TO_DATE('2000-10-10', 'YYYY-MM-DD') FROM dual; 
+     → 문자를 날짜로 변환 (날짜 연산 하기 위해) 
+ 
+   · 날짜 + 숫자
+		SELECT TO_DATE('2020-02-25')+100 FROM dual;
+   · 날짜 - 숫자
+   · 날짜 + 숫자/24
+		SELECT TO_CHAR(SYSDATE - 1/24, 'YYYY-MM-DD HH24:MI:SS') FROM dual;
+   · 날짜1 - 날짜2 
+		SELECT TRUNC(SYSDATE - TO_DATE('1991-07-15')) FROM dual;
+   
+ - 간격 리터럴(INTERVAL Literals)을 이용 
+   · SYSDATE(현재 컴퓨터 시스템의 날짜)
+           +(INTERVAL '1' YEAR) 
+		   +(INTERVAL '1' MONTH) 
+		   +(INTERVAL '1' DAY) 
+		   +(INTERVAL '1' HOUR) 
+			SELECT SYSDATE + (INTERVAL '02:10' HOUR TO MINUTE) FROM dual;
+                              
+ - 종류 
+   · SYSDATE          |   현재 시스템 상의 날짜 
+   · CURRENT_DATE 	  |   현재 시스템 상의 날짜
+		SELECT SYSDATE, CURRENT_DATE FROM dual;
+  
+   · SYSTIMESTAMP     |   현재 시스템 상의 날짜 - ms 까지 나옴	
+		SELECT SYSTIMESTAMP FROM dual;
+   
+   · EXTRACT          |   날짜에서 필요한 부분만 추출  	
+		SELECT EXTRACT(YEAR FROM SYSDATE) FROM dual; → 년도만 추출
+   
+   · MONTHS_BETWEEN	  |   두 날짜 사이의 '월' 간격 
+		SELECT MONTHS_BETWEEN(SYSDATE, TO_DATE('1994-05-13')) FROM dual;
+		* 주민번호에서 생일 추출 
+		  SELECT name, rrn, TO_DATE(SUBSTR(rrn,1,6), 'RRMMDD') birth FROM emp;
+   
+   · ADD_MONTHS      |   날짜에서 월 더하기 
+        SELECT ADD_MONTHS(TO_DATE('20200330'), -1) FROM dual;
+		→ 20/02/29 각 월의 마지막 날짜로 자동 변환됨  
+   
+   · LAST_DAY        |   마지막 날짜 
+		SELECT LAST_DAY(SYSDATE) FROM dual;
+   
+   · ROUND           |   날짜를 반올림 → 년도는 7월 1일 / 월은 16일부터  
+		SELECT ROUND(TO_DATE('2007-07-10'), 'YEAR') FROM dual;   -- 08/01/01
+		SELECT ROUND(TO_DATE('2007-06-10'), 'YEAR') FROM dual;   -- 07/01/01
+
+		SELECT ROUND(TO_DATE('2007-07-20'), 'MONTH') FROM dual;   -- 08/08/01
+		SELECT ROUND(TO_DATE('2007-07-10'), 'MONTH') FROM dual;   -- 07/07/01
+	
+   · TRUNC           |    날짜를 반내림 → 내리는 건 무조건 
+		SELECT TRUNC(TO_DATE('2007-07-10'), 'YEAR') FROM dual;   -- 07/01/01
+		SELECT TRUNC(TO_DATE('2007-06-10'), 'YEAR') FROM dual;   -- 07/01/01
+
+		SELECT TRUNC(TO_DATE('2007-07-20'), 'MONTH') FROM dual;   -- 07/07/01
+		SELECT TRUNC(TO_DATE('2007-07-10'), 'MONTH') FROM dual;   -- 07/07/01
+	
+   · NEXT_DAY        |    첫번째 요일의 날짜 → 일:1~토:7 
+		SELECT NEXT_DAY(SYSDATE, 1) FROM dual;  -- 다가오는 일요일
+		SELECT NEXT_DAY(SYSDATE, 6) FROM dual;  -- 다가오는 금요일
+		SELECT NEXT_DAY(SYSDATE, '금요일') FROM dual;
+	
+<변환 함수>
+ - 특정 데이터 타입을 다양한 형식으로 출력 하고 싶을 때 사용 
+ - 방식
+   · 명시적 데이터 유형 변환 - 변환 함수를 이용하여 형을 명시 
+   · 암시적 데이터 유형 변환 - DB가 자동으로 형 변환 
+	  * 다음과 같이 변경 가능 
+		VARCHAR2, CHAR → NUMBER
+		VARCHAR2, CHAR → DATE 
+		NUMBER         → VARCHAR2
+		DATE           → VARCHAR2
+		
+		SELECT 30+'30' FROM dual;   -- VARCHAR2 → NUMBER  
+		SELECT 30+'1,000' FROM dual;  -- 에러 
+		SELECT 30 || '대' FROM dual; -- NUMBER → VARCAHR2
+ 
+ - 통화기호, 날짜 등 출력 형식 
+   · 현재 출력 형식 확인
+      SELECT parameter, value FROM NLS_SESSION_PARAMETERS;
+   · 설정 변경 
+      ALTER SESSION SET NLS_LANGUAGE = 'KOREAN'    
+ 
+ - TO_CHAR 
+   · 숫자, 날짜를 문자로  
+   · 주요 형식 모델
+     - 9  : 숫자 형식 모델 
+			SELECT TO_CHAR(12345, '999,999') FROM dual;  --  12,345
+			 
+			 * 자릿수가 부족하면 ##### 로 출력 
+			   SELECT TO_CHAR(12345, '9,999') FROM dual;  -- #####
+			 * 자동 반올림 가능 
+			   SELECT TO_CHAR(12.67, '99') FROM dual;  -- 13 
+			   SELECT TO_CHAR(12.67, '99.9') FROM dual; -- 12.7 			 
+			 
+     - 0  : 남는 자릿수에 0을 넣음 	
+			 SELECT TO_CHAR(12345, '0,999,999') FROM dual; -- 0,012,345
+     - MI : 음수 기호를 뒤로 보냄 
+			 SELECT TO_CHAR(-1234, '9999MI') FROM dual;  -- 1234-
+     - PR : 음수 기호를 <> 로 변경
+			 SELECT TO_CHAR(-1234, '9999PR') FROM dual; -- <1234> 
+	 - E  : 지수로 표현 
+			 SELECT TO_CHAR(1234.345, '9.999EEEE') FROM dual; -- 1.234E+03
+	 - V  : 뒤의 9의 개수만큼 0을 붙임 
+			 SELECT TO_CHAR(1234, '9999V9999') FROM dual;  -- 12340000  
+	 - L  : 통화 기호 붙임 
+			 SELECT TO_CHAR(1234, 'L999,999') FROM dual; --  ￦1,234
+ 
+ - TO_NUMBER 
+   · NUMBER 데이터 형식으로 변환
+   · 잘 사용하지는 않음 
+      *다음과 같은 경우에 사용하면 좋음 
+		   SELECT '23,123'+12 FROM dual;  -- 에러 
+		   SELECT TO_NUMBER('23,123','99,999') + 12 FROM dual;
+ 
+ - TO_DATE
+   · 문자를 DATE로 
+   · 주요 형식 모델 
+     - YY : 현재 시스템 기준 
+	 - RR : 기준에 따라 출력되는 값이 달라짐   
+	   ※ YY와 RR을 사용할 때에는 주의 필요  
+		   SELECT TO_DATE('001010', 'YYMMDD') FROM dual;   -- 00/10/10
+		   SELECT TO_CHAR(TO_DATE('001010', 'YYMMDD'),'YYYY-MM-DD') FROM dual;  -- 2000-10-10
+		   SELECT TO_CHAR(TO_DATE('901010', 'YYMMDD'),'YYYY-MM-DD') FROM dual;  -- 2090-10-10 
+	 
+		   SELECT TO_CHAR(TO_DATE('001010', 'RRMMDD'),'YYYY-MM-DD') FROM dual;  -- 2000-10-10
+		   SELECT TO_CHAR(TO_DATE('901010', 'RRMMDD'),'YYYY-MM-DD') FROM dual;  -- 1990-10-10
+		   SELECT TO_CHAR(TO_DATE('451010', 'RRMMDD'),'YYYY-MM-DD') FROM dual;  -- 2045-10-10   
+	   
+	   ※ 날짜 형식 모델이 아닌 문자가 들어갔을 경우는 라벨 처리 필요 	   
+		   SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD DAY') FROM dual;  -- 2020/03/11 수요일 
+		   SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') FROM dual;
+		   SELECT TO_CHAR(SYSDATE, 'YYYY"년" MM"월" DD"일"') FROM dual;
+		
+	   ※ 국가별 설정과 일치하지 않을 때는 꼭 형식을 써주어야 함 	
+		   SELECT TO_DATE('2020-10-10') FROM dual;  -- 가능 20/10/10 
+		   SELECT TO_DATE('10-10-2020') FROM dual;  -- 에러 
+		   SELECT TO_DATE('10-10-2020', 'MM-DD-YYYY') FROM dual; -- 20/10/10 
+       
+       ※ 원하는 형식으로 얼마든지 변경 가능 	   
+		   SELECT TO_CHAR(SYSDATE, 'MON DD DAY') FROM dual;  -- 3월 11 수요일 
+		   SELECT TO_CHAR(SYSDATE, 'MON DD DAY', 'NLS_DATE_LANGUAGE = American') FROM dual; -- MAR 11 WENDSDAY
+ 
+ - TO_TIMESTAMP
+   · TIMESTAMP 데이터 형식으로 변환
+		 SELECT TO_TIMESTAMP (TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) FROM dual; 
+		
+ 
+<NULL 관련 함수> 
+
+ - NULL 
+   · 행의 열에 값이 없으면 → null or null을 포함
+   · 모든 데이터 유형의 열에는 null 가능 (NOT NULL 또는 PRIMARY KEY 무결성 제약 조건 제외)  *무결성>정확성
+   · 실제 값을 알 수 없거나, 값이 의미가 없는 경우 null 사용 
+   · 길이가 0인 문자 값은 null 
+   · NULL 값을 포함한 연산은 결과도 NULL 
+     → NULL 처리를 용이하게 하기 위해 관련 함수를 사용 
+ 
+ - NVL 
+   · null이 아니면 expr1, null이면 expr2 반환  
+	   SELECT name, NVL(tel, '전화없다.') tel FROM emp;	
+ 
+ - NVL2 
+   · null이 아니면 expr2, null이면 expr3 반환
+       SELECT name, NVL2(tel, '전화있다', '전화없다') FROM emp;  
+
+ - NULLIF 
+   · 같으면 null, 다르면 expr1 반환
+       SELECT NULLIF(1, 1), NULLIF(1, 2) FROM dual;
+   
+ - COALESCE 
+   · null이 아닌 최초의 데이터를 반환 
+       SELECT COALESCE(null, 1, 2) FROM dual;
+	   
+ - LNNBL 
+   · WHERE절에서만 사용 가능
+   · 
+   

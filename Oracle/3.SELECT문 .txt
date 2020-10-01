@@ -1,0 +1,300 @@
+[SELECT 문]
+
+<SELECT> 
+ - 테이블이나 뷰에 있는 데이터를 조회하여 0개 이상의 행을 반환 
+ - 가장 일반적으로 사용되는 DQL 명령 
+ - DML의 구성 요소로 간주 되기도 함 (in 정보처리) 
+ - 반드시 SELECT + FROM 으로 구성 
+ 
+ <기본 형식>
+    SELECT (출력 할 컬럼명 or 표현식 or *) FROM (조회할 테이블 or 뷰) 
+	
+	· 특정 컬럼이나 표현식 출력 
+		SELECT empNo, name, sal FROM emp;
+		→ 입력하는 순서에 따라 출력 순서가 달라짐
+        → 존재하지 않는 컬럼명을 입력 할 경우 'ORA-00904' 오류 발생		
+		  * ORA-00904 : 부적합한 식별자 
+	    → 수식 사용 가능  	  
+		   SELECT empNo, name, sal+bonus FROM emp;
+           SELECT empNo, name, sal, sal+100000 FROM emp;
+		   SELECT name || '님', '기본급여 :' || sal FROM emp;
+		  * 단순한 결과를 보고자 할 때에는 dual 테이블 사용 
+			 SELECT '결과 : ' || (10+5) FROM dual;
+			 
+	· 모든 컬럼 출력 
+	    SELECT * FROM emp; 
+		→ 모든 컬럼을 출력하는 경우에도 * 대신 모든 컬럼명을 기술 하는 것이 좋음 
+		  더 정확하고 에러를 없앨 수 있다. 
+		     SELECT empNo, name, rrn, .... FROM emp;
+			 
+	· 컬럼명에 별칭을 사용하여 출력 
+		SELECT empNo AS 사번, name AS 이름, sal AS 기본급 FROM emp;
+		SELECT empNo 사번, name 이름, sal 기본급 FROM emp;			
+		→ AS는 생략 가능 
+		→ 이름을 바꾸면 프로그램에서는 변경된 이름으로만 접근 가능 
+		→ 컬럼 이름의 변경은 일반적으로 수식에서 사용 (편리성을 위해) 
+		   SELECT empNo, name, sal, bonus, sal+bonus FROM emp;	
+		   SELECT empNo, name, sal, bonus, sal+bonus pay FROM emp;		
+		→ 별명에 공백 등 특수한 문자를 사용 할 경우에는 쌍따옴표(")안에 기술 
+		   SELECT empNo, name, sal, bonus, sal+bonus "급 여" FROM emp;
+		   
+	· 테이블명에 별칭을 사용하여 출력
+		SELECT ROWNUM, t.* FROM emp t;
+		→ 테이블에 별명 부여 
+			SELECT ROWNUM, empNo, name FROM emp
+			→ ROWNUM : 쿼리의 결과로 나오는 각각의 행들에 대한 순서 값 (→컬럼) 
+			→ * 는 다른 컬럼과 함께 사용 불가            
+				SELECT ROWNUM, * FROM emp; <에러> 
+				SELECT ROWNUM, emp.* FROM emp; <가능> *의 위치를 알려줌  			
+			
+<SELECT 문의 순서> 
+ - 구현 순서 
+	1. SELECT + 컬럼명(or표현식)
+	2. FROM + 테이블명 
+	3. WHERE + 조건식 
+	4. GROUP BY + 컬럼명(or표현식) 
+	5. HAVING + 집계함수 조건식 
+	6. ORDER BY + 컬럼명(or표현식) > 정렬 
+ 
+ - 실행 순서
+	2 → 3 → 4 → 5 → 1 → 6 
+	실행 순서를 기억하고 작성을 하는 것이 편리함 
+		
+<조건식> 
+ - 한 개 이상의 표현식과 논리 연산자가 결합된 식 
+ - TRUE/FALSE/UNKNOWN 세가지 타입 반환 
+ - WHERE 조건 
+   · 하나 이상의 조건을 만족하는 행을 리턴 
+   · 생략 할 경우 모든 행을 리턴 
+ 
+<비교 및 논리 연산자> 
+ - 비교 연산자 [=,>,<,<=,>=,<>,!=,^=] 
+	SELECT name, city FROM emp 
+	 WHERE city = '서울'; 
+    SELECT name, city FROM emp 
+	 WHERE city <> '서울';
+    SELECT name, sal, bonus FROM emp 
+	 WHERE sal+bonus >= 2500000;
+	
+ - 논리 연산자 
+   · AND 
+      SELECT empNo, name, city, sal FROM emp 
+	   WHERE city = '서울' AND sal >= 2000000; 
+   · OR 
+      SELECT empNo, name, city FROM emp 
+	   WHERE city = '서울' OR city = '경기' OR city = '인천';
+	    * SELECT empNo, name, city FROM emp 
+		   WHERE city = '서울' OR '경기';  
+          → 에러 : 컬럼명 생략 불가 
+   · NOT 
+	  SELECT empNo, name, sal FROM emp 
+	   WHERE NOT (sal >= 2000000 AND sal <= 3000000);
+
+ - 그룹 비교 연산자 
+   · ANY (SOME) : OR 연산과 유사 
+	  SELECT empNo, name, city FROM emp 
+	   WHERE city = ANY('서울','경기','인천');	     
+   · ALL : AND 연산과 유사
+      SELECT empNo, name, sal FROM emp 
+	   WHERE sal >= ALL(200000, 2500000, 3000000);	 
+		
+		→ ANY 나 ALL 은 쓸 일이 거의 없음 	 
+
+< SQL 연산자 >
+  - BETWEEN 조건식 
+    · 다른 두 식의 간격에 있는 한 식의 값을 리턴 
+	· 표현식은 숫자, 문자, 또는 날짜/시간 
+       SELECT empNo, name, sal FROM emp 
+	    WHERE sal [NOT] BETWEEN 2000000 AND 3000000; 
+       SELECT name, hireDate FROM emp 
+	    WHERE hiredate BETWEEN '2000-01-01' AND '2000-12-31';
+	   → BETWEEN은 함수이므로 데이터가 늘어나면 부하 발생 
+	   → 관계 or 논리 연산자를 사용하는 것이 더 효율적 
+	   
+  - IN 조건식 ★
+    · 리스트에 있는 값 중 하나라도 일치하는 값을 리턴 
+	   SELECT name, city FROM emp 
+	    WHERE city [NOT] IN ('서울', '경기', '인천'); 
+	   SELECT name, city, pos FROM emp 
+	    WHERE (city, pos) IN (('서울','부장'), ('서울','과장'));	
+  
+  - LIKE 조건식 
+    · 패턴과 일치된 조건 지정 
+	· 주로 검색 할 때 사용 
+	· 패턴 문자 
+	  > _  하나의 문자 
+	  > %  0문자 이상 
+		SELECT empNo, name FROM emp 
+		 WHERE name LIKE '김%';
+		SELECT name, tel FROM emp 
+         WHERE tel LIKE '%3%' OR tel LIKE '%5%';
+        SELECT name, rrn FROM emp 
+         WHERE rrn LIKE '_0%'; 
+	    
+		*성이 'ㄱ'으로 시작하는 사람 출력
+	      SELECT name, tel FROM emp
+           WHERE name BETWEEN '가%' AND '나%'; 
+          → 아래와 동일. %는 LIKE에서만 유효
+            SELECT name, tel FROM emp
+             WHERE name BETWEEN '가' AND '나'; 
+            SELECT name, tel FROM emp
+             WHERE name >= '가' AND name < '나';
+		
+		*패턴문자를 검색하고자 할 때 
+		  SELECT * FROM  tb
+           WHERE content LIKE '%#%%' ESCAPE '#';    
+		   → ESCAPE로 지정된 문자 뒤에 오는 패턴문자를 일반문자로 인식
+		   → ESCAPE는 1bye로 아무 문자나 가능 
+	
+  - NULL 
+    · 행의 열에 값이 없을 때 
+	· 모든 데이터 유형의 열에는 NULL이 나타날 수 있음 
+	  (NOT NULL 또는 PRIMARY KEY 무결성 제약 조건에 의해 제한되지 않는 한)
+	
+		SELECT '' FROM dual; => null  
+		 → 길이가 0인 문자 값은 null
+		SELECT 10+null FROM dual; => null
+		 → null 에 연산을 하면 null
+		
+    · NULL 조건식 	 
+	    SELECT name, tel FROM emp
+	     WHERE tel = null;	         [ X ] 	  
+	    SELECT name, tel FROM emp
+		 WHERE tel IS null;          
+	     → IS : null을 테스트 할 수 있는 유일한 방법  
+	
+	
+<CASE 표현식과 DECODE 함수>
+ 
+ ** 기초 함수 
+   · SUBSTR | 특정한 위치에 있는 것을 끄집어 낼 때 사용 
+	   SELECT SUBSTR('seoul korea', 7,3) FROM dual;   
+       SELECT SUBSTR('seoul korea', 7) FROM dual; 
+	    → 오라클의 인덱스는 1부터 시작    
+   · MOD | 나머지 
+       SELECT 13/5 FROM dual;
+       SELECT MOD(13,5) FROM dual;
+   · 자동 형변환 
+       SELECT '70'+'50' FROM dual;
+	    → 120    
+	
+		* 남자/여자만 출력 
+		  SELECT name, rrn FROM emp 
+			WHERE SUBSTR(rrn,8,1) IN (1,3,5,7,9);  → 남자 
+		  SELECT name, rrn FROM emp 
+			WHERE MOD(SUBSTR(rrn,8,1),2) = 0;      → 여자 
+	
+ - CASE 표현식 
+   · IF 구문과 비슷 
+   · 성능이 좋아 연산시 사용하면 좋음 
+   · Case 표현식의 최대 인수 수 → 255개 
+   
+   · Simple Case Expression (간단한)
+        CASE 조건 WHEN 값 THEN 결과 END 
+		
+		SELECT name, rrn, 
+			CASE SUBSTR(rrn,8,1) 
+				WHEN '1' THEN '남자' 
+				WHEN '2' THEN '여자'
+			END AS "성별" 
+		FROM emp;
+		  → WHEN 1 THEN '남자' → 오류 (자료형 불일치) 
+		  → [CASE~END] 가 하나의 컬럼 → 컬럼은 별명을 줄 수 있음 
+		  → 주민번호 뒷자리가 3,4인 사람들은 null으로 나옴 
+		
+		SELECT name, rrn, 
+			CASE MOD(SUBSTR(rrn,8,1),2) 
+				WHEN 1 THEN '남자' 
+				WHEN 0 THEN '여자'
+			END AS gender
+		FROM emp;		   
+   
+   · Searched Case Expression (조건) 
+        CASE WHEN 조건 THEN 결과 END 
+   
+		SELECT name, sal+bonus pay,
+			CASE 
+				WHEN sal+bonus >=2500000 THEN (sal+bonus) * 0.03 
+				WHEN sal+bonus >=2000000 THEN (sal+bonus) * 0.02
+				ELSE 0
+			END AS tax 
+		FROM emp;
+   
+ - DECODE 함수 
+   · DECODE <-> CASE 
+   · CASE 보다는 성능이 좋지 않음 , but 간단 
+   
+	SELECT name, rrn, DECODE(SUBSTR(rrn,8,1),1,'남자',2,'여자') 
+	FROM emp;
+	
+< ALL과 DISTINCT 옵션>
+ 
+ - ALL
+   · 선택된 모든 행을 반환
+   · 생략 가능 
+   · 그룹비교연산자 ALL과 다른 개념 
+   
+	SELECT ALL dept FROM emp; 
+ 
+ - DISTINCT 
+   · UNIQUE 옵션
+   · 중복행을 제거
+   · 성능 저하가 발생 할 수 있음    
+   
+    SELECT UNIQUE dept FROM emp;
+	SELECT DISTINCT dept FROM emp;
+	
+< ORDER BY > 
+ - SQL 문장으로 조회 된 데이터들을 다양한 목적에 맞게 특정 칼럼을 기준으로 정렬하여 출력 
+ - ORDER BY 절에는 컬럼명/수식/별명/컬럼 순서를 나타내는 정수 모두 가능 
+ - 기본은 ASC(오름차순) 
+	* DESC : 내림차순     
+		
+		SELECT name, city, sal+bonus pay FROM emp
+		 WHERE pay >= 3000000;  
+		 → 에러 [FROM > WHERE > SELECT 순으로 실행] 
+
+		SELECT name, city, sal+bonus pay FROM emp
+		 ORDER BY pay;  
+		  → 별명 가능 [FROM > SELECT > ORDER BY 순으로 실행] 
+
+		SELECT name, city, sal+bonus pay FROM emp
+		 ORDER BY pay DESC;
+	 
+    * NULLS FIRST - NULL인 데이터를 먼저 출력
+      NULLS LAST  - NULL인 데이터를 나중에 출력	
+		SELECT name, tel FROM emp ORDER BY tel NULLS FIRST;
+	
+    * 실행 할 때마다 다른 순서로 출력
+		SELECT * FROM emp ORDER BY DBMS_RANDOM.VALUE;
+
+<집합 연산자>
+ - 두 개 이상으로 나누어져있는 정보를 하나로 결합 
+ - 복합 쿼리 
+ - 종류
+   · UNION     | 합집합 , 출력 결과를 정렬해서 보여줌 
+  ★· UNION ALL | 합집합 , 교집합에 해당하는 부분이 두번 출력 , 정렬 x
+   · MINUS     | 차집합
+   · INTERSECT | 교집합    
+   
+<pseudo 컬럼>
+ - 오라클에서 내부적으로 사용되는 컬럼 
+ - 열처럼 동작. 테이블에 실제로 저장되지는 않음 
+ - 컬럼에서 선택 할 수는 있지만 변경은 불가 
+ - 종류 
+   · ROWID | 각 행의 주소를 반환 
+   · ROWNUM | 행을 선택하는 순서를 나타내는 숫자를 반환 
+			  → ROWNUM < n 은 가능하지만 ROWNUM > n 이나 ROWNUM = n 은 불가능 
+													  *ROWNUM = 1만 가능
+			  → ORDER BY 절과 함께 사용하지 않음 
+   
+	 ** 11g 게시판 페이징 처리에서 사용하는 쿼리 
+			SELECT * FROM ( 
+				SELECT ROWNUM rnum, tb.*FROM (
+					SELECT name, city, sal
+					FROM emp 
+					ORDER BY sal DESC
+				) tb WHERE ROWNUM <= 10 
+			) WHERE rnum >= 6; 
+   
+	
