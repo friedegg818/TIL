@@ -25,7 +25,7 @@
  > - [단일행 함수](https://github.com/friedegg818/TIL/blob/master/Oracle/5.%20%EB%8B%A8%EC%9D%BC%ED%96%89%20%ED%95%A8%EC%88%98.md)
  > - [집계 함수](https://github.com/friedegg818/TIL/blob/master/Oracle/6.%EC%A7%91%EA%B3%84%ED%95%A8%EC%88%98.md)
  > - [분석함수](https://github.com/friedegg818/TIL/blob/master/Oracle/7.%EB%B6%84%EC%84%9D%ED%95%A8%EC%88%98.md)
- > - 윈도우함수
+ > - [윈도우함수](https://github.com/friedegg818/TIL/blob/master/Oracle/8.%EC%9C%88%EB%8F%84%EC%9A%B0%ED%95%A8%EC%88%98.md)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
