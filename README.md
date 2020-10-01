@@ -19,6 +19,7 @@
 * * * 
 ### Oracle
  + [**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/1.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md) / [**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/2.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
+ + [**SQL 기본 개념**](https://github.com/friedegg818/TIL/blob/master/Oracle/3.%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20SQL.md)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
