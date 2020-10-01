@@ -1,16 +1,17 @@
-[SQL 함수]
+# SQL 함수
 
-[단일행 함수]
+## 단일행 함수
 
-<함수>
+### 함수
  - 데이터 항목을 조작하고 결과를 반환 
  - 인수 형식 (!= 연산자) 
  - 내장함수 : 벤더에서 제공
  - 사용자 정의 함수 
  - 단일 행 함수 : 결과가 한 행인 함수 
    · 선택 목록/WHERE/START WITH/CONNECT BY/HAVING 절에 사용 가능
- 
-<숫자 함수>
+   
+#
+### 숫자 함수
  - 수식 연산을 하는 함수 
  - 종류 
    · ABS(n)                | 절대값 
@@ -23,8 +24,9 @@
  ★ · TRUNC(n1 [,n2])       | 지정 자릿수 이하 절삭
    · SIN(n) COS(n) TAN(n)  | 삼각함수 
    · EXP POWER SQRT ...    | 지수 관련 
-   
-<문자 함수> 
+
+#
+### 문자 함수 
  - 연산 대상이 문자 
  - 함수에 따라 문자나 숫자 반환 
  - 종류 
@@ -43,8 +45,9 @@
    · LPAD / RPAD           | 남는 공간 채우기 *한글을 2byte로 처리 
    · LTRIM / RTRIM / TRIM  | 공백 제거 / 왼·오·양쪽에서 해당되는 문자 제거 
    · TRANSLATE()           | 각각의 문자 교체 
-   
-<날짜 함수>  
+
+#
+### 날짜 함수
  - 연산 대상이 날짜
  - 반환 값은 대부분 날짜형 
  - 부하가 커서 사용하지 않는 편이 좋음 
@@ -116,8 +119,9 @@
 		SELECT NEXT_DAY(SYSDATE, 1) FROM dual;  -- 다가오는 일요일
 		SELECT NEXT_DAY(SYSDATE, 6) FROM dual;  -- 다가오는 금요일
 		SELECT NEXT_DAY(SYSDATE, '금요일') FROM dual;
-	
-<변환 함수>
+
+#
+### 변환 함수
  - 특정 데이터 타입을 다양한 형식으로 출력 하고 싶을 때 사용 
  - 방식
    · 명시적 데이터 유형 변환 - 변환 함수를 이용하여 형을 명시 
@@ -202,8 +206,8 @@
    · TIMESTAMP 데이터 형식으로 변환
 		 SELECT TO_TIMESTAMP (TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')) FROM dual; 
 		
- 
-<NULL 관련 함수> 
+# 
+### NULL 관련 함수
 
  - NULL 
    · 행의 열에 값이 없으면 → null or null을 포함
@@ -230,6 +234,5 @@
        SELECT COALESCE(null, 1, 2) FROM dual;
 	   
  - LNNBL 
-   · WHERE절에서만 사용 가능
-   · 
+   · WHERE절에서만 사용 가능 
    
