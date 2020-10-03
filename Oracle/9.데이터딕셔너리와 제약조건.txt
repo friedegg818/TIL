@@ -1,0 +1,251 @@
+[데이터 딕셔너리와 제약 조건]
+
+<데이터 딕셔너리> (=system catalog)
+ - DB 자원을 효율적으로 관리하기 위한 다양한 정보를 저장하는 시스템 테이블 
+ - 사용자가 직접 수정/삭제 불가 
+ - 오라클이 자동으로 갱신 
+ - 분류 
+   · 데이터 딕셔너리 뷰 
+     - ALL_  : 전체 정보를 확인 할 때 
+	 - USER_ : 한 특정 사용자에게 종속 / 그 사용자가 소유하는 객체에 대한 정보 조회
+	 - DBA_  : DBA 권한을 가진 사용자만 조회 가능 / 모든 오라클 DB 객체에 대한 정보 조회
+   · 동적 성능 뷰 
+     - V$    
+	 - GV$
+	 - X$ 
+ - 종류 
+    DICTIONARY(DICT) : 모든 데이터 사전 테이블 정보 확인 
+	USER_OBJECTS(OBJ) : 현재 사용자의 모든 객체 정보 
+	USER_TABLES(TABS) / TAB	: 테이블 정보 확인
+	USER_TAB_COLUMNS(COLS) / COL : 테이블의 컬럼 정보 확인 
+	USER_CONSTRAINTS : 테이블에 지정된 제약 조건에 대한 정보 
+    USER_CONS_COLUMNS : 컬럼의 제약 조건에 대한 정보 
+	USER_USERS : 현재 사용자가 접근 가능한 유저 정보
+	ALL_USERS : 모든 사용자의 정보 
+	DBA_USERS : 모든 사용자의 정보 (암호 포함) 	
+     *시노님 - 간단하게 사용하기 위해 부여한 또 다른 이름 
+ 
+	 
+
+<제약 조건> 
+ - 데이터베이스의 값을 제한하여 바람직하지 않은 데이터가 저장 되는 것을 방지
+ - 무결성 제약 조건 
+   · DB의 일관성을 보장하기 위해 DB 상태를 정의하는 규칙들을 명시적으로 정의 
+   · 무결성 : 데이터의 정확성/유효성 유지 하는 것    
+ - 특징 
+   · 테이블 생성시 프로그래밍 과정을 줄임
+   · 데이터 오류 발생 가능성을 줄임 
+   · 테이블에 의해 정의되고 데이터 딕셔너리에 저장 
+   · 일시적으로 활성화or비활성화 가능 
+ - 종류 
+   · NOT NULL 
+      - 실제 값이 없거나 의미 없는 값을 나타내는 경우 
+	  - ''은 NULL 이지만 ' '(공백)은 NULL이 아님
+	  - constraint type은 C (Check)
+   · PRIMARY KEY (기본키) 
+      - 후보키 : 기본키로 사용 할 수 있는 속성의 모임 (유일성,최소성) 
+      - 중복 데이터 가질 수 없음 
+      - 하나의 테이블에 하나 존재 
+      - 두개 이상의 컬럼을 조합하여 만들 수도 있음 
+	  - 조건 1)유일성 2)NULL X 3)검색에 용이
+   · UNIQUE 
+      - 중복적인 데이터 가질 수 없음 → 튜플의 유일성 보장 
+      - 하나의 테이블에 두 개 이상 지정 가능 
+      - NULL 값 허용 (NULL은 중복이 가능)
+   · FOREIGN KEY ★ 
+      - 부-자 관계를 맺어줄 때 사용 
+	  - 테이블간 데이터의 일관성을 보장하기 위한 조건 
+	  - 한 테이블의 PRIMARY KEY 나 UNIQUE 컬럼만 다른 테이블의 참조키가 될 수 있음 
+	  - constraint type은 R 
+   · CHECK 제약  
+      - 지정된 조건을 만족하는 값    
+	  
+	* 객체 무결성 : 유일성을 보장 (PRIMARY KEY, UNIQUE)
+	  참조 무결성 : 일관성을 보장 (FOREIGN KEY)
+	  
+ - 설정 
+   · 컬럼 레벨 방식 : 컬럼명, 자료형 뒤에 제약조건 명시 
+   · 테이블 레벨 방식 : 마지막에 제약 조건을 한 번에 지정 
+   · 제약 조건 추가/제거 → ALTER TABLE 이용
+   · 제약 조건 이름 지정 가능 (지정하지 않으면 SYS_Cnnnnn 형식으로 부여됨)
+   · 모든 제약 조건은 데이터 사전에 저장 
+   
+     *컬럼 레벨 방식 	 
+	 - 기본키/ UNIQUE / NOT NULL / CHECK 
+		 CREATE TABLE 테이블명 ( 
+			컬럼명 타입[(크기)] [CONSTRAINT 제약이름] 제약조건  .. 
+       ); 
+	  
+	 - 참조키  
+	     CREATE TABLE 테이블명 ( 
+	        컬럼명 타입[(크기)] [CONSTRAINT 제약이름] 
+		       REFERENCE 부모테이블명 (부모테이블컬럼명) 
+		      .
+		      .
+		  ); 
+	 	 
+	 *테이블 레벨 방식 
+	  - 기본키/ UNIQUE / NOT NULL / CHECK 
+	     CREATE TABLE 테이블명 ( 
+           컬럼명 타입[(크기] [제약조건] ... 
+           , [CONSTRAINT 제약이름] 제약조건 
+         );  	
+	  
+	  - 참조키 
+	   CREATE TABLE 테이블명 (
+	     컬럼명 타입[(크기)] 
+		 .
+		 .
+		 , [CONSTRAINT 제약이름] FOREIGN KEY(컬럼[,컬럼])
+		   REFERENCES 부모테이블명 (컬럼[,컬럼])
+		);	  
+	  
+	  *두 개의 컬럼으로 기본키 지정 (테이블 레벨로만 가능)
+	   CREATE TABLE test4 (
+		id VARCHAR2(50)  
+	   ,code VARCHAR2(100) NOT NULL 
+       ,name VARCHAR2(30) NOT NULL 
+       ,CONSTRAINT pk_test4_id PRIMARY KEY (id, code)
+       ); 
+          → 기본키는 1개, [id+code]
+		  
+	  *제약조건 추가 (기본키 제약 위반하지 않을 때 가능) 
+	     ALTER TABLE 테이블명
+		     ADD [CONSTRAINT 제약이름] PRIMARY KEY (컬럼명);
+			 
+		 ALTER TABLE 테이블명
+		     ADD [CONSTRAINT 제약이름] UNIQUE (컬럼명);	
+
+		 ALTER TABLE 테이블명 MODIFY 컬럼명 NOT NULL; 
+		 ALTER TABLE 테이블명 MODIFY (컬럼명 타입[(크기)] NOT NULL); 
+		 ALTER TABLE 테이블명 
+		     ADD [CONSTRAINT 제약이름] CHECK (컬럼 IS NOT NULL); 	
+
+		 ALTER TABLE 테이블명 ADD CHECK (조건); 
+			 
+	  *제약조건 삭제 		
+         ALTER TABLE 테이블명 DROP CONSTRAINT 제약이름;  [모든 제약조건 가능]	
+		 
+         ALTER TABLE 테이블명 DROP PRIMARY key;       [기본키]		
+		 
+		 ALTER TABLE 테이블명 DROP UNIQUE(컬럼명[,컬럼명]);  [UNIQUE]
+		 
+		 ALTER TABLE 테이블명 MODIFY 테이블명 NULL;        [NOT NULL] 
+ 
+<DEFAULT> 
+ - 해당 컬럼의 기본 값을 설정 
+   
+   *DEAFUL 설정   
+		 CREATE TABLE test3 ( 
+		   id VARCHAR2(50) PRIMARY KEY 
+		   , name VARCHAR2(50) NOT NULL
+		   , subject VARCHAR2(500) NOT NULL
+		   , content VARCHAR2(4000) NOT NULL
+		   , created DATE DEFAULT SYSDATE
+		   , hitCount NUMBER DEFAULT 0
+		 ); 
+		 
+	*DEFAULT 확인 (cols만 가능)
+		 SELECT * FROM cols WHERE table_name = 'TEST3';
+		 SELECT column_name, data_default FROM cols 
+		     WHERE table_name = 'TEST3';
+			 
+	*DEFAULT 데이터 삽입 
+		 INSERT INTO test3(id, name, subject, content) 
+		     VALUES('2','b','b','b');
+
+		 INSERT INTO test3(id, name, subject, content, created, hitCount)
+             VALUES('3','c','c','c',DEFAULT,2);	
+			 
+	*DEFAULT 제거 
+		 ALTER TABLE test3 MODIFY hitCount DEFAULT NULL;
+	
+	
+**<참조키_관계>** 
+ - 1:1 관계 (비식별)
+ - 1:다 관계 (비식별)
+ - 1:다 관계 (식별)
+ - 동일한 테이블을 두번 이상 참조 
+ - 자기 자신을 참조 
+ - ON DELETE CASCADE 
+  
+   * 부모테이블 
+     CREATE TABLE mem1 ( 
+		id VARCHAR2(50) PRIMARY KEY 
+		, name VARCHAR2(50) NOT NULL
+		, pwd VARCHAR2(100) NOT NULL
+	 ); 
+
+   * 자식테이블 
+     [1:1 관계][식별]
+     CREATE TABLE mem2 ( 
+		id VARCHAR2(50) 
+		, birth DATE
+		, tel VARCHAR2(50)
+		, CONSTRAINT pk_mem2_id PRIMARY KEY(id)
+		, CONSTRAINT fk_mem2_id FOREIGN KEY(id) REFERENCES mem1(id) 
+	 ); 
+	 
+	 [1:다 관계][비식별]
+	 CREATE TABLE guest (   
+		num NUMBER PRIMARY KEY 
+		, content VARCHAR2(4000) NOT NULL
+		, id VARCHAR2(50) NOT NULL  -- id가 기본키이면 방명록을 한 번밖에 쓸 수 없으므로 기본키 X 
+		, created DATE DEFAULT SYSDATE 
+		, CONSTRAINT fk_guest_id FOREIGN KEY(id) REFERENCES mem1(id) -- 참조키 
+	 );
+		
+	 [1:다 관계][식별]	
+     CREATE TABLE guestLike(   -- 좋아요 // 하나의 아이디가 하나의 게시물에만 좋아요 , 다른 게시물엔 또 누를 수 있음
+		num NUMBER 
+		, id VARCHAR2(50)
+		, PRIMARY KEY(num, id) 
+		, FOREIGN KEY(num) REFERENCES guest(num)
+		, FOREIGN KEY(id) REFERENCES mem1(id) 	
+	 );
+
+    [동일한 테이블을 두번 이상 참조]  
+     CREATE TABLE note( 
+		num NUMBER PRIMARY KEY 
+		, sendId VARCHAR2(50) NOT NULL
+		, receiveId VARCHAR2(50) NOT NULL 
+		, content VARCHAR2(4000) NOT NULL 
+		, FOREIGN KEY(sendId) REFERENCES mem1(id)
+		, FOREIGN KEY(receiveId) REFERENCES mem1(id)
+	 );  
+
+    [자기 자신을 참조] - 반드시 null을 허용해야 함 
+	 CREATE TABLE test1 (
+		num NUMBER PRIMARY KEY 
+		, subject VARCHAR2(1000) NOT NULL
+		, snum NUMBER 
+		, FOREIGN KEY(snum) REFERENCES test1(num)
+	 );
+
+    [ON DELETE CASCADE]    
+	 CREATE TABLE exam1(
+		num NUMBER PRIMARY KEY 
+		, syear NUMBER(4) NOT NULL
+		, hak VARCHAR2(30) NOT NULL 
+		, score NUMBER(3) NOT NULL
+		, FOREIGN KEY(syear, hak) REFERENCES test1(syear, hak) ON DELETE CASCADE
+	 );
+
+
+<제약조건 활성화 및 비활성화>
+ - 제약조건 적용 여부 지정 할 수 있음
+ - 기본적으로는 ENABLE VALIDATE 상태 
+ - 제약조건 비활성화 
+    
+   ALTER TABLE 테이블명 DISABLE [VALIDATE | NOVALIDATE] 제약조건 [CASCADE];   
+   · VALIDATE : 제약 조건을 비활성화하고 제약 조건에서 인덱스를 삭제하지만 조건은 유효하게 유지
+   · NOVALIDATE : 기본값. 제약조건을 비활성화. 외래키 제약조건이 
+   · CASCADE : 부모 테이블의 제약조건을 비활성화 하면 자식 테이블의 제약조건도 함께 비활성화
+   
+ - 제약조건 활성화 
+ 
+   ALTER TABLE 테이블명 ENABLE [VALIDATE | NOVALIDATE] 제약조건 [CASCADE];   
+   · VALIDATE : 기본값. 모든 데이터가 제약조건을 준수하도록 지정
+   · NOVALIDATE : 모든 새로운 작업이 제약 조건을 준수하도록 지정. 기존 데이터는 확인 X 
+   
+ 

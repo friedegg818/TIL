@@ -1,0 +1,210 @@
+[데이터 정의 언어] [DDL]
+
+<데이터 정의 언어>
+ - DB를 구축하거나 수정 할 목적으로 사용하는 언어
+ - 번역한 결과가 '데이터 사전' 이라는 특별한 파일에 여러개의 테이블로 저장됨
+ - AUTO COMMINT (수정이 불가, 만들면 끝)
+ - 기능 
+   · 외부 스키마 명세(구조)를 정의
+   · DB의 논리적, 물리적 구조 및 구조 간의 사상을 정의
+   · 사용되는 제약 조건에 대한 명세를 정의 
+   · 데이터의 물리적 순서를 규정
+ - 종류 
+   · CREAT    - 생성
+   · ALTER    - 수정
+   · DROP     - 삭제
+   · RENAME   - 객체 이름 변경 
+   · TRUNCATE - 모든 데이터 삭제 
+ 
+<식별자>
+ - 테이블명, 컬럼명 등 사용자에 의해 부여된 이름
+ - 규칙
+   · 반드시 문자로 시작
+   · 1~30자까지 가능
+   · A~Z / a~z / 0~9 / 특수기호('_','$','#') 만 포함 가능
+   · 예약어는 사용 할 수 없음
+   · 객체명은 다른 객체명과 중복이 불가 
+   · 공백 허용 X (" " 안에 넣어주면 가능하긴 함) 
+   
+<데이터 타입>
+ - 문자/숫자/날짜 자료형 등 여러 종류의 데이터를 식별하는 타입 
+ - 테이블의 데이터 타입 정보 확인 
+   : SELECT DATA_TYPE FROM USER_TAB_COLUMSNS WHERE TABLE_NAME = '테이블명';
+ - 종류 
+   · 문자형 CHAR → 최대 크기 2000 byte 
+                 지정된 길이보다 짧은 데이터가 입력되면 나머지는 공백이 채워짐                  
+          ★VARCHAR2 → 최대 크기 4000 byte 
+		             지정된 길이보다 짧은 데이터가 입력되면 나머지는 채우지 않음
+					 지정된 길이를 초과하면 오류 발생 				 
+	      VARCHAR → 오라클에서는 권장 X 
+		  NCHAR/NVARCAR2
+		  
+		  * CHAR(4) -> 한자(A) 삽입 : 'A   ' 
+		    SELECT .. FROM 테이블 WHERE 컬럼 = 'A'; -- 다르다 
+			VARCHAR(4) -> 한자(A) 삽입 : 'A' 
+		    SELECT .. FROM 테이블 WHERE 컬럼 = 'A'; -- 같다  
+         
+   · 숫자형 ★NUMBER → (P,S)로 표현 
+					P:유효자리수 (1~38)
+					S:소수점 유효자리 (-84~127) 
+                   *NUMBER(5,2) => 정수 3자리, 소수점 2자리, 총 5자리					
+					NUMBER(2,3) => 소수점 3자리지만 수치는 2자리에만 들어감 (0.213은 X) 
+					NUMBER(3,-1) => 정수에서 일의자리는 0 (TRUNC 개념과 비슷)
+				   *S는 자리수를 초과하면 자동으로 반올림 되지만 P는 자리수를 초과하면 안됨 
+		  BINARY_FLOAT
+       	  BINARY_DOUBLE
+		  FLOAT
+   · 날짜형 ★DATE → 7 byte로 크기 고정 
+                 세기, 연도, 월, 일, 시간, 분, 초 
+				 
+   · 대용량 BLOB(대용량 이진파일을 저장) / ★CLOB(텍스트 대용량, 절대 남용 X)
+          NCLOB / BFILE		  
+   · 기타  LONG / RAW / LONG RAW 	 
+
+<테이블 생성> 
+ - 데이터 저장 공간 
+ - 관계형 데이터베이스를 구성하는 기본 데이터 구조 
+ - 행과 열의 구조  
+ - 데이터 입력, 수정, 삭제, 추출  
+ 
+ - CREAT TABLE  
+   1.테이블명 정하기 
+     · 테이블 명은 다른 객체의 이름과 중복 불가 
+	 · 데이터 사전에 대문자로 저장됨
+   2.컬럼명  컬럼타입  폭  제약조건  NULL 
+	 num    숫자   10  기본키    X
+     name   문자   30          X
+     birth  날짜 
+     city   문자   30
+	 * 한 테이블 내에서 컬럼명 중복 불가 
+	 
+	 CREATE TABLE test(
+       num NUMBER(10) PRIMARY KEY 
+      ,name VARCHAR2(30) NOT NULL    
+      ,birth DATE
+      ,city VARCHAR2(30)
+     );
+  
+ ** 테이블 확인  
+     SELECT * FROM tab;
+	 SELECT * FROM tab WHERE tname = 'TEST';
+	 SELECT * FROM tab WHERE tname = UPPER('test'); 
+	 
+ ** 테이블 구조 확인	 
+     SELECT * FROM cols WHERE table_name = 'TEST'; -- 자세하게 
+     SELECT * FROM col WHERE tname = 'TEST'; -- 간략하게
+     DESC test; -- developer, sqlplus 등 지원하는 곳에서만 사용 가능 (자바는 불가) 
+ 
+ - 가상 컬럼(virtual column)
+   · GENERATED ALWAYS AS ~ VIRTUAL 
+   · 디스크에 저장되지 않는 컬럼으로 보통 수식이나 함수 등을 기술
+   · SYSDATE 등 동적인 결과는 가질 수 없음
+   · 값 추가나 수정 불가 
+   
+     CREATE TABLE demo( 
+     id VARCHAR2(30) PRIMARY KEY
+     ,name VARCHAR2(30) NOT NULL
+     ,kor NUMBER(3) NOT NULL
+     ,eng NUMBER(3) NOT NULL
+     ,mat NUMBER(3) NOT NULL
+     ,tot NUMBER(3) GENERATED ALWAYS AS (kor+eng+mat) VIRTUAL  
+     ,ave NUMBER(4,1) GENERATED ALWAYS AS ((kor+eng+mat)/3) VIRTUAL
+    );
+
+ - subquery를 이용한 테이블 생성 
+   · 존재하는 테이블을 이용하여 테이블 작성 
+   · 기존의 데이터가 복사됨 
+   · 제약조건은 복사 되지 않음 (NOT NULL 제외)
+   
+     CREATE TABLE emp1 AS 
+      SELECT empNO, name, sal, bonus, sal+bonus FROM emp;    
+       → 에러 : 컬럼명 규칙 위반 (sal+bonus)
+     CREATE TABLE emp1 AS 
+      SELECT empNO, name, sal, bonus, sal+bonus pay FROM emp;     
+      
+    ** 제약 조건 확인 방법 
+       SELECT * FROM user_constraints;
+	   P : 기본키, U : UNIQUE, C : NOT NULL 등 
+
+     CREATE TABLE emp2(num, name, birth) AS 
+      SELECT empNo, name, TO_DATE(SUBSTR(rrn,1,6)) FROM emp;   
+      → 컬럼명을 따로 지정 해 줄 수 있음    
+
+     CREATE TABLE emp3 AS SELECT * FROM emp WHERE 1=2;	 
+      → 테이블의 구조만 복사하기  
+
+
+<테이블 구조 변경> 
+ - 기존의 테이블 구조 변경
+ - 컬럼의 추가/수정/삭제 시 사용 
+ - ALTER TABLE ~ ADD 
+   · 기존의 테이블에 새로운 컬럼 추가 → 테이블의 가장 마지막에 
+   · 기존 데이터가 존재하는 경우, 새로 추가되는 컬럼의 데이터는 null 
+   
+    * test => 데이터가 존재하지 않는 테이블 
+     	ALTER TABLE test ADD (dept VARCHAR2(30), sal NUMBER(3) NOT NULL); 
+		→ 가능. 
+
+    * emp2 => 데이터가 존재하는 테이블 
+		ALTER TABLE emp2 ADD(dept VARCHAR2(30) NOT NULL); 
+		→ 에러. 'null'이 자동으로 부여되므로 NOT NULL 제약 조건은 불가
+ 
+ - ALTER TABLE ~ MODIFY 
+   · 컬럼의 데이터 타입이나 폭 등을 변경
+   · 이미 데이터가 존재 할 경우, 기존의 폭 보다 적게 변경 불가
+   · 이미 데이터가 존재 할 경우, 타입이 변경 가능할 때만 가능 
+    
+	ALTER TABLE test MODIFY (sal NUMBER(10));
+	
+ - ALTER TABLE ~ RENAME COLUMN 	
+   · 테이블에 존재하는 컬럼의 이름을 변경 
+   
+     ALTER TABLE emp2 RENAME COLUMN num TO empNo;
+   
+ - ALTER TABLE ~ DROP COLUMN 
+   · 테이블에 존재하는 컬럼 삭제 
+   · 내용이 있으면 내용도 삭제 
+   
+     ALTER TABLE emp2 DROP COLUMN name;
+	
+ - ALTER TABLE ~ SET UNUSED 
+   · 데이터가 존재하는 컬럼을 삭제 할 경우, 많은 시간이 소요 됨 
+     → 컬럼의 사용을 논리적으로 제한 하는 것이 필요 
+   · 지워진 것 처럼 보이지만 실제로 지워지진 않음
+   · 복구 불가능 
+   
+     ALTER TABLE emp1 SET UNUSED (pay);  [논리적 삭제]
+	
+	 SELECT * FROM USER_UNUSED_COL_TABS; [논리적 삭제 된 컬럼의 정보 확인]
+	                                   → 어떤 컬럼인지는 모르고, 갯수만 확인 가능함 
+	
+	 ALTER TABLE emp1 DROP UNUSED COLUMNS; [논리적으로 삭제 된 컬럼 실제 삭제] 	
+	
+ - 테이블 삭제  
+   · 물리적으로 삭제 됨 
+   · 구조와 내용 전부 다 지워지고 복구는 불가
+ 
+     DROP TABLE demo;		[휴지통으로, 복구 가능]
+                            → SELECT * FROM tab; 으로 확인 시 'BIN~' 형식으로 나타남 
+     DROP TABLE test PURGE;  [완전 삭제, 복구 불가능]
+	
+ - RENAME 	
+   · 객체의 이름을 변경 (테이블,뷰,시퀀스,개인 동의어) 
+     
+	 RENAME emp2 TO demo;
+	 
+ - 휴지통
+   · 실제로 삭제 된 객체가 들어 있는 곳
+   
+     SELECT * FROM RECYCLEBIN; [휴지통 정보 확인] 
+	 
+     PURGE TABLE demo;  [휴지통에서 demo 테이블만 삭제]
+	 PURGE RECYCLEBIN;  [휴지통 모두 비우기] 
+
+ - TRUNCATE 	
+   · 테이블의 구조는 삭제하지 않고 데이터만 삭제하는 가장 빠른 방법
+   · 자동 COMMINT 되므로 복구가 불가능 
+   · WHERE 절이 없음 
+   
+     TRUNCATE TABLE emp1; 
+	 	 
