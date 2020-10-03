@@ -26,8 +26,8 @@
  > - [집계 함수](https://github.com/friedegg818/TIL/blob/master/Oracle/6.%EC%A7%91%EA%B3%84%ED%95%A8%EC%88%98.md)
  > - [분석함수](https://github.com/friedegg818/TIL/blob/master/Oracle/7.%EB%B6%84%EC%84%9D%ED%95%A8%EC%88%98.md)
  > - [윈도우함수](https://github.com/friedegg818/TIL/blob/master/Oracle/8.%EC%9C%88%EB%8F%84%EC%9A%B0%ED%95%A8%EC%88%98.md)
- + [**데이터 정의 언어(DDL)**](https://github.com/friedegg818/TIL/blob/master/Oracle/9.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%95%EC%9D%98%20%EC%96%B8%EC%96%B4.md)
- + [**데이터 조작 언어(DML)**](https://github.com/friedegg818/TIL/blob/master/Oracle/10.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A1%B0%EC%9E%91%20%EC%96%B8%EC%96%B4.md)
+ + [**데이터 정의 언어 (DDL)**](https://github.com/friedegg818/TIL/blob/master/Oracle/9.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%95%EC%9D%98%20%EC%96%B8%EC%96%B4.md)
+ + [**데이터 조작 언어 (DML)**](https://github.com/friedegg818/TIL/blob/master/Oracle/10.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A1%B0%EC%9E%91%20%EC%96%B8%EC%96%B4.md)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
