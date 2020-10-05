@@ -1,3 +1,4 @@
+
 [SUBQUERY]
 - WHERE/SELECT/SELECT FROM/HAVING/INSERT INTO/UPDATE~SET~/DELETE~FROM 이나 다른 하위 쿼리 내부에 중첩된 쿼리 
 - 단독 실행이 가능하다.
