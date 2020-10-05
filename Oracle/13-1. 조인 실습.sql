@@ -1,18 +1,18 @@
 [JOIN]
- - µÑ ÀÌ»óÀÇ Å×ÀÌºí, ºäÀÇ ÇàÀ» °áÇÕÇÏ´Â Äõ¸® 
- - query ÀÇ FROM Àý¿¡ ¿©·¯ Å×ÀÌºíÀÌ ³ªÅ¸³¯ ¶§¸¶´Ù ¼öÇà 
- - °øÅëµÈ ÄÃ·³ÀÇ ÀÌ¸§ÀÌ Á¸ÀçÇÏ´Â °æ¿ì, ¸ðÈ£¼ºÀ» ÇÇÇÏ±â À§ÇØ Å×ÀÌºí ÀÌ¸§À¸·Î ±Ô¼º 
+ - ë‘˜ ì´ìƒì˜ í…Œì´ë¸”, ë·°ì˜ í–‰ì„ ê²°í•©í•˜ëŠ” ì¿¼ë¦¬ 
+ - query ì˜ FROM ì ˆì— ì—¬ëŸ¬ í…Œì´ë¸”ì´ ë‚˜íƒ€ë‚  ë•Œë§ˆë‹¤ ìˆ˜í–‰ 
+ - ê³µí†µëœ ì»¬ëŸ¼ì˜ ì´ë¦„ì´ ì¡´ìž¬í•˜ëŠ” ê²½ìš°, ëª¨í˜¸ì„±ì„ í”¼í•˜ê¸° ìœ„í•´ í…Œì´ë¸” ì´ë¦„ìœ¼ë¡œ ê·œì„± 
  
 ------- INNER JOIN 
 [EQUI JOIN] 
--- ¿©·¯ Å×ÀÌºíÀÇ ±³ÁýÇÕ¿¡ ÇØ´çµÇ´Â Á¤º¸¸¸ °¡Á®¿È
+-- ì—¬ëŸ¬ í…Œì´ë¸”ì˜ êµì§‘í•©ì— í•´ë‹¹ë˜ëŠ” ì •ë³´ë§Œ ê°€ì ¸ì˜´
     1)
     SELECT empNo, name, com, excel, word 
     FROM emp, emp_score 
-    WHERE emp.empNO = emp_score.empNo;  -- ¿¡·¯ : µ¿ÀÏÇÑ ÄÃ·³¸íÀÌ µÎ Å×ÀÌºí¿¡ Á¸ÀçÇÏ¸ç, ¸ðÈ£¼ºÀÌ ¹ß»ý (ORA-00918
+    WHERE emp.empNO = emp_score.empNo;  -- ì—ëŸ¬ : ë™ì¼í•œ ì»¬ëŸ¼ëª…ì´ ë‘ í…Œì´ë¸”ì— ì¡´ìž¬í•˜ë©°, ëª¨í˜¸ì„±ì´ ë°œìƒ (ORA-00918
     
     SELECT e.empNo, name, com, excel, word 
-    FROM emp e, emp_score s     -- Å×ÀÌºí¸í¿¡ º°¸í ºÎ¿©ÇÏ¿© °£´ÜÇÏ°Ô ÀÛ¼ºÇÏ±â 
+    FROM emp e, emp_score s     -- í…Œì´ë¸”ëª…ì— ë³„ëª… ë¶€ì—¬í•˜ì—¬ ê°„ë‹¨í•˜ê²Œ ìž‘ì„±í•˜ê¸° 
     WHERE e.empNO = s.empNo; 
     
     2)
@@ -20,22 +20,22 @@
     FROM emp e 
     JOIN emp_score s ON e.empNo = s.empNo;
 
-**½Ç½À - ÆÇ¸ÅÇöÈ² Å×ÀÌºí ÀÛ¼º
-- °¢°¢ÀÇ ÄÃ·³ÀÌ ¾î´À Å×ÀÌºí¿¡ ÀÖ´ÂÁö È®ÀÎ 
+**ì‹¤ìŠµ - íŒë§¤í˜„í™© í…Œì´ë¸” ìž‘ì„±
+- ê°ê°ì˜ ì»¬ëŸ¼ì´ ì–´ëŠ í…Œì´ë¸”ì— ìžˆëŠ”ì§€ í™•ì¸ 
 book : bCode, bName, bPRICE, pNum
 pub : pNum, pName
 sale : sNum, sDate, cNum
-dsale : sNum, bCode, qty     *sale-dsale °áÇÕÀ» À§ÇØ sNumÀÌ ÇÊ¿ä 
+dsale : sNum, bCode, qty     *sale-dsale ê²°í•©ì„ ìœ„í•´ sNumì´ í•„ìš” 
 cus : cNum, cName 
 
-    1) SELECT <select_list> FROM Å×ÀÌºí1, Å×ÀÌºí2 WHERE Å×ÀÌºí1.ÄÃ·³ = Å×ÀÌºí2.ÄÃ·³; 
-    -- Å×ÀÌºí¿¡ º°¸íÀ» ºÎ¿©ÇÏ¿© °£´ÜÈ÷ ÀÛ¼º 
+    1) SELECT <select_list> FROM í…Œì´ë¸”1, í…Œì´ë¸”2 WHERE í…Œì´ë¸”1.ì»¬ëŸ¼ = í…Œì´ë¸”2.ì»¬ëŸ¼; 
+    -- í…Œì´ë¸”ì— ë³„ëª…ì„ ë¶€ì—¬í•˜ì—¬ ê°„ë‹¨ížˆ ìž‘ì„± 
     SELECT b.bCode, bName, bPrice, b.pNum, pName, sDate, s.cNum, cName, qty, bPrice*qty amt 
     FROM book b, pub p, sale s, dsale d, cus c 
     WHERE b.pNum = p.pNum AND b.bCode = d.bCode AND d.sNum = s.sNum AND s.cNum = c.cNum;
     
-    2) SELECT <select_list> FROM Å×ÀÌºí1 [INNER] JOIN Å×ÀÌºí2 ON Å×ÀÌºí1.ÄÃ·³ = Å×ÀÌºí2.ÄÃ·³
-     -- Ãß°¡ÀûÀÎ Á¶°ÇÀ» ÀÔ·ÂÇÏ±â¿¡ ´õ ¿ëÀÌÇÔ
+    2) SELECT <select_list> FROM í…Œì´ë¸”1 [INNER] JOIN í…Œì´ë¸”2 ON í…Œì´ë¸”1.ì»¬ëŸ¼ = í…Œì´ë¸”2.ì»¬ëŸ¼
+     -- ì¶”ê°€ì ì¸ ì¡°ê±´ì„ ìž…ë ¥í•˜ê¸°ì— ë” ìš©ì´í•¨
     SELECT b.bCode, bName, bPrice, b.pNum, pName, sDate, s.cNum, cName, qty, bPrice*qty amt 
     FROM book b
     JOIN pub p ON b.pNum = p.pNum
@@ -43,7 +43,7 @@ cus : cNum, cName
     JOIN sale s ON d.sNum = s.sNum
     JOIN cus c  ON s.cNum = c.cNum;
     
-    -- ¿ÃÇØ ÆÇ¸Å ÇöÈ² 
+    -- ì˜¬í•´ íŒë§¤ í˜„í™© 
     SELECT b.bCode, bName, bPrice, b.pNum, pName, sDate, s.cNum, cName, qty, bPrice*qty amt 
     FROM book b
     JOIN pub p ON b.pNum = p.pNum
@@ -52,7 +52,7 @@ cus : cNum, cName
     JOIN cus c  ON s.cNum = c.cNum
     WHERE TO_CHAR(SYSDATE,'YYYY') = TO_CHAR(sDate, 'YYYY');
     
-    -- ÀÛ³â ÆÇ¸Å ÇöÈ²
+    -- ìž‘ë…„ íŒë§¤ í˜„í™©
     SELECT b.bCode, bName, bPrice, b.pNum, pName, sDate, s.cNum, cName, qty, bPrice*qty amt 
     FROM book b
     JOIN pub p ON b.pNum = p.pNum
@@ -62,9 +62,9 @@ cus : cNum, cName
     WHERE TO_CHAR(SYSDATE,'YYYY')-1 = TO_CHAR(sDate, 'YYYY');
     -- WHERE TO_CHAR(SYSDATE - (INTERVAL '1' YEAR),'YYYY') = TO_CHAR(sDate, 'YYYY');
     
-    3) SELECT <select_list> FROM Å×ÀÌºí1 [INNER] JOIN Å×ÀÌºí2 USING (ÄÃ·³) 
-    -- ÄÃ·³¸íÀÌ °°Àº °æ¿ì¿¡¸¸ »ç¿ë °¡´É 
-    -- º°¸íÀ» »ç¿ëÇÏÁö ¾ÊÀ½ 
+    3) SELECT <select_list> FROM í…Œì´ë¸”1 [INNER] JOIN í…Œì´ë¸”2 USING (ì»¬ëŸ¼) 
+    -- ì»¬ëŸ¼ëª…ì´ ê°™ì€ ê²½ìš°ì—ë§Œ ì‚¬ìš© ê°€ëŠ¥ 
+    -- ë³„ëª…ì„ ì‚¬ìš©í•˜ì§€ ì•ŠìŒ 
     SELECT bCode, bName, bPrice, pNum, pName, sDate, cNum, cName, qty, bPrice*qty amt 
     FROM book b
     JOIN pub USING (pNum)
@@ -72,40 +72,40 @@ cus : cNum, cName
     JOIN sale USING (sNum)
     JOIN cus USING (cNum);
 
-**¹®Á¦ 1
-- ÆÇ¸ÅµÈ Ã¥ÄÚµå(bCode), Ã¥ÀÌ¸§(bName), ÆÇ¸Å±Ç¼öÀÇÇÕ(qty ÇÕ) / Ã¥ÄÚµå ¿À¸§Â÷¼ø 
+**ë¬¸ì œ 1
+- íŒë§¤ëœ ì±…ì½”ë“œ(bCode), ì±…ì´ë¦„(bName), íŒë§¤ê¶Œìˆ˜ì˜í•©(qty í•©) / ì±…ì½”ë“œ ì˜¤ë¦„ì°¨ìˆœ 
 book : bCode, bName
 dsale : qty , bCode 
 
-    SELECT b.bCode, bName, SUM(qty) ÃÑÆÇ¸Å±Ç¼ö 
+    SELECT b.bCode, bName, SUM(qty) ì´íŒë§¤ê¶Œìˆ˜ 
     FROM book b 
     JOIN dSale d ON b.bCode = d.bCode
     GROUP BY b.bCode, bName
     ORDER BY bCode;
 
-- ÆÇ¸ÅµÈ Ã¥ÄÚµå(bCode), Ã¥ÀÌ¸§(bName), ÆÇ¸Å±Ç¼öÀÇÇÕ(qty ÇÕ), ÆÇ¸Å±Ý¾×ÇÕ(qty*bPrice ÇÕ) / Ã¥ÄÚµå ¿À¸§Â÷¼ø
+- íŒë§¤ëœ ì±…ì½”ë“œ(bCode), ì±…ì´ë¦„(bName), íŒë§¤ê¶Œìˆ˜ì˜í•©(qty í•©), íŒë§¤ê¸ˆì•¡í•©(qty*bPrice í•©) / ì±…ì½”ë“œ ì˜¤ë¦„ì°¨ìˆœ
 book : bCode, bName, bPrice 
 dsale : qty , bCode 
 
-    SELECT DISTINCT b.bCode, bName, SUM(qty) ÃÑÆÇ¸Å±Ç¼ö, SUM(qty*bPrice) ÃÑÆÇ¸Å±Ý¾×
+    SELECT DISTINCT b.bCode, bName, SUM(qty) ì´íŒë§¤ê¶Œìˆ˜, SUM(qty*bPrice) ì´íŒë§¤ê¸ˆì•¡
     FROM book b 
     JOIN dSale d ON b.bCODE = d.bCode
     GROUP BY b.bCode, bName
     ORDER BY bCode;
 
-        --**SUM()OVER()½á¼­ ÇØº»°Í**
-        SELECT DISTINCT b.bCode, bName, SUM(qty)OVER(PARTITION BY b.bCode) ÃÑÆÇ¸Å±Ç¼ö 
+        --**SUM()OVER()ì¨ì„œ í•´ë³¸ê²ƒ**
+        SELECT DISTINCT b.bCode, bName, SUM(qty)OVER(PARTITION BY b.bCode) ì´íŒë§¤ê¶Œìˆ˜ 
         FROM book b 
         JOIN dSale d ON b.bCode = d.bCode
         ORDER BY bCode;
         
-        SELECT DISTINCT b.bCode, bName, SUM(qty)OVER(PARTITION BY b.bCode) ÃÑÆÇ¸Å±Ç¼ö 
-                                      , SUM(qty*bPrice)OVER(PARTITION BY b.bCode) ÃÑÆÇ¸Å±Ý¾×
+        SELECT DISTINCT b.bCode, bName, SUM(qty)OVER(PARTITION BY b.bCode) ì´íŒë§¤ê¶Œìˆ˜ 
+                                      , SUM(qty*bPrice)OVER(PARTITION BY b.bCode) ì´íŒë§¤ê¸ˆì•¡
         FROM book b 
         JOIN dSale d ON b.bCode = d.bCode
         ORDER BY bCode;
 
-- ÆÇ¸ÅµÈ Ã¥ÄÚµå(bCode), Ã¥ÀÌ¸§(bName) : Áßº¹ ¹èÁ¦ 
+- íŒë§¤ëœ ì±…ì½”ë“œ(bCode), ì±…ì´ë¦„(bName) : ì¤‘ë³µ ë°°ì œ 
 book : bCode, bName
 dsale : bCode 
 
@@ -113,19 +113,19 @@ dsale : bCode
     FROM book b 
     JOIN dSale d ON b.bCode = d.bCode;
 
-- ÆÇ¸ÅµÈ Ã¥ Áß ÆÇ¸Å±Ç¼öÇÕÀÌ °¡Àå Å« Ã¥ÄÚµå(bCode), Ã¥ÀÌ¸§(bName)
+- íŒë§¤ëœ ì±… ì¤‘ íŒë§¤ê¶Œìˆ˜í•©ì´ ê°€ìž¥ í° ì±…ì½”ë“œ(bCode), ì±…ì´ë¦„(bName)
 book : bCode, bName
 dsale : bCode , qty 
 
-    -- 1. ¼øÀ§¸¦ ÀÌ¿ëÇÏ¿© ±¸ÇÏ±â 
+    -- 1. ìˆœìœ„ë¥¼ ì´ìš©í•˜ì—¬ êµ¬í•˜ê¸° 
     SELECT bCode, bName FROM ( 
-        SELECT b.bCode, bName, SUM(qty), RANK() OVER(ORDER BY SUM(qty) DESC) ¼øÀ§
+        SELECT b.bCode, bName, SUM(qty), RANK() OVER(ORDER BY SUM(qty) DESC) ìˆœìœ„
         FROM book b 
         JOIN dSale d ON b.bCode = d.bCode
         GROUP BY b.bCode, bName
-    ) WHERE ¼øÀ§ = 1;
+    ) WHERE ìˆœìœ„ = 1;
     
-    -- 2. HAVINGÀýÀ» ÀÌ¿ëÇÏ¿© ±¸ÇÏ±â 
+    -- 2. HAVINGì ˆì„ ì´ìš©í•˜ì—¬ êµ¬í•˜ê¸° 
     SELECT b.bCode, bName 
     FROM book b 
     JOIN dsale d ON b.bCode = d.bCode
@@ -133,63 +133,63 @@ dsale : bCode , qty
     HAVING SUM(qty) = ( 
         SELECT MAX(SUM(qty)) 
         FROM book b1
-        JOIN dsale d1 ON b1.bCode = d1.bCode   -- ÀÌ¹Ì À§¿¡¼­ º°¸íÀ¸·Î b,c¸¦ »ç¿ëÇßÀ¸¹Ç·Î 
+        JOIN dsale d1 ON b1.bCode = d1.bCode   -- ì´ë¯¸ ìœ„ì—ì„œ ë³„ëª…ìœ¼ë¡œ b,cë¥¼ ì‚¬ìš©í–ˆìœ¼ë¯€ë¡œ 
         GROUP BY b1.bCode, bName
         );
 
-**¹®Á¦ 2 
-- ³âµµº° ÆÇ¸Å±Ý¾×ÀÇ ÇÕ : ³âµµ, ÆÇ¸ÅÇÕ(³âµµº° ÆÇ¸ÅÇÕ) / ³âµµ ¿À¸§Â÷¼ø 
+**ë¬¸ì œ 2 
+- ë…„ë„ë³„ íŒë§¤ê¸ˆì•¡ì˜ í•© : ë…„ë„, íŒë§¤í•©(ë…„ë„ë³„ íŒë§¤í•©) / ë…„ë„ ì˜¤ë¦„ì°¨ìˆœ 
 sale : sDate   sNum 
 dsale : qty    bCode  sNum
 book : bPrice  bCode
 
-    SELECT TO_CHAR(sDate, 'YYYY') ³âµµ , SUM(qty*bPrice) ÆÇ¸ÅÇÕ
+    SELECT TO_CHAR(sDate, 'YYYY') ë…„ë„ , SUM(qty*bPrice) íŒë§¤í•©
     FROM dsale d
     JOIN book b ON d.bCode = b.bCode 
     JOIN sale s ON d.sNum = s.sNum 
     GROUP BY TO_CHAR(sDate, 'YYYY')
-    ORDER BY ³âµµ;
+    ORDER BY ë…„ë„;
 
-- °í°´¹øÈ£(cNum), °í°´¸í(cName), ³âµµ, ÆÇ¸Å±Ý¾×ÇÕ / °í°´¹øÈ£ ¿À¸§Â÷¼ø, ³âµµ ¿À¸§Â÷¼ø 
+- ê³ ê°ë²ˆí˜¸(cNum), ê³ ê°ëª…(cName), ë…„ë„, íŒë§¤ê¸ˆì•¡í•© / ê³ ê°ë²ˆí˜¸ ì˜¤ë¦„ì°¨ìˆœ, ë…„ë„ ì˜¤ë¦„ì°¨ìˆœ 
 cus : cNum, cName   cNum
 sale : sDate    sNum   cNum
 dsale : qty     bCode  sNum
 book : bPrice   bCode
 
-    SELECT c.cNum °í°´¹øÈ£, cName °í°´¸í, TO_CHAR(sDate,'YYYY') ³âµµ, SUM(qty*bPrice) ÆÇ¸Å±Ý¾×ÇÕ 
+    SELECT c.cNum ê³ ê°ë²ˆí˜¸, cName ê³ ê°ëª…, TO_CHAR(sDate,'YYYY') ë…„ë„, SUM(qty*bPrice) íŒë§¤ê¸ˆì•¡í•© 
     FROM cus c
     JOIN sale s ON c.cNum = s.cNum
     JOIN dsale d ON s.sNum = d.sNum
     JOIN book b ON d.bCode = b.bCode
     GROUP BY c.cNum, cName, TO_CHAR(sDate,'YYYY')
-    ORDER BY °í°´¹øÈ£, ³âµµ;
+    ORDER BY ê³ ê°ë²ˆí˜¸, ë…„ë„;
 
-- °í°´¹øÈ£(cNum), °í°´¸í(cName) / ÀÛ³â ´©Àû ÆÇ¸Å±Ý¾×ÀÌ °¡Àå ¸¹Àº °í°´ Ãâ·Â
+- ê³ ê°ë²ˆí˜¸(cNum), ê³ ê°ëª…(cName) / ìž‘ë…„ ëˆ„ì  íŒë§¤ê¸ˆì•¡ì´ ê°€ìž¥ ë§Žì€ ê³ ê° ì¶œë ¥
 cus : cNum, cName cNum
 sale : sDate    sNum cNum
 dsale : qty     bCode sNum
 book : bPrice   bCode
 
-    SELECT °í°´¹øÈ£, °í°´¸í FROM (
-        SELECT c.cNum °í°´¹øÈ£, cName °í°´¸í, SUM(qty*bPrice) ÀÛ³â±Ý¾×, RANK() OVER(ORDER BY SUM(qty*bPrice) DESC) ¼øÀ§
+    SELECT ê³ ê°ë²ˆí˜¸, ê³ ê°ëª… FROM (
+        SELECT c.cNum ê³ ê°ë²ˆí˜¸, cName ê³ ê°ëª…, SUM(qty*bPrice) ìž‘ë…„ê¸ˆì•¡, RANK() OVER(ORDER BY SUM(qty*bPrice) DESC) ìˆœìœ„
         FROM cus c 
         JOIN sale s ON c.cNum = s.cNum
         JOIN dsale d ON s.sNum = d.sNum 
         JOIN book b ON d.bCode = b.bCode
         WHERE TO_CHAR(sDate,'YYYY') = TO_CHAR(SYSDATE,'YYYY')-1
         GROUP BY c.cNum, cName
-     ) WHERE ¼øÀ§ = 1;            
+     ) WHERE ìˆœìœ„ = 1;            
  
 
-- °í°´¹øÈ£(cNum), °í°´¸í(cName), È¸¿ø¾ÆÀÌµð(userID) / È¸¿ø Áß ¿ÃÇØ ´©Àû ÆÇ¸Å±Ý¾×ÀÌ °¡Àå ¸¹Àº °í°´ Ãâ·Â
+- ê³ ê°ë²ˆí˜¸(cNum), ê³ ê°ëª…(cName), íšŒì›ì•„ì´ë””(userID) / íšŒì› ì¤‘ ì˜¬í•´ ëˆ„ì  íŒë§¤ê¸ˆì•¡ì´ ê°€ìž¥ ë§Žì€ ê³ ê° ì¶œë ¥
 cus : cNum, cName 
 member : userId  cNum 
 sale : sDate  sNum cNum
 dsale : qty   sNum bCode
 book : bPrice  bCode
 
-    SELECT °í°´¹øÈ£, °í°´¸í, È¸¿ø¾ÆÀÌµð FROM (
-        SELECT c.cNum °í°´¹øÈ£, cName °í°´¸í, userId È¸¿ø¾ÆÀÌµð, SUM(qty*bPrice), RANK() OVER(ORDER BY SUM(qty*bPrice) DESC) ¼øÀ§
+    SELECT ê³ ê°ë²ˆí˜¸, ê³ ê°ëª…, íšŒì›ì•„ì´ë”” FROM (
+        SELECT c.cNum ê³ ê°ë²ˆí˜¸, cName ê³ ê°ëª…, userId íšŒì›ì•„ì´ë””, SUM(qty*bPrice), RANK() OVER(ORDER BY SUM(qty*bPrice) DESC) ìˆœìœ„
         FROM cus c 
         JOIN member m ON c.cNum = m.cNum
         JOIN sale s ON c.cNum = s.cNum
@@ -197,13 +197,13 @@ book : bPrice  bCode
         JOIN book b ON d.bCode = b.bCode 
         WHERE TO_CHAR(sDATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
         GROUP BY c.cNum, cName, userId
-    ) WHERE ¼øÀ§ = 1; 
+    ) WHERE ìˆœìœ„ = 1; 
 
-- Ã¥ÄÚµå(bCode), Ã¥ÀÌ¸§(bName), ÆÇ¸Å±Ç¼öÇÕ / ÆÇ¸Å±Ç¼ö ÇÕÀÌ 80±Ç ÀÌ»óÀÎ Ã¥¸¸ Ãâ·Â 
+- ì±…ì½”ë“œ(bCode), ì±…ì´ë¦„(bName), íŒë§¤ê¶Œìˆ˜í•© / íŒë§¤ê¶Œìˆ˜ í•©ì´ 80ê¶Œ ì´ìƒì¸ ì±…ë§Œ ì¶œë ¥ 
 book : bCode, bName 
 dsale : qty , bCode 
  
-    SELECT b.bCode Ã¥ÄÚµå, bName Ã¥ÀÌ¸§, SUM(qty) ÆÇ¸Å±Ç¼ö
+    SELECT b.bCode ì±…ì½”ë“œ, bName ì±…ì´ë¦„, SUM(qty) íŒë§¤ê¶Œìˆ˜
     FROM book b
     JOIN dsale d ON b.bCode = d.bCode
     GROUP BY b.bCode, bName 
@@ -211,9 +211,9 @@ dsale : qty , bCode
     
 ---------------------------------------------------------------------------------------
 [NATURAL JOIN]
--- º°Äª »ç¿ë ºÒ°¡, ÄÃ·³ ÀÌ¸§ÀÌ ´Ù¸£¸é »ç¿ë ºÒ°¡, ¼Óµµ°¡ ¸Å¿ì ¶³¾îÁü 
+-- ë³„ì¹­ ì‚¬ìš© ë¶ˆê°€, ì»¬ëŸ¼ ì´ë¦„ì´ ë‹¤ë¥´ë©´ ì‚¬ìš© ë¶ˆê°€, ì†ë„ê°€ ë§¤ìš° ë–¨ì–´ì§ 
 
- SELECT ÄÃ·³¸í, ÄÃ·³¸í ... FROM Å×ÀÌºí1 NATURAL JOIN Å×ÀÌºí2 
+ SELECT ì»¬ëŸ¼ëª…, ì»¬ëŸ¼ëª… ... FROM í…Œì´ë¸”1 NATURAL JOIN í…Œì´ë¸”2 
 
      SELECT bCode, bName, bPrice, pNum, pName, sDate, cNum, cName, qty, bPrice*qty amt 
      FROM book b
@@ -223,36 +223,36 @@ dsale : qty , bCode
      NATURAL JOIN cus;
  
 [CROSS JOIN]
--- Å×ÀÌºí°£ÀÇ Ä«µð¼Ç °ö ¹ÝÈ¯. ÇÐ¼úÀû ¿ëµµ  
+-- í…Œì´ë¸”ê°„ì˜ ì¹´ë””ì…˜ ê³± ë°˜í™˜. í•™ìˆ ì  ìš©ë„  
 
     SELECT p.pNum, pName, bCode, bName 
     FROM pub p 
     CROSS JOIN book b;
 
 [SELF JOIN]
--- ÀÚ±â°¡ ÀÚ±â ÀÚ½ÅÀ» JOIN
--- ´ëºÐ·ù/ÁßºÐ·ù/..
+-- ìžê¸°ê°€ ìžê¸° ìžì‹ ì„ JOIN
+-- ëŒ€ë¶„ë¥˜/ì¤‘ë¶„ë¥˜/..
 
     SELECT b1.bcCode, b1.bcSubject, b1.pcCode, 
            b2.bcCode, b2.bcSubject, b2.pcCode
     FROM bclass b1
-    JOIN bclass b2 ON b1.bcCode = b2.pcCode;       -- pcCode > nullÀÌ¸é ÃÖ»óÀ§ ±×·ì 
+    JOIN bclass b2 ON b1.bcCode = b2.pcCode;       -- pcCode > nullì´ë©´ ìµœìƒìœ„ ê·¸ë£¹ 
     
 [NON-EQUI JOIN] 
--- JOIN½Ã '=' ÀÌ¿ÜÀÇ ¿¬»êÀÚ »ç¿ë   
+-- JOINì‹œ '=' ì´ì™¸ì˜ ì—°ì‚°ìž ì‚¬ìš©   
 
 SELECT a1.bCode, a1.aName, a2.aName 
 FROM author a1
 JOIN author a2 ON a1.bCode = a2.bCode
 ORDER BY a1.bCode;
     
-    -- ÀúÀÚ°¡ 2¸í ÀÌ»óÀÎ °Í¸¸ Ãâ·Â 
+    -- ì €ìžê°€ 2ëª… ì´ìƒì¸ ê²ƒë§Œ ì¶œë ¥ 
     SELECT a1.bCode, a1.aName, a2.aName 
     FROM author a1
     JOIN author a2 ON a1.bCode = a2.bCode AND a1.aName > a2.aName  
     ORDER BY a1.bCode;
     
-    -- ÀúÀÚ°¡ 2¸í ÀÌ»óÀÎ Ã¥ÄÚµå¿Í Ã¥ÀÌ¸§ Ãâ·Â
+    -- ì €ìžê°€ 2ëª… ì´ìƒì¸ ì±…ì½”ë“œì™€ ì±…ì´ë¦„ ì¶œë ¥
     SELECT bCode, bName 
     FROM book
     WHERE bCode IN (    
@@ -274,7 +274,7 @@ ORDER BY a1.bCode;
 ----------------------------------------------------------------------------------------
 ----------- OUTER JOIN 
 [LEFT OUTER JOIN]
--- ÁÂº¯ÀÇ Å×ÀÌºíÀÇ °á°ú¸¦ ¸ðµÎ °¡Á®¿À°í ¿ìº¯Àº Á¶°ÇÀ» ¸¸Á·ÇÏ´Â µ¥ÀÌÅÍ¸¸ °¡Á®¿Â´Ù.
+-- ì¢Œë³€ì˜ í…Œì´ë¸”ì˜ ê²°ê³¼ë¥¼ ëª¨ë‘ ê°€ì ¸ì˜¤ê³  ìš°ë³€ì€ ì¡°ê±´ì„ ë§Œì¡±í•˜ëŠ” ë°ì´í„°ë§Œ ê°€ì ¸ì˜¨ë‹¤.
 
 book : bCode, bName / dsale : bCode, sNum, qty 
 -- EQUI JOIN 
@@ -283,44 +283,44 @@ book : bCode, bName / dsale : bCode, sNum, qty
     WHERE b.bCode = d.bCode;
 
 -- LEFT OUTER JOIN
-    1) ¹¬½ÃÀû
+    1) ë¬µì‹œì 
     SELECT b.bCode, bName, sNum, qty 
     FROM book b, dsale d 
-    WHERE b.bCode = d.bCode(+);  -- ÆÇ¸ÅµÇÁö ¾ÊÀº Ã¥µµ Ãâ·Â 
+    WHERE b.bCode = d.bCode(+);  -- íŒë§¤ë˜ì§€ ì•Šì€ ì±…ë„ ì¶œë ¥ 
     
-    2) ¸í½ÃÀû 
+    2) ëª…ì‹œì  
     SELECT b.bCode, bName, sNum, qty 
     FROM book b
     LEFT OUTER JOIN dsale d ON b.bCode = d.bCode;
 
 
-**¹®Á¦ 
-- bCode, bName, sNum, sDate, qty Ãâ·Â (´Ü, bCode¿Í bNameÀº ÇÑ±Çµµ ÆÇ¸Å°¡ µÇÁö ¾ÊÀº Ã¥µµ Ãâ·Â) 
+**ë¬¸ì œ 
+- bCode, bName, sNum, sDate, qty ì¶œë ¥ (ë‹¨, bCodeì™€ bNameì€ í•œê¶Œë„ íŒë§¤ê°€ ë˜ì§€ ì•Šì€ ì±…ë„ ì¶œë ¥) 
 
     SELECT b.bCode, bName, d.sNum, sDate, qty 
     FROM book b 
     LEFT OUTER JOIN dsale d ON b.bCode = d.bCode
     LEFT OUTER JOIN sale s ON d.sNum = s.sNum;
 
-- ÆÇ¸Å µÈ / ÆÇ¸Å ¾È µÈ Ã¥ÄÚµå, Ã¥ÀÌ¸§¸¸ Ãâ·Â     
+- íŒë§¤ ëœ / íŒë§¤ ì•ˆ ëœ ì±…ì½”ë“œ, ì±…ì´ë¦„ë§Œ ì¶œë ¥     
  
-     1) IN »ç¿ë 
+     1) IN ì‚¬ìš© 
      SELECT b.bCode, bName
      FROM book b 
      WHERE bCode IN (SELECT DISTINCT bCode FROM dSale);
      
-     2) JOIN »ç¿ë 
+     2) JOIN ì‚¬ìš© 
      SELECT b.bCode, bName
      FROM book b 
      LEFT OUTER JOIN dSale d ON b.bCode = d.bCode
-     WHERE d.bCode IS NOT NULL;                     -- ÆÇ¸Å µÈ ¸®½ºÆ® 
+     WHERE d.bCode IS NOT NULL;                     -- íŒë§¤ ëœ ë¦¬ìŠ¤íŠ¸ 
      
      SELECT b.bCode, bName
      FROM book b 
      LEFT OUTER JOIN dSale d ON b.bCode = d.bCode
-     WHERE d.bCode IS NOT NULL;                     -- ÆÇ¸Å µÇÁö ¾ÊÀº ¸®½ºÆ®
+     WHERE d.bCode IS NOT NULL;                     -- íŒë§¤ ë˜ì§€ ì•Šì€ ë¦¬ìŠ¤íŠ¸
      
-- ¿Ã ÇØ ÆÇ¸ÅµÈ Ã¥ÄÚµå, Ã¥ÀÌ¸§    
+- ì˜¬ í•´ íŒë§¤ëœ ì±…ì½”ë“œ, ì±…ì´ë¦„    
 
     SELECT bCode, bName
 	FROM book
@@ -331,7 +331,7 @@ book : bCode, bName / dsale : bCode, sNum, qty
 		);
 
 [RIGHT OUTER JOIN] 
--- ¿ìº¯ÀÇ Å×ÀÌºíÀÇ °á°ú¸¦ ¸ðµÎ °¡Á®¿À°í ÁÂº¯Àº Á¶°ÇÀ» ¸¸Á·ÇÏ´Â µ¥ÀÌÅÍ¸¸ °¡Á®¿Â´Ù.
+-- ìš°ë³€ì˜ í…Œì´ë¸”ì˜ ê²°ê³¼ë¥¼ ëª¨ë‘ ê°€ì ¸ì˜¤ê³  ì¢Œë³€ì€ ì¡°ê±´ì„ ë§Œì¡±í•˜ëŠ” ë°ì´í„°ë§Œ ê°€ì ¸ì˜¨ë‹¤.
 book : bCode, bName / dsale : bCode, sNum, qty 
 -- EQUI JOIN 
     SELECT b.bCode, bName, sNum, qty 
@@ -339,18 +339,18 @@ book : bCode, bName / dsale : bCode, sNum, qty
     WHERE b.bCode = d.bCode;
 
 -- RIGHT OUTER JOIN
-    1) ¹¬½ÃÀû
+    1) ë¬µì‹œì 
     SELECT b.bCode, bName, sNum, qty 
     FROM dsale d, book b 
-    WHERE d.bCode(+) = b.bCode;  -- ÆÇ¸ÅµÇÁö ¾ÊÀº Ã¥µµ Ãâ·Â 
+    WHERE d.bCode(+) = b.bCode;  -- íŒë§¤ë˜ì§€ ì•Šì€ ì±…ë„ ì¶œë ¥ 
     
-    2) ¸í½ÃÀû 
+    2) ëª…ì‹œì  
     SELECT b.bCode, bName, sNum, qty 
     FROM dsale d 
     RIGHT OUTER JOIN book b ON d.bCode = b.bCode;
 
 [FULL OUTER JOIN] 
--- ÁÂº¯°ú ¿ìº¯ÀÇ °á°ú¸¦ ¸ðµÎ °¡Á®¿Â´Ù. (ÇÕÁýÇÕ) 
+-- ì¢Œë³€ê³¼ ìš°ë³€ì˜ ê²°ê³¼ë¥¼ ëª¨ë‘ ê°€ì ¸ì˜¨ë‹¤. (í•©ì§‘í•©) 
 
     SELECT sNum, sDate, s.cNum, m.cNum, userId 
     FROM sale s
@@ -369,7 +369,7 @@ book : bCode, bName / dsale : bCode, sNum, qty
     SELECT sNum, sDate, s.cNum, m.cNum, cName, userId 
     FROM sale s  -- sDate, sNum
     FULL OUTER JOIN member m ON s.cNum = m.cNum   -- userId, cNum     // sDate sNum + cNum userId 
-    FULL OUTER JOIN cus c ON c.cNum = s.cNum; -- cNum, cName    // sDate sNum cNum userId + cNum cName (cName null Ãâ·Â) 
+    FULL OUTER JOIN cus c ON c.cNum = s.cNum; -- cNum, cName    // sDate sNum cNum userId + cNum cName (cName null ì¶œë ¥) 
     
     SELECT sNum, sDate, s.cNum, m.cNum, cName, userId
 	FROM cus c    -- cNum, cName 
@@ -377,8 +377,8 @@ book : bCode, bName / dsale : bCode, sNum, qty
 	FULL OUTER JOIN sale s ON c.cNum = s.cNum; -- sDate, sNum   // cNum cName userId cNum  + sDate sNum 
 
 
-**¹®Á¦ 
-- ºñÈ¸¿ø ÆÇ¸Å ÇöÈ² : cNum, cName, bCode, bName, sDate, bPrice, qty 
+**ë¬¸ì œ 
+- ë¹„íšŒì› íŒë§¤ í˜„í™© : cNum, cName, bCode, bName, sDate, bPrice, qty 
 cus (cNum, cName) 
 member (cNum) 
 book (bCode, bName, bPrice) 
@@ -394,7 +394,7 @@ sale (sDate, sNum)
     WHERE userId IS NULL
     ORDER BY cNum;     
     
-    ------ RIGHT ·Î ÇØº¸±â *** ¸øÇÑ°Í 
+    ------ RIGHT ë¡œ í•´ë³´ê¸° *** ëª»í•œê²ƒ 
       SELECT s.cNum, cName, b.bCode, bName, sDate, bPrice, qty
       FROM  book b
       JOIN  dsale d  ON  b.bCode = d.bCode
@@ -404,13 +404,13 @@ sale (sDate, sNum)
       WHERE userId IS NULL
       ORDER BY cNum;
 
-- °í°´º° ´©Àû ÆÇ¸Å ±Ý¾× : cNum, cName, bPrice*qty ÇÕ (´Ü, °í°´Áß Ã¥À» ÇÑ±Çµµ ±¸¸ÅÇÏÁö ¾ÊÀº °í°´µµ Ãâ·Â) 
+- ê³ ê°ë³„ ëˆ„ì  íŒë§¤ ê¸ˆì•¡ : cNum, cName, bPrice*qty í•© (ë‹¨, ê³ ê°ì¤‘ ì±…ì„ í•œê¶Œë„ êµ¬ë§¤í•˜ì§€ ì•Šì€ ê³ ê°ë„ ì¶œë ¥) 
 cus(cNum, cName) 
 sale(cNum, sNum)
 dsale(qty, bCode, sNum) 
 book(bPrice, bCode)
 
-    SELECT c.cNum, cName, NVL(SUM(bPrice*qty),0) ÇÕ 
+    SELECT c.cNum, cName, NVL(SUM(bPrice*qty),0) í•© 
     FROM cus c
     LEFT OUTER JOIN sale s ON c.cNum = s.cNum
     LEFT OUTER JOIN dsale d ON s.sNum = d.sNum
@@ -418,15 +418,15 @@ book(bPrice, bCode)
     GROUP BY c.cNum, cName
     ORDER BY c.cNum, cName;
 
-- °í°´º° ´©Àû ÆÇ¸Å ±Ý¾× ¹× ºñÀ² : cNum, cName, bPrice*qty ÇÕ, ÀüÃ¼ ÆÇ¸Å ±Ý¾×¿¡ ´ëÇÑ ºñÀ²
+- ê³ ê°ë³„ ëˆ„ì  íŒë§¤ ê¸ˆì•¡ ë° ë¹„ìœ¨ : cNum, cName, bPrice*qty í•©, ì „ì²´ íŒë§¤ ê¸ˆì•¡ì— ëŒ€í•œ ë¹„ìœ¨
 cus(cNum, cName) 
 sale(cNum, sNum)
 dsale(qty, bCode, sNum) 
 book(bPrice, bCode)
 
     SELECT DISTINCT c.cNum, cName, 
-                    SUM(bPrice*qty) OVER(PARTITION BY c.cNum, cName) ÇÕ, 
-                    ROUND((SUM(bPrice*qty) OVER(PARTITION BY c.cNum, cName) / SUM(bPrice*qty) OVER())*100,1) || '%' ºñÀ²
+                    SUM(bPrice*qty) OVER(PARTITION BY c.cNum, cName) í•©, 
+                    ROUND((SUM(bPrice*qty) OVER(PARTITION BY c.cNum, cName) / SUM(bPrice*qty) OVER())*100,1) || '%' ë¹„ìœ¨
                     --ROUND(RATIO_TO_REPORT(SUM(bPrice*qty)) OVER() * 100, 1) 
     FROM cus c
     JOIN sale s ON c.cNum = s.cNum
@@ -434,50 +434,50 @@ book(bPrice, bCode)
     JOIN book b ON d.bCode = b.bCode
     ORDER BY c.cNum;
 
-- ³âµµº° °í°´ ´©Àû ÆÇ¸Å±Ý¾×ÀÌ °¡Àå ¸¹Àº µ¥ÀÌÅÍ : ÆÇ¸Å³âµµ, cNum, cName, bPrice*qty ÇÕ / ³âµµº° ¿À¸§Â÷¼ø 
+- ë…„ë„ë³„ ê³ ê° ëˆ„ì  íŒë§¤ê¸ˆì•¡ì´ ê°€ìž¥ ë§Žì€ ë°ì´í„° : íŒë§¤ë…„ë„, cNum, cName, bPrice*qty í•© / ë…„ë„ë³„ ì˜¤ë¦„ì°¨ìˆœ 
 cus(cNum, cName) 
 sale(sDate, cNum, sNum)
 dsale(qty, bCode, sNum) 
 book(bPrice, bCode)
 
-    SELECT ÆÇ¸Å³âµµ, cNum, cName, ÇÕ FROM ( 
-        SELECT TO_CHAR(sDate,'YYYY') ÆÇ¸Å³âµµ, c.cNum, cName, SUM(bPrice*qty) ÇÕ, 
-               RANK() OVER(PARTITION BY TO_CHAR(sDate,'YYYY') ORDER BY SUM(bPrice*qty)) ¼øÀ§
+    SELECT íŒë§¤ë…„ë„, cNum, cName, í•© FROM ( 
+        SELECT TO_CHAR(sDate,'YYYY') íŒë§¤ë…„ë„, c.cNum, cName, SUM(bPrice*qty) í•©, 
+               RANK() OVER(PARTITION BY TO_CHAR(sDate,'YYYY') ORDER BY SUM(bPrice*qty)) ìˆœìœ„
         FROM cus c 
         JOIN sale s ON c.cNum = s.cNum
         JOIN dsale d ON s.sNum = d.sNum
         JOIN book b ON d.bCode = b.bCode 
         GROUP BY TO_CHAR(sDate,'YYYY'), c.cNum, cName  
-    ) WHERE ¼øÀ§ = 1;
+    ) WHERE ìˆœìœ„ = 1;
 
-**¹®Á¦ 
-- ³âµµÀÇ ¿ùº° ¼­ÀûÀÇ ÆÇ¸Å ¼ö·®ÀÇ ÇÕ ±¸ÇÏ±â / ³âµµ ¿À¸§Â÷¼ø, Ã¥ÄÚµå ¿À¸§Â÷¼ø 
-  ³âµµ Ã¥ÄÚµå Ã¥ÀÌ¸§  1¿ù 2¿ù 3¿ù ... 12¿ù 
+**ë¬¸ì œ 
+- ë…„ë„ì˜ ì›”ë³„ ì„œì ì˜ íŒë§¤ ìˆ˜ëŸ‰ì˜ í•© êµ¬í•˜ê¸° / ë…„ë„ ì˜¤ë¦„ì°¨ìˆœ, ì±…ì½”ë“œ ì˜¤ë¦„ì°¨ìˆœ 
+  ë…„ë„ ì±…ì½”ë“œ ì±…ì´ë¦„  1ì›” 2ì›” 3ì›” ... 12ì›” 
   
   book (bCode, bName) 
   sale (sDate, sNum) 
   dsale (qty, bCode, sNum) 
   
-             SELECT TO_CHAR(sDate,'YYYY') ³âµµ, b.bCode Ã¥ÄÚµå, bName Ã¥ÀÌ¸§, 
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),1,qty)),0) "1¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),2,qty,0)),0) "2¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),3,qty,0)),0) "3¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),4,qty,0)),0) "4¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),5,qty,0)),0) "5¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),6,qty,0)),0) "6¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),7,qty,0)),0) "7¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),8,qty,0)),0) "8¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),9,qty,0)),0) "9¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),10,qty,0)),0) "10¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),11,qty,0)),0) "11¿ù",
-                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),12,qty,0)),0) "12¿ù"                            
+             SELECT TO_CHAR(sDate,'YYYY') ë…„ë„, b.bCode ì±…ì½”ë“œ, bName ì±…ì´ë¦„, 
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),1,qty)),0) "1ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),2,qty,0)),0) "2ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),3,qty,0)),0) "3ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),4,qty,0)),0) "4ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),5,qty,0)),0) "5ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),6,qty,0)),0) "6ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),7,qty,0)),0) "7ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),8,qty,0)),0) "8ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),9,qty,0)),0) "9ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),10,qty,0)),0) "10ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),11,qty,0)),0) "11ì›”",
+                                NVL(SUM(DECODE(TO_CHAR(sDate,'MM'),12,qty,0)),0) "12ì›”"                            
                  FROM book b
                  JOIN dsale d ON b.bCode = d.bCode 
                  JOIN sale s ON d.snum = s.snum            
                  GROUP BY TO_CHAR(sDate,'YYYY'),b.bCode, bName
                  ORDER BY TO_CHAR(sDate,'YYYY');
  
-** PDF ¹®Á¦ 
+** PDF ë¬¸ì œ 
 
 CREATE TABLE injeok ( 
     hakbeon VARCHAR2(15) 
@@ -507,11 +507,11 @@ CREATE TABLE score (
   
 1)   
 SELECT hak, ban, 
-       DECODE(gubun,1,'1ÇÐ±âÁß°£',2,'1ÇÐ±â±â¸»',3,'2ÇÐ±âÁß°£','2ÇÐ±â±â¸»') ±¸ºÐ,
+       DECODE(gubun,1,'1í•™ê¸°ì¤‘ê°„',2,'1í•™ê¸°ê¸°ë§',3,'2í•™ê¸°ì¤‘ê°„','2í•™ê¸°ê¸°ë§') êµ¬ë¶„,
        name, com, excel, word,
        com+excel+word tot, ROUND((com+excel+word)/3,1) ave,
-       RANK() OVER(PARTITION BY gubun,HAK,BAN ORDER BY ROUND((com+excel+word)/3,1) DESC) ÇÐ±Þ¼®Â÷,
-       RANK() OVER(PARTITION BY gubun,HAK ORDER BY ROUND((com+excel+word)/3,1) DESC) ÇÐ³â¼®Â÷
+       RANK() OVER(PARTITION BY gubun,HAK,BAN ORDER BY ROUND((com+excel+word)/3,1) DESC) í•™ê¸‰ì„ì°¨,
+       RANK() OVER(PARTITION BY gubun,HAK ORDER BY ROUND((com+excel+word)/3,1) DESC) í•™ë…„ì„ì°¨
 FROM score s
 JOIN injeok i ON s.hakbeon = i.hakbeon
 ORDER BY gubun, hak, ban;
@@ -519,13 +519,13 @@ ORDER BY gubun, hak, ban;
 
 2) 
 SELECT hak, ban, 
-       DECODE(gubun,1,'1ÇÐ±âÁß°£',2,'1ÇÐ±â±â¸»',3,'2ÇÐ±âÁß°£','2ÇÐ±â±â¸»') ±¸ºÐ,
+       DECODE(gubun,1,'1í•™ê¸°ì¤‘ê°„',2,'1í•™ê¸°ê¸°ë§',3,'2í•™ê¸°ì¤‘ê°„','2í•™ê¸°ê¸°ë§') êµ¬ë¶„,
        name, com+excel+word tot, ROUND((com+excel+word)/3,1) ave,
        CASE 
-        WHEN com >= 40 AND excel >=40 AND word >=40 AND ROUND((com+excel+word)/3,1)>=60 THEN 'ÇÕ°Ý' 
-        WHEN ROUND((com+excel+word)/3,1) < 60 THEN 'ºÒÇÕ°Ý'
-        ELSE '°ú¶ô'
-       END ÆÇÁ¤ 
+        WHEN com >= 40 AND excel >=40 AND word >=40 AND ROUND((com+excel+word)/3,1)>=60 THEN 'í•©ê²©' 
+        WHEN ROUND((com+excel+word)/3,1) < 60 THEN 'ë¶ˆí•©ê²©'
+        ELSE 'ê³¼ë½'
+       END íŒì • 
 FROM score s
 JOIN injeok i ON s.hakbeon = i.hakbeon;
    
