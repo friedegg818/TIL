@@ -37,7 +37,8 @@
  + [**VIEW / SEQUENCE / SYNONYM**](https://github.com/friedegg818/TIL/blob/master/Oracle/15.%20%EB%B7%B0,%20%EC%8B%9C%ED%80%80%EC%8A%A4,%20%EC%8B%9C%EB%85%B8%EB%8B%98.md)
  + 고급쿼리 
  > - 계층형 쿼리 
- > - PIVOT 
+ > - PIVOT / UNPIVOT
+ > - 정규식
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
