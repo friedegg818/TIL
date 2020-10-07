@@ -34,7 +34,7 @@
  > - INNER JOIN / OUTER JOIN 
  > - [JOIN 실습 예제](https://github.com/friedegg818/TIL/blob/master/Oracle/13-1.%20%EC%A1%B0%EC%9D%B8%20%EC%8B%A4%EC%8A%B5.sql)
  + [**Subquery**](https://github.com/friedegg818/TIL/blob/master/Oracle/14.%20%EC%84%9C%EB%B8%8C%EC%BF%BC%EB%A6%AC.sql)
- + [**VIEW / SEQUENCE / SYNONYM**](https://github.com/friedegg818/TIL/blob/master/Oracle/15.%20%EB%B7%B0%2C%20%EC%8B%9C%ED%80%80%EC%8A%A4%2C%20%EC%8B%9C%EB%85%B8%EB%8B%98.sql)
+ + [**VIEW / SEQUENCE / SYNONYM**](https://github.com/friedegg818/TIL/blob/master/Oracle/15.%20%EB%B7%B0,%20%EC%8B%9C%ED%80%80%EC%8A%A4,%20%EC%8B%9C%EB%85%B8%EB%8B%98.md)
  + 고급쿼리 
  > - 계층형 쿼리 
  > - PIVOT 
