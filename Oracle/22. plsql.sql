@@ -1,0 +1,240 @@
+[PL/SQL]
+ - 프로그래밍언어의 특성을 가지는 SQL의 확장 
+ - 데이터 조작과 질의 문장은 PL/SQL의 절차적 코드 안에 포함 된다.
+ - 주로 자료 내부에서 SQL 명령문만으로 처리하기에 복잡한 자료의 저장이나 프로시저, 트리거 등을 작성하는데 사용됨 
+ 
+ 1) PL/SQL 프로그래밍 단위 
+   - PL/SQL 익명 블록, 함수, 프로시저, 패키지, 트리거 
+ 
+ 2) DBMS_OUTPUT 패키지 
+   - SQL Plus 또는 SQL*DBA 에서 출력 
+   - DBMS_OUTPUT.PUT_LINE : 문자 시퀀스를 포함하는 단일 라인을 저장 
+   - DBMS_OUTPUT.PUT : 문자열을 배치, NEW_LINE 프로시저가 있어야 출력이 가능하다.
+   - DBMS_OUTPUT.NEW_LINE : 문자 시퀀스를 추가 
+   - DBMS_OUTPUT.GET_LINE : 텍스트의 라인을 가져온다. 존재하면 1, 그렇지 않으면 0 
+   
+ 3) PL/SQL 자료형 
+   - 주요 자료형 (VARCHAR2, CHAR, LONG, LOB / NUMBER, PLS_INTEGER, BINARY_DOUBLE / DATE / BOOLEAN )
+   - RECORD 유형 : 다양한 유형의 데이터 값을 저장 할 수 있는 복합 변수
+     > 테이블 행의 데이터 또는 특정 컬럼을 저장하는데 유용 
+   
+ 4) 블록 구조 
+    - 한 문장이 종료 할 때마다 ; 사용 
+    - END 뒤에 ; 사용하여 블록 종료 
+    - 행에 / 가 있으면 종결됨 
+   ---------------------------------------------------------
+    DECLARE            [선언부| 선택적, 변수 선언]
+    BEGIN              [실행부| 필수적, 실행 구문]
+      [EXCEPTION]      [예외처리부| 선택적] 
+    END;
+    / 
+   ---------------------------------------------------------
+
+   - sqlplus : DBMS_OUTPUT 결과 확인
+	 SET SERVEROUTPUT ON
+	 
+   - %TYPE : 테이블의 기존 컬럼의 데이터 형식 참조
+   
+	 DECLARE
+	    vname  emp.name%TYPE;
+		vpay   NUMBER;
+	 BEGIN
+        SELECT name, sal+bonus INTO vname, vpay     -- PL/SQL의 SELECT 문에는 INTO 절이 필요 
+                                                    -- INTO 절 + 조회한 데이터를 저장할 변수 (1:1 일치해야 함)
+        FROM emp  WHERE  empNo = '1001';
+		
+		DBMS_OUTPUT.PUT_LINE('이름 : ' || vname);
+		DBMS_OUTPUT.PUT_LINE('급여 : ' || vpay);
+	 END;
+     /	 
+
+    - %ROWTYPE : 테이블의 행을 참조하는 레코드 선언
+	 DECLARE
+	    vrec  emp%ROWTYPE;
+	 BEGIN
+        -- SELECT name, sal INTO vrec.name, vrec.sal
+          -- FROM emp  WHERE  empNo = '1001';	
+		SELECT * INTO vrec FROM  emp  WHERE  empNo = '1001';
+		
+		DBMS_OUTPUT.PUT_LINE('이름 : ' || vrec.name);
+		DBMS_OUTPUT.PUT_LINE('급여 : ' || vrec.sal);
+	 END;
+     /
+	 
+	 -- 사용자 정의 레코드
+	 DECLARE
+	    TYPE  mytype IS RECORD
+		(
+		    name  emp.name%TYPE
+			,sal  emp.sal%TYPE
+		);
+	    vrec  MYTYPE;
+	 BEGIN
+        SELECT name, sal INTO vrec.name, vrec.sal
+        FROM emp  WHERE  empNo = '1001';
+	
+		DBMS_OUTPUT.PUT_LINE('이름 : ' || vrec.name);
+		DBMS_OUTPUT.PUT_LINE('급여 : ' || vrec.sal);
+	 END;
+     /
+
+
+ 5) 제어 구조
+  <조건 제어> 
+   - IF
+   
+	 DECLARE
+	    a NUMBER  := 10;
+	 BEGIN
+	    IF MOD(a, 6) = 0 THEN
+		    DBMS_OUTPUT.PUT_LINE(a || '2 또는 3의 배수');
+		ELSIF MOD(a, 3) = 0 THEN
+		    DBMS_OUTPUT.PUT_LINE(a || '3의 배수');
+		ELSIF MOD(a, 2) = 0 THEN
+		    DBMS_OUTPUT.PUT_LINE(a || '2의 배수');
+        ELSE
+		    DBMS_OUTPUT.PUT_LINE(a || '2 또는 3의 배수가 아님');
+        END IF;
+	 END;
+	 /
+	 
+	 -- emp 테이블 : empNo가 1001인 레코드
+	   -- 이름(name), 급여(sal+bonus), 세금 출력
+	   -- 세금은  sal+bonus가 300만 이상 3%, 200만 이상 2%, 나머지 0
+	   -- 소수점 첫째자리 반올림
+	 DECLARE
+	    vname VARCHAR2(30);
+		vpay  NUMBER;
+		vtax  NUMBER;
+	 BEGIN
+        SELECT name, sal+bonus INTO vname, vpay
+        FROM emp  WHERE  empNo = '1001';
+		
+		IF vpay >= 3000000 THEN
+		   vtax := ROUND(vpay * 0.03);
+		ELSIF vpay >= 2000000 THEN
+		   vtax := ROUND(vpay * 0.02);
+		ELSE
+           vtax := 0;		
+	    END IF;
+		
+		DBMS_OUTPUT.PUT_LINE('이름: ' || vname);
+		DBMS_OUTPUT.PUT_LINE('급여: ' || vpay || ', 세금: ' || vtax);      -- 문자열만 출력됨 
+	 END;
+     /
+	 
+	 
+	 
+     -------------------------------------------------------
+   - CASE
+
+
+     -------------------------------------------------------
+   <반복 제어> 
+   - basic LOOP
+    - 무한 반복되는 LOOP 문장
+    - EXIT 를 만나면 빠져 나감 
+    - CONTINUE 를 만나면 현재 반복이 완료되고, 다음 반복으로 전달됨 
+     
+    DECLARE 
+        n NUMBER := 0;
+        s NUMBER := 0;
+    BEGIN 
+        LOOP 
+            n := n + 1;
+            s := s + n;
+            EXIT WHEN n = 100;  -- 빠져나가는 조건 
+        END LOOP;               -- 무한루프 
+        
+        DBMS_OUTPUT.PUT_LINE('결과:'||s);
+    END;
+    /
+
+     -------------------------------------------------------
+   - WHILE-LOOP
+    
+    DECLARE 
+        n NUMBER := 0;
+        s NUMBER := 0;
+    BEGIN 
+       WHILE n < 100 LOOP
+            n := n + 1;
+            s := s + n;           
+        END LOOP;        
+        
+        DBMS_OUTPUT.PUT_LINE('결과:'||s);
+    END;
+    /
+    
+    --- 홀수 합  
+    DECLARE 
+        n NUMBER := 1;
+        s NUMBER := 0;
+    BEGIN 
+       WHILE n < 100 LOOP
+            s := s + n;
+            n := n + 2;                      
+        END LOOP;        
+        
+        DBMS_OUTPUT.PUT_LINE('결과:'||s);
+    END;
+    /
+    
+    DECLARE 
+        a NUMBER;
+        b NUMBER;
+    BEGIN
+        a := 1;
+        WHILE a<9 LOOP
+            a := a+1;
+            DBMS_OUTPUT.PUT_LINE('**'||a||' 단 **');
+            b := b+1;
+                DBMS_OUTPUT.PUT_LINE(a||'*'||b||'='||(a*b));
+            END LOOP;
+        END LOOP;
+    END;
+    /
+     -------------------------------------------------------
+     -- FOR-LOOP  무조건 1씩만 증가/감소 / SELECT 문에 사용하면 편함 / 
+     -- FOR 반복 변수는 선언하지 않는다. 자동 선언됨 
+    DECLARE 
+        s NUMBER := 0;
+    BEGIN 
+        FOR n IN 1 .. 100 LOOP 
+            s := s + n;
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('결과:'||s);
+    END;
+    /
+    
+    DECLARE 
+        s NUMBER := 0;
+    BEGIN 
+        FOR n IN REVERSE 65 .. 90 LOOP     -- REVERSE : 거꾸로 찍힘 (뒤의 숫자는 순서대로 써야 함) 
+            DBMS_OUTPUT.PUT_LINE(CHR(n));  -- 출력 후 라인 안넘김 
+                                           -- PUT_LINE(), NEW_LINE() 을 만나야 출력
+        END LOOP;
+        DBMS_OUTPUT.NEW_LINE(); -- 라인 넘김
+    END;
+    /    
+
+
+     -------------------------------------------------------
+     -- SQL Cursor FOR LOOP
+     
+     DECLARE
+	    vrec  emp%ROWTYPE;
+	 BEGIN       
+		SELECT * INTO vrec FROM  emp; -- 에러 : 여러줄이므로 
+		DBMS_OUTPUT.PUT_LINE('이름 : ' || vrec.name);
+		DBMS_OUTPUT.PUT_LINE('급여 : ' || vrec.sal);
+	 END;
+     /
+     
+     DECLARE 
+     BEGIN
+        FOR rec IN (SELECT empNo, name, sal FROM emp) LOOP
+            DBMS_OUTPUT.PUT_LINE(rec.name || '    ' || rec.sal);
+        END LOOP; 
+     END;
+     /
