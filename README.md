@@ -46,7 +46,7 @@
  > - **Procedure**
  > > - [Procedure - IN/OUT 파라미터](https://github.com/friedegg818/TIL/blob/master/Oracle/23.%20Procedure.md)
  > > - [**사용자 정의 함수**](https://github.com/friedegg818/TIL/blob/master/Oracle/23-1.%20%EC%82%AC%EC%9A%A9%EC%9E%90%20%EC%A0%95%EC%9D%98%20%ED%95%A8%EC%88%98.md)
- > > - [활용 예제](https://github.com/friedegg818/TIL/blob/master/Oracle/23-2.%20procedure%20%ED%99%9C%EC%9A%A9%20%EC%98%88%EC%A0%9C.sql) / [문제](https://github.com/friedegg818/TIL/blob/master/Oracle/23-3.%20Procedure%20%EB%AC%B8%EC%A0%9C.sql)
+ > > - 참고 * [활용 예제](https://github.com/friedegg818/TIL/blob/master/Oracle/23-2.%20Procedure%20%ED%99%9C%EC%9A%A9%20%EC%98%88%EC%A0%9C.sql) / [문제](https://github.com/friedegg818/TIL/blob/master/Oracle/23-3.%20Procedure%20%EB%AC%B8%EC%A0%9C.sql)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
