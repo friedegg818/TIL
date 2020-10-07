@@ -187,3 +187,4 @@ CREATE SEQUENCE 시퀀스명
 
 3) 시노님 삭제
     DROP SYNONYM employees;
+
