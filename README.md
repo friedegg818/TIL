@@ -39,7 +39,7 @@
  > - [계층형 쿼리](https://github.com/friedegg818/TIL/blob/master/Oracle/16.%20%EA%B3%84%EC%B8%B5%ED%98%95%20%EC%BF%BC%EB%A6%AC.md)
  > - [PIVOT / UNPIVOT](https://github.com/friedegg818/TIL/blob/master/Oracle/17.%20PIVOT.md)
  > - [정규식](https://github.com/friedegg818/TIL/blob/master/Oracle/18.%20%EC%A0%95%EA%B7%9C%EC%8B%9D.md)
- + [**트랜잭션**](https://github.com/friedegg818/TIL/blob/master/Oracle/17.%20%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98.sql)
+ + [**트랜잭션**](https://github.com/friedegg818/TIL/blob/master/Oracle/19.%20Transaction.sql)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
