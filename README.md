@@ -18,15 +18,15 @@
  > - [수학 관련 함수](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%20%ED%95%A8%EC%88%98%20(%EC%88%98%ED%95%99%20%EA%B4%80%EB%A0%A8).md)
 * * * 
 ### Oracle
- + [**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/1.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md) / [**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/2.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
- + [**SQL 기본 개념**](https://github.com/friedegg818/TIL/blob/master/Oracle/3.%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20SQL.md)
- + [**SELECT 문**](https://github.com/friedegg818/TIL/blob/master/Oracle/4.SELECT%EB%AC%B8%20.md)
+ + [**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/01.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md) / [**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/02.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
+ + [**SQL 기본 개념**](https://github.com/friedegg818/TIL/blob/master/Oracle/03.%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20SQL.md)
+ + [**SELECT 문**](https://github.com/friedegg818/TIL/blob/master/Oracle/04.SELECT%EB%AC%B8%20.md)
  + **SQL 함수** 
- > - [단일행 함수](https://github.com/friedegg818/TIL/blob/master/Oracle/5.%20%EB%8B%A8%EC%9D%BC%ED%96%89%20%ED%95%A8%EC%88%98.md)
- > - [집계 함수](https://github.com/friedegg818/TIL/blob/master/Oracle/6.%EC%A7%91%EA%B3%84%ED%95%A8%EC%88%98.md)
- > - [분석함수](https://github.com/friedegg818/TIL/blob/master/Oracle/7.%EB%B6%84%EC%84%9D%ED%95%A8%EC%88%98.md)
- > - [윈도우함수](https://github.com/friedegg818/TIL/blob/master/Oracle/8.%EC%9C%88%EB%8F%84%EC%9A%B0%ED%95%A8%EC%88%98.md)
- + [**데이터 정의 언어 (DDL)**](https://github.com/friedegg818/TIL/blob/master/Oracle/9.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%95%EC%9D%98%20%EC%96%B8%EC%96%B4.md)
+ > - [단일행 함수](https://github.com/friedegg818/TIL/blob/master/Oracle/05.%20%EB%8B%A8%EC%9D%BC%ED%96%89%20%ED%95%A8%EC%88%98.md)
+ > - [집계 함수](https://github.com/friedegg818/TIL/blob/master/Oracle/06.%EC%A7%91%EA%B3%84%ED%95%A8%EC%88%98.md)
+ > - [분석함수](https://github.com/friedegg818/TIL/blob/master/Oracle/07.%EB%B6%84%EC%84%9D%ED%95%A8%EC%88%98.md)
+ > - [윈도우함수](https://github.com/friedegg818/TIL/blob/master/Oracle/08.%EC%9C%88%EB%8F%84%EC%9A%B0%ED%95%A8%EC%88%98.md)
+ + [**데이터 정의 언어 (DDL)**](https://github.com/friedegg818/TIL/blob/master/Oracle/09.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%95%EC%9D%98%20%EC%96%B8%EC%96%B4.md)
  + [**데이터 조작 언어 (DML)**](https://github.com/friedegg818/TIL/blob/master/Oracle/10.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A1%B0%EC%9E%91%20%EC%96%B8%EC%96%B4.md)
  + [**데이터 딕셔너리**](https://github.com/friedegg818/TIL/blob/master/Oracle/11.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC.md)
  + [**제약 조건**](https://github.com/friedegg818/TIL/blob/master/Oracle/12.%20%EC%A0%9C%EC%95%BD%EC%A1%B0%EA%B1%B4.md)
