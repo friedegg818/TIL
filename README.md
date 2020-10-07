@@ -40,6 +40,7 @@
  > - [PIVOT / UNPIVOT](https://github.com/friedegg818/TIL/blob/master/Oracle/17.%20PIVOT.md)
  > - [정규식](https://github.com/friedegg818/TIL/blob/master/Oracle/18.%20%EC%A0%95%EA%B7%9C%EC%8B%9D.md)
  + [**트랜잭션**](https://github.com/friedegg818/TIL/blob/master/Oracle/19.%20Transaction.sql)
+ + [**데이터모델링**](https://github.com/friedegg818/TIL/blob/master/Oracle/20.%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%AA%A8%EB%8D%B8%EB%A7%81.md)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
