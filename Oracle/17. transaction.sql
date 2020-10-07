@@ -1,10 +1,10 @@
-¡á Æ®·£Àè¼Ç
- ¡Ø Æ®·£Àè¼Ç(Transaction)
-   ¥ï COMMIT °ú ROLLBACK
+ [ íŠ¸ëžœìž­ì…˜(Transaction) ]
+ 
+   Î¿ COMMIT ê³¼ ROLLBACK
    
    CREATE TABLE  emp1  AS SELECT empNo, name, city FROM emp;
    
-   INSERT INTO emp1 VALUES ('9999', 'aaa', '¼­¿ï');
+   INSERT INTO emp1 VALUES ('9999', 'aaa', 'ì„œìš¸');
    SELECT * FROM emp1;
    
    SAVEPOINT a;
@@ -13,7 +13,7 @@
    SELECT * FROM emp1;
    
    ROLLBACK TO a;
-         -- UPDATE¸¸ ·Ñ¹é
+         -- UPDATEë§Œ ë¡¤ë°±
 		 
    SELECT * FROM emp1;
    
@@ -21,85 +21,86 @@
    SELECT * FROM emp1;
 
 
-   ¥ï Æ®·£Àè¼Ç °ü·Ã ¼³Á¤
+   Î¿ íŠ¸ëžœìž­ì…˜ ê´€ë ¨ ì„¤ì •
      1) SET TRANSACTION
 
--------------------------
-cmd>sqlplus  sky/"java$!"
-SQL> SHOW  AUTOCOMMIT
-AUTOCOMMIT OFF  -- DMLÀº ÀÚµ¿  COMMIT µÇÁö ¾Ê´Â´Ù.
+	-------------------------
+	cmd>sqlplus  sky/"java$!"
+	SQL> SHOW  AUTOCOMMIT
+	AUTOCOMMIT OFF  -- DMLì€ ìžë™  COMMIT ë˜ì§€ ì•ŠëŠ”ë‹¤.
 
-SQL> SET AUTOCOMMIT ON
+	SQL> SET AUTOCOMMIT ON
 
-SQL> INSERT emp1 VALUES('7777', 'a', 'a');
+	SQL> INSERT emp1 VALUES('7777', 'a', 'a');
 
-SQL> SET AUTOCOMMIT OFF
--------------------------
--- Ä¿³Ø¼Ç1
-INSERT INTO emp1 VALUES('5555, 'b', b');
-SELECT * FROM emp1;
+	SQL> SET AUTOCOMMIT OFF
+	-------------------------
+	-- ì»¤ë„¥ì…˜1
+	INSERT INTO emp1 VALUES('5555, 'b', b');
+	SELECT * FROM emp1;
 
--- Ä¿³Ø¼Ç2
-SELECT * FROM emp1;
-        -- Ãß°¡µÈ°Å ¾Èº¸ÀÓ
+	-- ì»¤ë„¥ì…˜2
+	SELECT * FROM emp1;
+		-- ì¶”ê°€ëœê±° ì•ˆë³´ìž„
 
--- Ä¿³Ø¼Ç1
-COMMIT;
+	-- ì»¤ë„¥ì…˜1
+	COMMIT;
 
--- Ä¿³Ø¼Ç2
-SELECT * FROM emp1;
-        -- º¸ÀÓ
+	-- ì»¤ë„¥ì…˜2
+	SELECT * FROM emp1;
+		-- ë³´ìž„
 
--- Ä¿³Ø¼Ç1
-SET TRANSACTION READ ONLY;
-DELETE FROM emp1;
-       -- ¿¡·¯. SELECT ¸¸ °¡´É
-	   
-ROLLBACK;
+	-- ì»¤ë„¥ì…˜1
+	SET TRANSACTION READ ONLY;
+	DELETE FROM emp1;
+	       -- ì—ëŸ¬. SELECT ë§Œ ê°€ëŠ¥
 
-SET TRANSACTION READ WRITE;
+	ROLLBACK;
 
-     2) LOCK TABLE
+	SET TRANSACTION READ WRITE;
 
--- Ä¿³Ø¼Ç1
-SELECT * FROM emp1;
+	     2) LOCK TABLE
 
-UPDATE emp1 SET city='aaa' WHERE empNo='1001';
-SET TIME ON;
+	-- ì»¤ë„¥ì…˜1
+	SELECT * FROM emp1;
 
--- Ä¿³Ø¼Ç2
-SELECT * FROM emp1  FOR UPDATE  WAIT 5;
-     -- 5ÃÊ ÈÄ ¿¡·¯
-	 
--- Ä¿³Ø¼Ç1
-ROLLBACK;
+	UPDATE emp1 SET city='aaa' WHERE empNo='1001';
+	SET TIME ON;
 
-LOCK TABLE  emp1  IN  EXCLUSIVE  MODE;
-               -- Àá±ä Å×ÀÌºí¿¡ DMLÀ» Çã¿ëÇÏÁö ¾ÊÀ½
-			   -- DML ÈÄ COMMIT ¶Ç´Â ROLLBACKÀ» ÇØ¾ß ´Ù¸¥ Ä¿³Ø¼ÇÀº DML °¡´É
-DELETE FROM  emp1;
+	-- ì»¤ë„¥ì…˜2
+	SELECT * FROM emp1  FOR UPDATE  WAIT 5;
+	     -- 5ì´ˆ í›„ ì—ëŸ¬
+
+	-- ì»¤ë„¥ì…˜1
+	ROLLBACK;
+
+	LOCK TABLE  emp1  IN  EXCLUSIVE  MODE;
+		       -- ìž ê¸´ í…Œì´ë¸”ì— DMLì„ í—ˆìš©í•˜ì§€ ì•ŠìŒ
+				   -- DML í›„ COMMIT ë˜ëŠ” ROLLBACKì„ í•´ì•¼ ë‹¤ë¥¸ ì»¤ë„¥ì…˜ì€ DML ê°€ëŠ¥
+	DELETE FROM  emp1;
 
 
--- Ä¿³Ø¼Ç2
-UPDATE  emp1  SET  city='aaa' WHERE empNo='1001';
+	-- ì»¤ë„¥ì…˜2
+	UPDATE  emp1  SET  city='aaa' WHERE empNo='1001';
 
--- Ä¿³Ø¼Ç1
-ROLLBACK;
+	-- ì»¤ë„¥ì…˜1
+	ROLLBACK;
 
--- Ä¿³Ø¼Ç2
-ROLLBACK;
+	-- ì»¤ë„¥ì…˜2
+	ROLLBACK;
 
-      -------------------------------------------------------
-      -- COMMITÀÌ µÇÁö ¾Ê´Â »óÅÂ È®ÀÎ
-      -- °ü¸®ÀÚ(sys ¶Ç´Â system) °èÁ¤¿¡¼­ È®ÀÎ
-        SELECT s.inst_id inst, s.sid||','||s.serial# sid, s.username,
-                    s.program, s.status, s.machine, s.service_name,
-                    '_SYSSMU'||t.xidusn||'$' rollname, --r.name rollname, 
-                    t.used_ublk, 
-                   ROUND(t.used_ublk * 8192 / 1024 / 1024, 2) used_bytes,
-                   s.prev_sql_id, s.sql_id
-        FROM gv$session s,
-                  --v$rollname r,
-                  gv$transaction t
-        WHERE s.saddr = t.ses_addr
-        ORDER BY used_ublk, machine;
+	      -------------------------------------------------------
+	      -- COMMITì´ ë˜ì§€ ì•ŠëŠ” ìƒíƒœ í™•ì¸
+	      -- ê´€ë¦¬ìž(sys ë˜ëŠ” system) ê³„ì •ì—ì„œ í™•ì¸
+		SELECT s.inst_id inst, s.sid||','||s.serial# sid, s.username,
+			    s.program, s.status, s.machine, s.service_name,
+			    '_SYSSMU'||t.xidusn||'$' rollname, --r.name rollname, 
+			    t.used_ublk, 
+			   ROUND(t.used_ublk * 8192 / 1024 / 1024, 2) used_bytes,
+			   s.prev_sql_id, s.sql_id
+		FROM gv$session s,
+			  --v$rollname r,
+			  gv$transaction t
+		WHERE s.saddr = t.ses_addr
+		ORDER BY used_ublk, machine;
+		
