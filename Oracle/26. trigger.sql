@@ -1,15 +1,21 @@
+
 [TRIGGER]
- - ¹Ì¸® Á¤ÇØ ³õÀº Æ¯Á¤ Á¶°ÇÀ» ¸¸Á·ÇÏ°Å³ª, ¾î¶² µ¿ÀÛÀ» ÇÏ¸é ÀÚµ¿À¸·Î ½ÇÇàµÇµµ·Ï Á¤ÀÇÇÑ °Í 
- - Æ®¸®°Å ½ÇÇà Á¶°ÇÀÌ µÉ ¼ö ÀÖ´Â °Í 
+ - ë¯¸ë¦¬ ì •í•´ ë†“ì€ íŠ¹ì • ì¡°ê±´ì„ ë§Œì¡±í•˜ê±°ë‚˜, ì–´ë–¤ ë™ìž‘ì„ í•˜ë©´ ìžë™ìœ¼ë¡œ ì‹¤í–‰ë˜ë„ë¡ ì •ì˜í•œ ê²ƒ 
+ - íŠ¸ë¦¬ê±° ì‹¤í–‰ ì¡°ê±´ì´ ë  ìˆ˜ ìžˆëŠ” ê²ƒ 
     1. DML - DELETE, INSERT, UPDATE
     2. DDL - CREATE, ALTER, DROP
-    3. DB ÀÛ¾÷ - SERVERERROR, LOGON, LOGOFF, STARTUP, SHUTDOWN
- - À¯Çü (DML Æ®¸®°Å, INSTEAD OF Æ®¸®°Å, ½Ã½ºÅÛ Æ®¸®°Å)
- - Æ®¸®°Å »ý¼º ±ÇÇÑ ºÎ¿© 
-   GRANT CREATE TRIGGER TO »ç¿ëÀÚ;    
+    3. DB ìž‘ì—… - SERVERERROR, LOGON, LOGOFF, STARTUP, SHUTDOWN
+    
+ - ìœ í˜• 
+    1. DML íŠ¸ë¦¬ê±°
+    2. INSTEAD OF íŠ¸ë¦¬ê±°
+    3. ì‹œìŠ¤í…œ íŠ¸ë¦¬ê±°
+    
+ - íŠ¸ë¦¬ê±° ìƒì„± ê¶Œí•œ ë¶€ì—¬ 
+   GRANT CREATE TRIGGER TO ì‚¬ìš©ìž;    
 
 
- 1) ¹®Àå Æ®¸®°Å - DML ¹®Àå ½ÇÇà È½¼ö¿Í »ó°ü ¾øÀÌ Æ®¸®°Å´Â 1¹ø¸¸ ½ÇÇà 
+ 1) ë¬¸ìž¥ íŠ¸ë¦¬ê±° - DML ë¬¸ìž¥ ì‹¤í–‰ íšŸìˆ˜ì™€ ìƒê´€ ì—†ì´ íŠ¸ë¦¬ê±°ëŠ” 1ë²ˆë§Œ ì‹¤í–‰ 
  
     CREATE TABLE ex (
         num NUMBER PRIMARY KEY
@@ -21,26 +27,26 @@
         , created DATE DEFAULT SYSDATE
     );
 
-    -- ¹®Àå Æ®¸®°Å »ý¼º
+    -- ë¬¸ìž¥ íŠ¸ë¦¬ê±° ìƒì„±
     CREATE OR REPLACE TRIGGER tri_Ex 
     AFTER INSERT OR UPDATE OR DELETE ON ex 
     BEGIN
         IF INSERTING THEN 
-            INSERT INTO ex_time(memo) VALUES('Ãß°¡');
+            INSERT INTO ex_time(memo) VALUES('ì¶”ê°€');
         ELSIF UPDATING THEN 
-            INSERT INTO ex_time(memo) VALUES('¼öÁ¤');
+            INSERT INTO ex_time(memo) VALUES('ìˆ˜ì •');
         ELSIF DELETING THEN 
-            INSERT INTO ex_time(memo) VALUES('»èÁ¦');
+            INSERT INTO ex_time(memo) VALUES('ì‚­ì œ');
         END IF; 
-          -- Æ®¸®°Å ¾È¿¡¼­ INSERT, DELETE, UPDATE´Â ÀÚµ¿ COMMIT µÇ¹Ç·Î COMMIT ¹®À» ±â¼úÇÏÁö ¾Ê´Â´Ù.
+          -- íŠ¸ë¦¬ê±° ì•ˆì—ì„œ INSERT, DELETE, UPDATEëŠ” ìžë™ COMMIT ë˜ë¯€ë¡œ COMMIT ë¬¸ì„ ê¸°ìˆ í•˜ì§€ ì•ŠëŠ”ë‹¤.
     END;
     / 
     
-    -- Æ®¸®°Å Á¤º¸ È®ÀÎ    
-    SELECT * FROM user_triggers; -- ¸ñ·Ï È®ÀÎ
-    SELECT * FROM user_source;   -- ¼Ò½º È®ÀÎ
+    -- íŠ¸ë¦¬ê±° ì •ë³´ í™•ì¸    
+    SELECT * FROM user_triggers; -- ëª©ë¡ í™•ì¸
+    SELECT * FROM user_source;   -- ì†ŒìŠ¤ í™•ì¸
     
-    -- DML¹® ½ÇÇà 
+    -- DMLë¬¸ ì‹¤í–‰ 
     INSERT INTO ex VALUES(1,'a');
     INSERT INTO ex VALUES(2,'b');
     COMMIT;
@@ -48,18 +54,18 @@
     UPDATE ex SET name = 'aa' WHERE num=1;
     COMMIT;
 
-    DELETE FROM ex;  -- 2¹ø ½ÇÇà 
+    DELETE FROM ex;  -- 2ë²ˆ ì‹¤í–‰ 
     COMMIT;
     
-    SELECT * FROM ex_time;  -- »èÁ¦´Â 2¹ø ½ÇÇà µÇ¾îµµ Æ®¸®°Å´Â 1¹ø¸¸ ½ÇÇàµÊ 
+    SELECT * FROM ex_time;  -- ì‚­ì œëŠ” 2ë²ˆ ì‹¤í–‰ ë˜ì–´ë„ íŠ¸ë¦¬ê±°ëŠ” 1ë²ˆë§Œ ì‹¤í–‰ë¨ 
     
-    -- ÁöÁ¤½Ã°£ÀÌ Áö³ª¸é ÀÛ¾÷À» ÇÏÁö ¸øÇÏµµ·Ï
+    -- ì§€ì •ì‹œê°„ì´ ì§€ë‚˜ë©´ ìž‘ì—…ì„ í•˜ì§€ ëª»í•˜ë„ë¡
     CREATE OR REPLACE TRIGGER tri_Ex2
     AFTER INSERT OR UPDATE OR DELETE ON ex
     BEGIN
         IF TO_CHAR(SYSDATE,'D') IN (1, 7) OR
            ( TO_CHAR(SYSDATE, 'HH24') >= 15 AND TO_CHAR(SYSDATE,'HH24') <= 16) THEN 
-         RAISE_APPLICATION_ERROR(-20001, 'Áö±ÝÀº ÀÏÀ» ¸øÇÔ...'); 
+         RAISE_APPLICATION_ERROR(-20001, 'ì§€ê¸ˆì€ ì¼ì„ ëª»í•¨...'); 
         END IF;
    END;
    /
@@ -69,8 +75,8 @@
    SELECT * FROM ex;
     
     
- 2) Çà Æ®¸®°Å - DML ¹®Àå ½ÇÇà È½¼ö(Çà)¸¸Å­ Æ®¸®°Å ½ÇÇà 
-               ex) 10°³ÀÇ ÇàÀÌ »èÁ¦µÇ¸é Æ®¸®°Åµµ 10¹ø ½ÇÇà 
+ 2) í–‰ íŠ¸ë¦¬ê±° - DML ë¬¸ìž¥ ì‹¤í–‰ íšŸìˆ˜(í–‰)ë§Œí¼ íŠ¸ë¦¬ê±° ì‹¤í–‰ 
+               ex) 10ê°œì˜ í–‰ì´ ì‚­ì œë˜ë©´ íŠ¸ë¦¬ê±°ë„ 10ë²ˆ ì‹¤í–‰ 
 
     CREATE TABLE score1 (
         hak VARCHAR2(20) PRIMARY KEY 
@@ -112,20 +118,20 @@
     
     SELECT fnGrade(90) FROM dual;
     
-    -- Çà Æ®¸®°Å »ý¼º(INSERT)
+    -- í–‰ íŠ¸ë¦¬ê±° ìƒì„±(INSERT)
     CREATE OR REPLACE TRIGGER tri_scoreInsert 
     AFTER INSERT ON score1 
-    FOR EACH ROW           -- Çà Æ®¸®°Å 
+    FOR EACH ROW           -- í–‰ íŠ¸ë¦¬ê±° 
     DECLARE 
     BEGIN
-      -- :NEW -> insertÇÑ Çà ³»¿ë (ÇàÆ®¸®°Å¸¸ »ç¿ë °¡´É) 
+      -- :NEW -> insertí•œ í–‰ ë‚´ìš© (í–‰íŠ¸ë¦¬ê±°ë§Œ ì‚¬ìš© ê°€ëŠ¥) 
       INSERT INTO score2(hak, kor, eng, mat) VALUES (
             :NEW.hak, fnGrade(:NEW.kor), fnGrade(:NEW.eng), fnGrade(:NEW.mat)
             );
     END;
     /
     
-    -- DML¹® ½ÇÇà
+    -- DMLë¬¸ ì‹¤í–‰
     INSERT INTO score1 VALUES('1', 'aaa', 90, 85, 70);
     INSERT INTO score1 VALUES('2', 'bbb', 85, 60, 77);
     COMMIT;
@@ -133,14 +139,14 @@
     SELECT * FROM score1;
     SELECT * FROM score2;
     
-    -- Çà Æ®¸®°Å »ý¼º (UPDATE)
+    -- í–‰ íŠ¸ë¦¬ê±° ìƒì„± (UPDATE)
     CREATE OR REPLACE TRIGGER tri_scoreUpdate
     AFTER UPDATE ON score1 
     FOR EACH ROW         
     DECLARE 
     BEGIN
-      -- :OLD -> update ÇÏ±â Àü Çà ³»¿ë (ÇàÆ®¸®°Å¸¸ »ç¿ë °¡´É)
-      -- :NEW -> »õ·Î update ÇÑ Çà ³»¿ë (ÇàÆ®¸®°Å¸¸ »ç¿ë °¡´É)
+      -- :OLD -> update í•˜ê¸° ì „ í–‰ ë‚´ìš© (í–‰íŠ¸ë¦¬ê±°ë§Œ ì‚¬ìš© ê°€ëŠ¥)
+      -- :NEW -> ìƒˆë¡œ update í•œ í–‰ ë‚´ìš© (í–‰íŠ¸ë¦¬ê±°ë§Œ ì‚¬ìš© ê°€ëŠ¥)
       UPDATE score2 SET kor = fnGrade(:NEW.kor), eng = fnGrade(:NEW.eng), mat = fnGrade(:NEW.mat)
             WHERE hak = :OLD.hak;
     END;
@@ -152,13 +158,13 @@
     SELECT * FROM score1;
     SELECT * FROM score2;
     
-    -- Çà Æ®¸®°Å »ý¼º (DELETE) 
+    -- í–‰ íŠ¸ë¦¬ê±° ìƒì„± (DELETE) 
     CREATE OR REPLACE TRIGGER tri_scoreDelete
-    BEFORE DELETE ON score1      -- score2ÀÇ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é score1À» »èÁ¦ ÇÒ ¼ö ¾øÀ¸¹Ç·Î 
+    BEFORE DELETE ON score1      -- score2ì˜ ë°ì´í„°ê°€ ìžˆìœ¼ë©´ score1ì„ ì‚­ì œ í•  ìˆ˜ ì—†ìœ¼ë¯€ë¡œ 
     FOR EACH ROW         
     DECLARE 
     BEGIN
-      -- :OLD -> delete ÇÒ Çà ³»¿ë (ÇàÆ®¸®°Å¸¸ »ç¿ë °¡´É)
+      -- :OLD -> delete í•  í–‰ ë‚´ìš© (í–‰íŠ¸ë¦¬ê±°ë§Œ ì‚¬ìš© ê°€ëŠ¥)
       DELETE FROM score2 WHERE hak = :OLD.hak; 
     END;
     /
@@ -169,302 +175,196 @@
     SELECT * FROM score1;
     SELECT * FROM score2;
     
- 3) Æ®¸®°Å °ü¸® 
+ 3) íŠ¸ë¦¬ê±° ê´€ë¦¬ 
     
-    ALTER TRIGGER Æ®¸®°Å ÀÌ¸§ ENABLE | DISABLE; 
+    ALTER TRIGGER íŠ¸ë¦¬ê±° ì´ë¦„ ENABLE | DISABLE; 
     
-    ALTER TABLE Å×ÀÌºí¸í ENABLE | DISABLE ALL TRIGGERS;
+    ALTER TABLE í…Œì´ë¸”ëª… ENABLE | DISABLE ALL TRIGGERS;
     
-    SELECT Å×ÀÌºí¸í FROM user_triggers; 
+    SELECT í…Œì´ë¸”ëª… FROM user_triggers; 
     
  
- * Æ®¸®°Å ½Ç½À 
-  1. Å×ÀÌºí ÀÛ¼º 
+ * íŠ¸ë¦¬ê±° ì‹¤ìŠµ 
+  1. í…Œì´ë¸” ìž‘ì„± 
    
- -- »óÇ° Å×ÀÌºí
-     CREATE TABLE »óÇ° (
-       »óÇ°ÄÚµå    VARCHAR2(6) NOT NULL PRIMARY KEY
-      ,»óÇ°¸í      VARCHAR2(30)  NOT NULL
-      ,Á¦Á¶»ç      VARCHAR2(30)  NOT NULL
-      ,¼ÒºñÀÚ°¡°Ý  NUMBER
-      ,Àç°í¼ö·®    NUMBER DEFAULT 0
+ -- ìƒí’ˆ í…Œì´ë¸”
+     CREATE TABLE ìƒí’ˆ (
+       ìƒí’ˆì½”ë“œ    VARCHAR2(6) NOT NULL PRIMARY KEY
+      ,ìƒí’ˆëª…      VARCHAR2(30)  NOT NULL
+      ,ì œì¡°ì‚¬      VARCHAR2(30)  NOT NULL
+      ,ì†Œë¹„ìžê°€ê²©  NUMBER
+      ,ìž¬ê³ ìˆ˜ëŸ‰    NUMBER DEFAULT 0
     );
 
- -- ÀÔ°í Å×ÀÌºí
-    CREATE TABLE ÀÔ°í (
-       ÀÔ°í¹øÈ£   NUMBER PRIMARY KEY
-      ,»óÇ°ÄÚµå   VARCHAR2(6) NOT NULL
-                      CONSTRAINT fk_ibgo_no REFERENCES »óÇ°(»óÇ°ÄÚµå)
-      ,ÀÔ°íÀÏÀÚ   DATE
-      ,ÀÔ°í¼ö·®   NUMBER
-      ,ÀÔ°í´Ü°¡   NUMBER
+ -- ìž…ê³  í…Œì´ë¸”
+    CREATE TABLE ìž…ê³  (
+       ìž…ê³ ë²ˆí˜¸   NUMBER PRIMARY KEY
+      ,ìƒí’ˆì½”ë“œ   VARCHAR2(6) NOT NULL
+                      CONSTRAINT fk_ibgo_no REFERENCES ìƒí’ˆ(ìƒí’ˆì½”ë“œ)
+      ,ìž…ê³ ì¼ìž   DATE
+      ,ìž…ê³ ìˆ˜ëŸ‰   NUMBER
+      ,ìž…ê³ ë‹¨ê°€   NUMBER
     );
 
- -- ÆÇ¸Å Å×ÀÌºí
-    CREATE TABLE ÆÇ¸Å (
-       ÆÇ¸Å¹øÈ£   NUMBER  PRIMARY KEY
-      ,»óÇ°ÄÚµå   VARCHAR2(6) NOT NULL
-            CONSTRAINT fk_pan_no REFERENCES »óÇ°(»óÇ°ÄÚµå)
-      ,ÆÇ¸ÅÀÏÀÚ   DATE
-      ,ÆÇ¸Å¼ö·®   NUMBER
-      ,ÆÇ¸Å´Ü°¡   NUMBER
+ -- íŒë§¤ í…Œì´ë¸”
+    CREATE TABLE íŒë§¤ (
+       íŒë§¤ë²ˆí˜¸   NUMBER  PRIMARY KEY
+      ,ìƒí’ˆì½”ë“œ   VARCHAR2(6) NOT NULL
+            CONSTRAINT fk_pan_no REFERENCES ìƒí’ˆ(ìƒí’ˆì½”ë“œ)
+      ,íŒë§¤ì¼ìž   DATE
+      ,íŒë§¤ìˆ˜ëŸ‰   NUMBER
+      ,íŒë§¤ë‹¨ê°€   NUMBER
     );
 
- -- »óÇ° Å×ÀÌºí¿¡ ÀÚ·á Ãß°¡
-    INSERT INTO »óÇ°(»óÇ°ÄÚµå, »óÇ°¸í, Á¦Á¶»ç, ¼ÒºñÀÚ°¡°Ý) VALUES
-            ('AAAAAA', 'µðÄ«', '»ï½Ì', 100000);
-    INSERT INTO »óÇ°(»óÇ°ÄÚµå, »óÇ°¸í, Á¦Á¶»ç, ¼ÒºñÀÚ°¡°Ý) VALUES
-            ('BBBBBB', 'ÄÄÇ»ÅÍ', '¿¤µð', 1500000);
-    INSERT INTO »óÇ°(»óÇ°ÄÚµå, »óÇ°¸í, Á¦Á¶»ç, ¼ÒºñÀÚ°¡°Ý) VALUES
-            ('CCCCCC', '¸ð´ÏÅÍ', '»ï½Ì', 600000);
-    INSERT INTO »óÇ°(»óÇ°ÄÚµå, »óÇ°¸í, Á¦Á¶»ç, ¼ÒºñÀÚ°¡°Ý) VALUES
-            ('DDDDDD', 'ÇÚµåÆù', '´Ù¿ì', 500000);
-    INSERT INTO »óÇ°(»óÇ°ÄÚµå, »óÇ°¸í, Á¦Á¶»ç, ¼ÒºñÀÚ°¡°Ý) VALUES
-             ('EEEEEE', 'ÇÁ¸°ÅÍ', '»ï½Ì', 200000);
+ -- ìƒí’ˆ í…Œì´ë¸”ì— ìžë£Œ ì¶”ê°€
+    INSERT INTO ìƒí’ˆ(ìƒí’ˆì½”ë“œ, ìƒí’ˆëª…, ì œì¡°ì‚¬, ì†Œë¹„ìžê°€ê²©) VALUES
+            ('AAAAAA', 'ë””ì¹´', 'ì‚¼ì‹±', 100000);
+    INSERT INTO ìƒí’ˆ(ìƒí’ˆì½”ë“œ, ìƒí’ˆëª…, ì œì¡°ì‚¬, ì†Œë¹„ìžê°€ê²©) VALUES
+            ('BBBBBB', 'ì»´í“¨í„°', 'ì—˜ë””', 1500000);
+    INSERT INTO ìƒí’ˆ(ìƒí’ˆì½”ë“œ, ìƒí’ˆëª…, ì œì¡°ì‚¬, ì†Œë¹„ìžê°€ê²©) VALUES
+            ('CCCCCC', 'ëª¨ë‹ˆí„°', 'ì‚¼ì‹±', 600000);
+    INSERT INTO ìƒí’ˆ(ìƒí’ˆì½”ë“œ, ìƒí’ˆëª…, ì œì¡°ì‚¬, ì†Œë¹„ìžê°€ê²©) VALUES
+            ('DDDDDD', 'í•¸ë“œí°', 'ë‹¤ìš°', 500000);
+    INSERT INTO ìƒí’ˆ(ìƒí’ˆì½”ë“œ, ìƒí’ˆëª…, ì œì¡°ì‚¬, ì†Œë¹„ìžê°€ê²©) VALUES
+             ('EEEEEE', 'í”„ë¦°í„°', 'ì‚¼ì‹±', 200000);
     COMMIT;
     
-   2. Æ®¸®°Å ÀÛ¼º 
+   2. íŠ¸ë¦¬ê±° ìž‘ì„± 
     
-    <ÀÔ°í Å×ÀÌºí>     
-  -- INSERT Æ®¸®°Å (ÀÔ°í Å×ÀÌºí¿¡ ÀÚ·á°¡ Ãß°¡ µÇ´Â °æ¿ì, »óÇ° Å×ÀÌºíÀÇ Àç°í¼ö·®ÀÌ º¯°æ µÇµµ·Ï)
+    <ìž…ê³  í…Œì´ë¸”>     
+  -- INSERT íŠ¸ë¦¬ê±° (ìž…ê³  í…Œì´ë¸”ì— ìžë£Œê°€ ì¶”ê°€ ë˜ëŠ” ê²½ìš°, ìƒí’ˆ í…Œì´ë¸”ì˜ ìž¬ê³ ìˆ˜ëŸ‰ì´ ë³€ê²½ ë˜ë„ë¡)
       CREATE OR REPLACE TRIGGER insTrg_lpgo
-      AFTER INSERT ON ÀÔ°í 
+      AFTER INSERT ON ìž…ê³  
       FOR EACH ROW 
       BEGIN
-         UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® + :NEW.ÀÔ°í¼ö·® WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå;
+         UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ + :NEW.ìž…ê³ ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ;
       END;
       /
 
- -- ÀÔ°í Å×ÀÌºí¿¡ µ¥ÀÌÅÍ ÀÔ·Â
-        INSERT INTO ÀÔ°í (ÀÔ°í¹øÈ£, »óÇ°ÄÚµå, ÀÔ°íÀÏÀÚ, ÀÔ°í¼ö·®, ÀÔ°í´Ü°¡)
+ -- ìž…ê³  í…Œì´ë¸”ì— ë°ì´í„° ìž…ë ¥
+        INSERT INTO ìž…ê³  (ìž…ê³ ë²ˆí˜¸, ìƒí’ˆì½”ë“œ, ìž…ê³ ì¼ìž, ìž…ê³ ìˆ˜ëŸ‰, ìž…ê³ ë‹¨ê°€)
                       VALUES (1, 'AAAAAA', '2004-10-10', 5,   50000);
-        INSERT INTO ÀÔ°í (ÀÔ°í¹øÈ£, »óÇ°ÄÚµå, ÀÔ°íÀÏÀÚ, ÀÔ°í¼ö·®, ÀÔ°í´Ü°¡)
+        INSERT INTO ìž…ê³  (ìž…ê³ ë²ˆí˜¸, ìƒí’ˆì½”ë“œ, ìž…ê³ ì¼ìž, ìž…ê³ ìˆ˜ëŸ‰, ìž…ê³ ë‹¨ê°€)
                       VALUES (2, 'BBBBBB', '2004-10-10', 15, 700000);
-        INSERT INTO ÀÔ°í (ÀÔ°í¹øÈ£, »óÇ°ÄÚµå, ÀÔ°íÀÏÀÚ, ÀÔ°í¼ö·®, ÀÔ°í´Ü°¡)
+        INSERT INTO ìž…ê³  (ìž…ê³ ë²ˆí˜¸, ìƒí’ˆì½”ë“œ, ìž…ê³ ì¼ìž, ìž…ê³ ìˆ˜ëŸ‰, ìž…ê³ ë‹¨ê°€)
                       VALUES (3, 'AAAAAA', '2004-10-11', 15, 52000);
-        INSERT INTO ÀÔ°í (ÀÔ°í¹øÈ£, »óÇ°ÄÚµå, ÀÔ°íÀÏÀÚ, ÀÔ°í¼ö·®, ÀÔ°í´Ü°¡)
+        INSERT INTO ìž…ê³  (ìž…ê³ ë²ˆí˜¸, ìƒí’ˆì½”ë“œ, ìž…ê³ ì¼ìž, ìž…ê³ ìˆ˜ëŸ‰, ìž…ê³ ë‹¨ê°€)
                       VALUES (4, 'CCCCCC', '2004-10-14', 15,  250000);
-        INSERT INTO ÀÔ°í (ÀÔ°í¹øÈ£, »óÇ°ÄÚµå, ÀÔ°íÀÏÀÚ, ÀÔ°í¼ö·®, ÀÔ°í´Ü°¡)
+        INSERT INTO ìž…ê³  (ìž…ê³ ë²ˆí˜¸, ìƒí’ˆì½”ë“œ, ìž…ê³ ì¼ìž, ìž…ê³ ìˆ˜ëŸ‰, ìž…ê³ ë‹¨ê°€)
                       VALUES (5, 'BBBBBB', '2004-10-16', 25, 700000);
         COMMIT;  
       
-      SELECT * FROM »óÇ°;
-      SELECT * FROM ÀÔ°í;
+      SELECT * FROM ìƒí’ˆ;
+      SELECT * FROM ìž…ê³ ;
 
- -- UPDATE Æ®¸®°Å (ÀÔ°í Å×ÀÌºíÀÇ ÀÚ·á°¡ º¯°æ µÇ´Â °æ¿ì, »óÇ° Å×ÀÌºíÀÇ Àç°í¼ö·®ÀÌ º¯°æ)
+ -- UPDATE íŠ¸ë¦¬ê±° (ìž…ê³  í…Œì´ë¸”ì˜ ìžë£Œê°€ ë³€ê²½ ë˜ëŠ” ê²½ìš°, ìƒí’ˆ í…Œì´ë¸”ì˜ ìž¬ê³ ìˆ˜ëŸ‰ì´ ë³€ê²½)
         CREATE OR REPLACE TRIGGER uptTrg_lpgo
-        AFTER UPDATE ON ÀÔ°í 
+        AFTER UPDATE ON ìž…ê³  
         FOR EACH ROW 
         BEGIN 
-            UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® - :OLD.ÀÔ°í¼ö·® + :NEW.ÀÔ°í¼ö·® WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå;
+            UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ - :OLD.ìž…ê³ ìˆ˜ëŸ‰ + :NEW.ìž…ê³ ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ;
         END;
         /
         
-        UPDATE ÀÔ°í SET ÀÔ°í¼ö·® = 30 WHERE ÀÔ°í¹øÈ£ = 5;
+        UPDATE ìž…ê³  SET ìž…ê³ ìˆ˜ëŸ‰ = 30 WHERE ìž…ê³ ë²ˆí˜¸ = 5;
         COMMIT;
         
-        SELECT * FROM »óÇ°;
-        SELECT * FROM ÀÔ°í;
+        SELECT * FROM ìƒí’ˆ;
+        SELECT * FROM ìž…ê³ ;
 
- -- DELETE Æ®¸®°Å (ÀÔ°í Å×ÀÌºíÀÇ ÀÚ·á°¡ »èÁ¦µÇ´Â °æ¿ì, »óÇ° Å×ÀÌºíÀÇ Àç°í¼ö·®ÀÌ º¯°æ)
+ -- DELETE íŠ¸ë¦¬ê±° (ìž…ê³  í…Œì´ë¸”ì˜ ìžë£Œê°€ ì‚­ì œë˜ëŠ” ê²½ìš°, ìƒí’ˆ í…Œì´ë¸”ì˜ ìž¬ê³ ìˆ˜ëŸ‰ì´ ë³€ê²½)
     CREATE OR REPLACE TRIGGER delTrg_lpgo
-    AFTER DELETE ON ÀÔ°í 
+    AFTER DELETE ON ìž…ê³  
     FOR EACH ROW 
     BEGIN
-        UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® - :OLD.ÀÔ°í¼ö·® WHERE »óÇ°ÄÚµå = :OLD.»óÇ°ÄÚµå;
+        UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ - :OLD.ìž…ê³ ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :OLD.ìƒí’ˆì½”ë“œ;
     END;
     /
     
-    DELETE FROM ÀÔ°í WHERE ÀÔ°í¹øÈ£ = 5;
+    DELETE FROM ìž…ê³  WHERE ìž…ê³ ë²ˆí˜¸ = 5;
     COMMIT;
-    SELECT * FROM »óÇ°;
-    SELECT * FROM ÀÔ°í;
+    SELECT * FROM ìƒí’ˆ;
+    SELECT * FROM ìž…ê³ ;
 
-   <ÆÇ¸Å Å×ÀÌºí>
- -- INSERT Æ®¸®°Å (ÆÇ¸Å Å×ÀÌºí¿¡ ÀÚ·á°¡ Ãß°¡µÇ´Â °æ¿ì »óÇ° Å×ÀÌºíÀÇ Àç°í¼ö·®ÀÌ º¯°æ)
+   <íŒë§¤ í…Œì´ë¸”>
+ -- INSERT íŠ¸ë¦¬ê±° (íŒë§¤ í…Œì´ë¸”ì— ìžë£Œê°€ ì¶”ê°€ë˜ëŠ” ê²½ìš° ìƒí’ˆ í…Œì´ë¸”ì˜ ìž¬ê³ ìˆ˜ëŸ‰ì´ ë³€ê²½)
     CREATE OR REPLACE TRIGGER insTrg_Pan
-    BEFORE INSERT ON ÆÇ¸Å 
+    BEFORE INSERT ON íŒë§¤ 
     FOR EACH ROW 
     
     DECLARE 
         j_qty NUMBER;
     BEGIN 
-        SELECT Àç°í¼ö·® INTO j_qty FROM »óÇ° WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå; 
-        IF :NEW.ÆÇ¸Å¼ö·® > j_qty THEN 
-            RAISE_APPLICATION_ERROR(-20007, 'ÆÇ¸Å ¿À·ù');
+        SELECT ìž¬ê³ ìˆ˜ëŸ‰ INTO j_qty FROM ìƒí’ˆ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ; 
+        IF :NEW.íŒë§¤ìˆ˜ëŸ‰ > j_qty THEN 
+            RAISE_APPLICATION_ERROR(-20007, 'íŒë§¤ ì˜¤ë¥˜');
         ELSE
-            UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® - :NEW.ÆÇ¸Å¼ö·® WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå;
+            UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ - :NEW.íŒë§¤ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ;
         END IF;
     END;
     /
 
-    INSERT INTO ÆÇ¸Å (ÆÇ¸Å¹øÈ£, »óÇ°ÄÚµå, ÆÇ¸ÅÀÏÀÚ, ÆÇ¸Å¼ö·®, ÆÇ¸Å´Ü°¡) VALUES
+    INSERT INTO íŒë§¤ (íŒë§¤ë²ˆí˜¸, ìƒí’ˆì½”ë“œ, íŒë§¤ì¼ìž, íŒë§¤ìˆ˜ëŸ‰, íŒë§¤ë‹¨ê°€) VALUES
              (1, 'AAAAAA', '2004-11-10', 5, 1000000);
     COMMIT;
-    SELECT * FROM »óÇ°;
-    SELECT * FROM ÆÇ¸Å;
+    SELECT * FROM ìƒí’ˆ;
+    SELECT * FROM íŒë§¤;
     
-    INSERT INTO ÆÇ¸Å (ÆÇ¸Å¹øÈ£, »óÇ°ÄÚµå, ÆÇ¸ÅÀÏÀÚ, ÆÇ¸Å¼ö·®, ÆÇ¸Å´Ü°¡) VALUES
+    INSERT INTO íŒë§¤ (íŒë§¤ë²ˆí˜¸, ìƒí’ˆì½”ë“œ, íŒë§¤ì¼ìž, íŒë§¤ìˆ˜ëŸ‰, íŒë§¤ë‹¨ê°€) VALUES
              (1, 'AAAAAA', '2004-11-10', 50, 1000000);
 
- -- UPDATE Æ®¸®°Å (ÆÇ¸Å Å×ÀÌºíÀÇ ÀÚ·á°¡ º¯°æµÇ´Â °æ¿ì »óÇ° Å×ÀÌºíÀÇ Àç°í¼ö·®ÀÌ º¯°æµÇµµ·Ï)
+ -- UPDATE íŠ¸ë¦¬ê±° (íŒë§¤ í…Œì´ë¸”ì˜ ìžë£Œê°€ ë³€ê²½ë˜ëŠ” ê²½ìš° ìƒí’ˆ í…Œì´ë¸”ì˜ ìž¬ê³ ìˆ˜ëŸ‰ì´ ë³€ê²½ë˜ë„ë¡)
     CREATE OR REPLACE TRIGGER uptTrg_Pan
-    BEFORE UPDATE ON ÆÇ¸Å
+    BEFORE UPDATE ON íŒë§¤
     FOR EACH ROW
     
     DECLARE 
         j_qty NUMBER;
     BEGIN
-        SELECT Àç°í¼ö·® INTO j_qty FROM »óÇ° WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå; 
-        IF :NEW.ÆÇ¸Å¼ö·® > (j_qty + :OLD.ÆÇ¸Å¼ö·®) THEN 
-            RAISE_APPLICATION_ERROR(-20007, 'ÆÇ¸Å·®ÀÌ Àç°í·® º¸´Ù ¸¹½À´Ï´Ù.');
+        SELECT ìž¬ê³ ìˆ˜ëŸ‰ INTO j_qty FROM ìƒí’ˆ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ; 
+        IF :NEW.íŒë§¤ìˆ˜ëŸ‰ > (j_qty + :OLD.íŒë§¤ìˆ˜ëŸ‰) THEN 
+            RAISE_APPLICATION_ERROR(-20007, 'íŒë§¤ëŸ‰ì´ ìž¬ê³ ëŸ‰ ë³´ë‹¤ ë§ŽìŠµë‹ˆë‹¤.');
         ELSE
-            UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® + :OLD.ÆÇ¸Å¼ö·® - :NEW.ÆÇ¸Å¼ö·® WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå;
+            UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ + :OLD.íŒë§¤ìˆ˜ëŸ‰ - :NEW.íŒë§¤ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ;
         END IF;
     END;
     /
 
-    UPDATE ÆÇ¸Å SET ÆÇ¸Å¼ö·® = 200 WHERE ÆÇ¸Å¹øÈ£ = 1;
-    UPDATE ÆÇ¸Å SET ÆÇ¸Å¼ö·® = 10 WHERE ÆÇ¸Å¹øÈ£ = 1;
+    UPDATE íŒë§¤ SET íŒë§¤ìˆ˜ëŸ‰ = 200 WHERE íŒë§¤ë²ˆí˜¸ = 1;
+    UPDATE íŒë§¤ SET íŒë§¤ìˆ˜ëŸ‰ = 10 WHERE íŒë§¤ë²ˆí˜¸ = 1;
     COMMIT;
-    SELECT * FROM »óÇ°;
-    SELECT * FROM ÆÇ¸Å;
+    SELECT * FROM ìƒí’ˆ;
+    SELECT * FROM íŒë§¤;
 
 
- -- DELETE Æ®¸®°Å (ÆÇ¸Å Å×ÀÌºí¿¡ ÀÚ·á°¡ »èÁ¦µÇ´Â °æ¿ì »óÇ° Å×ÀÌºíÀÇ Àç°í¼ö·®ÀÌ º¯°æ)
+ -- DELETE íŠ¸ë¦¬ê±° (íŒë§¤ í…Œì´ë¸”ì— ìžë£Œê°€ ì‚­ì œë˜ëŠ” ê²½ìš° ìƒí’ˆ í…Œì´ë¸”ì˜ ìž¬ê³ ìˆ˜ëŸ‰ì´ ë³€ê²½)
     CREATE OR REPLACE TRIGGER delTrg_Pan
-    AFTER DELETE ON ÆÇ¸Å 
+    AFTER DELETE ON íŒë§¤ 
     FOR EACH ROW 
     
     BEGIN
-       UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® + :OLD.ÆÇ¸Å¼ö·® WHERE »óÇ°ÄÚµå = :OLD.»óÇ°ÄÚµå;   
+       UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ + :OLD.íŒë§¤ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :OLD.ìƒí’ˆì½”ë“œ;   
     END;
     /
-    -- DELETE Å×½ºÆ®
-    DELETE ÆÇ¸Å WHERE ÆÇ¸Å¹øÈ£ = 1;
+    -- DELETE í…ŒìŠ¤íŠ¸
+    DELETE íŒë§¤ WHERE íŒë§¤ë²ˆí˜¸ = 1;
     COMMIT;
     
-    SELECT * FROM »óÇ°;
-    SELECT * FROM ÆÇ¸Å;
+    SELECT * FROM ìƒí’ˆ;
+    SELECT * FROM íŒë§¤;
 
-** ÇÏ³ªÀÇ Æ®¸®°Å·Î ÀÛ¼º
+** í•˜ë‚˜ì˜ íŠ¸ë¦¬ê±°ë¡œ ìž‘ì„±
 CREATE OR REPLACE TRIGGER Trg_IN
-AFTER INSERT OR UPDATE OR DELETE ON ÀÔ°í 
+AFTER INSERT OR UPDATE OR DELETE ON ìž…ê³  
 FOR EACH ROW
 
 BEGIN 
     IF INSERTING THEN 
-        UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® + :NEW.ÀÔ°í¼ö·® WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå;        
+        UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ + :NEW.ìž…ê³ ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ;        
     ELSIF UPDATING THEN
-        UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® - :OLD.ÀÔ°í¼ö·® + :NEW.ÀÔ°í¼ö·® WHERE »óÇ°ÄÚµå = :NEW.»óÇ°ÄÚµå;
+        UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ - :OLD.ìž…ê³ ìˆ˜ëŸ‰ + :NEW.ìž…ê³ ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :NEW.ìƒí’ˆì½”ë“œ;
     ELSIF DELETING THEN 
-        UPDATE »óÇ° SET Àç°í¼ö·® = Àç°í¼ö·® - :OLD.ÀÔ°í¼ö·® WHERE »óÇ°ÄÚµå = :OLD.»óÇ°ÄÚµå;
+        UPDATE ìƒí’ˆ SET ìž¬ê³ ìˆ˜ëŸ‰ = ìž¬ê³ ìˆ˜ëŸ‰ - :OLD.ìž…ê³ ìˆ˜ëŸ‰ WHERE ìƒí’ˆì½”ë“œ = :OLD.ìƒí’ˆì½”ë“œ;
     END IF;
 END;
 
-
-[Package]
- - ¿À¶óÅ¬¿¡ ÀúÀåµÈ ¼­·Î °ü·Ã ÀÖ´Â PL/SQL ÇÁ·Î½ÃÀú, ÇÔ¼ö, Å¸ÀÔ µîÀ» ³í¸®ÀûÀ¸·Î ¹­¾î ³õÀº ÁýÇÕ 
- - ¼±¾ðºÎ + º»¹®(±¸ÇöºÎ) 
- - ÆÐÅ°Áö ³»¿¡¼­´Â ÇÁ·Î½ÃÀú¿Í ÇÔ¼öÀÇ ¿À¹ö·ÎµùÀÌ °¡´É 
- - ÆÐÅ°Áö ¸ñ·Ï È®ÀÎ 
-   SELECT * FROM user_objects WHERE object_type = 'PACKAGE'; 
-   SELECT * FROM user_objects WHERE object_type = 'PACKAGE_BODY'; 
-   SELECT * FROM user_procedures WHERE object_type = 'PACKAGE';  -- ÆÐÅ°Áö ³»ÀÇ ÇÁ·Î½ÃÀú, ÇÔ¼ö ¸ñ·Ï
-   
- 1) ÆÐÅ°Áö »ý¼º 
-  - ¼±¾ðºÎ | ÆÐÅ°Áö¿¡ Æ÷ÇÔµÉ PL/SQL ÇÁ·Î½ÃÀú, ÇÔ¼ö, Ä¿¼­, º¯¼ö, ¿¹¿ÜÀý ¼±¾ð (ÆÐÅ°Áö ÀüÃ¼¿¡ Àû¿ëµÊ)
-   * Çü½Ä 
-    CREATE OR REPLACE PACKAGE ÆÐÅ°Áö¸í IS
-        [º¯¼ö ¼±¾ðÀý] 
-        [Ä¿¼­ ¼±¾ðÀý]
-        [¿¹¿Ü ¼±¾ðÀý]
-        [ÇÔ¼ö ¼±¾ðÀý]       FUNCTION ÇÔ¼ö¸í(ÀÎ¼ö) RETURN ¸®ÅÏÅ¸ÀÔ;
-        [ÇÁ·Î½ÃÀú ¼±¾ðÀý]    PROCEDURE ÇÁ·Î½ÃÀú¸í(ÀÎ¼ö); 
-    END ÆÐÅ°Áö¸í; 
-    
-  - ±¸ÇöºÎ | ÆÐÅ°Áö¿¡¼­ ¼±¾ðµÈ ÇÁ·Î½ÃÀú³ª ÇÔ¼öÀÇ ¸öÃ¼ ±¸Çö 
-   * Çü½Ä
-    CREATE OR REPLACE PACKAGE BODY ÆÐÅ°Áö¸í IS
-        [ÇÔ¼ö ±¸Çö]
-           FUNCTION ÇÔ¼ö¸í(ÀÎ¼ö) 
-           RETURN ¸®ÅÏÅ¸ÀÔ
-           IS º¯¼ö ¼±¾ð 
-           BEGIN ÇÔ¼ö ¸öÃ¼ ±¸Çö
-           RETURN ¸®ÅÏ°ª; 
-           END;
-        [ÇÁ·Î½ÃÀú ±¸Çö]
-           PROCEDURE ÇÁ·Î½ÃÀú¸í(ÀÎ¼ö)
-           IS º¯¼ö¼±¾ð
-           BEGIN ÇÁ·Î½ÃÀú ¸öÃ¼ ±¸Çö
-           END;
-    END ÆÐÅ°Áö¸í;
-   
- 2) ÆÐÅ°Áö ³» ÇÁ·Î½ÃÀú OR ÇÔ¼ö ½ÇÇà 
-    EXEC ÆÐÅ°Áö¸í.ÇÁ·Î½ÃÀú¸í(ÀÎ¼ö); 
-    
- 3) ÆÐÅ°Áö »èÁ¦ 
-    DROP PACKAGE ÆÐÅ°Áö¸í;  -- ¼±¾ðºÎ¿Í ¸öÃ¼ »èÁ¦
-    DROP PACKAGE BODY ÆÐÅ°Áö¸í; -- ¸öÃ¼ »èÁ¦
-    
-   -----------------------------------------------------------------------------------------------------
-    - ÆÐÅ°Áö ¼±¾ð
-    CREATE OR REPLACE PACKAGE pEmp IS 
-        FUNCTION fnTax(p IN NUMBER) RETURN NUMBER;
-        PROCEDURE empList(pName VARCHAR2);
-        PROCEDURE empList;                 -- ÇÁ·Î½ÃÀú Áßº¹Á¤ÀÇ 
-    END pEmp;
-    /
-    
-    - ¸öÃ¼ ±¸Çö
-    CREATE OR REPLACE PACKAGE BODY pEmp IS 
-        FUNCTION fnTax(p IN NUMBER) 
-        RETURN NUMBER
-        IS 
-            t NUMBER := 0;
-        BEGIN
-            IF p >= 3000000 THEN t := TRUNC(p * 0.03, -1); 
-            ELSIF p >= 2000000 THEN t := TRUNC(p * 0.02, -1);
-            ELSE t := 0;
-            END IF;
-            
-            RETURN t;
-        END;
-        
-        PROCEDURE empList(pName VARCHAR2)
-        IS 
-            vName VARCHAR2(30);
-            vSal NUMBER;
-            CURSOR cur_emp IS 
-                SELECT name, sal FROM emp WHERE INSTR(name, pName)=1; 
-        BEGIN
-            OPEN cur_emp;
-            LOOP 
-                FETCH cur_emp INTO vName, vSal; 
-                EXIT WHEN cur_emp%NOTFOUND;
-                DBMS_OUTPUT.PUT_LINE(vName||' '||vSal); 
-            END LOOP;
-            CLOSE cur_emp;
-        END;
-        
-        PROCEDURE empList
-        IS 
-        BEGIN 
-            FOR rec IN (SELECT name, sal+bonus pay, fnTax(sal+bonus) tax FROM emp) LOOP
-                DBMS_OUTPUT.PUT_LINE(rec.name||' '||rec.pay||' '||rec.tax); 
-            END LOOP;
-        END;
-    END pEmp;
-    /
-    
-    - ÆÐÅ°Áö ½ÇÇà 
-    EXEC pEmp.empList('±è');
-    EXEC pEmp.empList();
-    
-    - ÆÐÅ°Áö ¸ñ·Ï È®ÀÎ 
-    SELECT * FROM user_objects;
-    SELECT * FROM user_procedures;
-    
-    - ÆÐÅ°Áö »èÁ¦ 
-    DROP PACKAGE pEmp;
-         
