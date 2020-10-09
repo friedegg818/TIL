@@ -1,0 +1,15 @@
+-- 전체 DBMS 점유율
+
+-- 국내 DBMS 점유율(2008)
+   1. 오라클 - 48.6%
+   2. 한국 IBM(DB2+인포믹스(Informix)) - 20.7%
+   3. Microsoft SQL Server - 18.1%
+   4. 한국사이베이스(Sybase)
+   5. 기타(MySQL, PostgreSQL, 마리아DB(MariaDB : MySQL 개발자가 개발) 등
+
+-- 국산 RDBMS
+   티베로 RDBMS (티멕스)
+
+-- 기타
+   H2 (DBMS) : 자바로 작성된 관계형 데이터베이스 관리 시스템이다. 자바 애플리케이션에 임베드하거나 클라이언트-서버 모드에서 구동할 수 있다.
+
