@@ -1,12 +1,12 @@
-[Cursor] (Ä¿¼­)
- - ¿©·¯ ·¹ÄÚµå·Î ±¸¼ºµÈ ÀÛ¾÷ ¿µ¿ª¿¡¼­ SQL¹®À» ½ÇÇàÇÏ°í, ±× °úÁ¤¿¡ »ý±ä Á¤º¸¸¦ ÀúÀåÇÏ±â À§ÇÑ ±×¸© 
- - ¿À¶óÅ¬ ¼­¹ö¿¡ ÀÇÇØ ½ÇÇàµÇ´Â ¸ðµç SQL¹®Àº ¿¬°üµÈ °¢°¢ÀÇ Ä¿¼­¸¦ ¼ÒÀ¯ÇÏ°í ÀÖ´Ù.
+[Cursor] (ì»¤ì„œ)
+ - ì—¬ëŸ¬ ë ˆì½”ë“œë¡œ êµ¬ì„±ëœ ìž‘ì—… ì˜ì—­ì—ì„œ SQLë¬¸ì„ ì‹¤í–‰í•˜ê³ , ê·¸ ê³¼ì •ì— ìƒê¸´ ì •ë³´ë¥¼ ì €ìž¥í•˜ê¸° ìœ„í•œ ê·¸ë¦‡ 
+ - ì˜¤ë¼í´ ì„œë²„ì— ì˜í•´ ì‹¤í–‰ë˜ëŠ” ëª¨ë“  SQLë¬¸ì€ ì—°ê´€ëœ ê°ê°ì˜ ì»¤ì„œë¥¼ ì†Œìœ í•˜ê³  ìžˆë‹¤.
  
- 1) ¾Ï½ÃÀû Ä¿¼­ : ¿À¶óÅ¬ÀÌ³ª PL/SQL ½ÇÇà ¸ÞÄ¿´ÏÁò¿¡ ÀÇÇØ SQL ¹®ÀåÀÌ Ã³¸® µÇ´Â °÷¿¡ ´ëÇÑ ÀÍ¸íÀÇ ÁÖ¼Ò 
-                 SQL¹®ÀÌ ½ÇÇàµÇ´Â ¼ø°£ ÀÚµ¿ OPEN - CLOSE 
+ 1) ì•”ì‹œì  ì»¤ì„œ : ì˜¤ë¼í´ì´ë‚˜ PL/SQL ì‹¤í–‰ ë©”ì»¤ë‹ˆì¦˜ì— ì˜í•´ SQL ë¬¸ìž¥ì´ ì²˜ë¦¬ ë˜ëŠ” ê³³ì— ëŒ€í•œ ìµëª…ì˜ ì£¼ì†Œ 
+                 SQLë¬¸ì´ ì‹¤í–‰ë˜ëŠ” ìˆœê°„ ìžë™ OPEN - CLOSE 
                  (SQL%ROWCOUNT / SQL%FOUND / SQL%NOTFOUND / SQL%ISOPEN)
                 
-            -- SQL%ROWCOUNT : ÇØ´ç SQL ¹®¿¡ ¿µÇâÀ» ¹Þ´Â ÇàÀÇ ¼ö 
+            -- SQL%ROWCOUNT : í•´ë‹¹ SQL ë¬¸ì— ì˜í–¥ì„ ë°›ëŠ” í–‰ì˜ ìˆ˜ 
                 DECLARE 
                     vempNo emp.empNo%TYPE;
                     vcount NUMBER;
@@ -16,12 +16,12 @@
                     vCount := SQL%ROWCOUNT;
                     COMMIT;
                     
-                    DBMS_OUTPUT.PUT_LINE(vCount || '·¹ÄÚµå »èÁ¦'); 
+                    DBMS_OUTPUT.PUT_LINE(vCount || 'ë ˆì½”ë“œ ì‚­ì œ'); 
                     
                 END;
                 /
                 
-              -- SQL%NOTFOUND ¤Ó ÇØ´ç SQL¹®¿¡ ¿µÇâÀ» ¹Þ´Â ÇàÀÇ ¼ö°¡ ¾øÀ» °æ¿ì TRUE 
+              -- SQL%NOTFOUND ã…£ í•´ë‹¹ SQLë¬¸ì— ì˜í–¥ì„ ë°›ëŠ” í–‰ì˜ ìˆ˜ê°€ ì—†ì„ ê²½ìš° TRUE 
                 DECLARE 
                     vempNo emp.empNo%TYPE;
                     vcount NUMBER;
@@ -31,38 +31,38 @@
                     vCount := SQL%ROWCOUNT;
                     
                     IF SQL%NOTFOUND THEN 
-                        RAISE_APPLICATION_ERROR(-20001, '¾øÀ½');
+                        RAISE_APPLICATION_ERROR(-20001, 'ì—†ìŒ');
                     END IF;
                     
                     COMMIT;
                     
-                    DBMS_OUTPUT.PUT_LINE(vCount || '·¹ÄÚµå »èÁ¦'); 
+                    DBMS_OUTPUT.PUT_LINE(vCount || 'ë ˆì½”ë“œ ì‚­ì œ'); 
                     
                 END;
                 /
                
            
- 2) ¸í½ÃÀû Ä¿¼­ : ÇÁ·Î±×·¡¸Ó¿¡ ÀÇÇØ ¼±¾ðµÇ´Â ÀÌ¸§ÀÌ ÀÖ´Â Ä¿¼­ 
-                * ¼ø¼­ | Ä¿¼­ ¼±¾ð(Äõ¸® ¸¸µé±â) > Ä¿¼­ OPEN (½ÇÇà) > FETCH (µ¥ÀÌÅÍ °¡Á®¿À±â) > Ä¿¼­ CLOSE 
+ 2) ëª…ì‹œì  ì»¤ì„œ : í”„ë¡œê·¸ëž˜ë¨¸ì— ì˜í•´ ì„ ì–¸ë˜ëŠ” ì´ë¦„ì´ ìžˆëŠ” ì»¤ì„œ 
+                * ìˆœì„œ | ì»¤ì„œ ì„ ì–¸(ì¿¼ë¦¬ ë§Œë“¤ê¸°) > ì»¤ì„œ OPEN (ì‹¤í–‰) > FETCH (ë°ì´í„° ê°€ì ¸ì˜¤ê¸°) > ì»¤ì„œ CLOSE 
                          
-               -- ¿À·ù°¡ ¹ß»ýÇÏ´Â »óÈ² 
+               -- ì˜¤ë¥˜ê°€ ë°œìƒí•˜ëŠ” ìƒí™© 
                 DECLARE
                     vname emp.name%TYPE;
                     vsal emp.sal%TYPE;
                 BEGIN
-                    SELECT name, sal INTO vname, vsal FROM emp    -- ¿¡·¯ : µ¥ÀÌÅÍÀÇ ¾çÀÌ ³Ê¹« ¸¹À½ 
+                    SELECT name, sal INTO vname, vsal FROM emp    -- ì—ëŸ¬ : ë°ì´í„°ì˜ ì–‘ì´ ë„ˆë¬´ ë§ŽìŒ 
                     DBMS_OUTPUT.PUT_LINE(vname || ':' || vsal);
                 END;
                 /
                 
-               -- ¸í½ÃÀû Ä¿¼­ ÀÌ¿ë 
+               -- ëª…ì‹œì  ì»¤ì„œ ì´ìš© 
                 DECLARE
                     vname emp.name%TYPE;
                     vsal emp.sal%TYPE;
-                - 1.Ä¿¼­ ¼±¾ð
-                   CURSOR cur_emp IS SELECT name, sal FROM emp;   -- cursor ¿¡´Â INTO ÀýÀÌ ¾ø´Ù.
+                - 1.ì»¤ì„œ ì„ ì–¸
+                   CURSOR cur_emp IS SELECT name, sal FROM emp;   -- cursor ì—ëŠ” INTO ì ˆì´ ì—†ë‹¤.
                 BEGIN
-                - 2.Ä¿¼­ OPEN
+                - 2.ì»¤ì„œ OPEN
                    OPEN cur_emp; 
                    
                    LOOP 
@@ -72,12 +72,12 @@
                         DBMS_OUTPUT.PUT_LINE(vname || ':' || vsal); 
                    END LOOP; 
                    
-                - 4.Ä¿¼­ CLOSE
+                - 4.ì»¤ì„œ CLOSE
                    CLOSE cur_emp;   
                 END;
                 /
                 
-               -- ÆÄ¶ó¹ÌÅÍ°¡ ÀÖ´Â Ä¿¼­ (ÀÌ¸§¿¡¼­ ÇÑÀÚ¸¸ ÀÔ·ÂÇÏ¿© Ãâ·Â)
+               -- íŒŒë¼ë¯¸í„°ê°€ ìžˆëŠ” ì»¤ì„œ (ì´ë¦„ì—ì„œ í•œìžë§Œ ìž…ë ¥í•˜ì—¬ ì¶œë ¥)
                 CREATE OR REPLACE PROCEDURE pEmpSelect 
                 (
                     pName VARCHAR2 
@@ -101,9 +101,9 @@
                 END;
                 /
                 
-                EXEC pEmpSelect('±è');
+                EXEC pEmpSelect('ê¹€');
 
-              -- ÆÄ¶ó¹ÌÅÍ »ç¿ëÇÏÁö ¾Ê°í Á¶°Ç °Ë»ö (ÀÌ¸§¿¡¼­ ¼º¸¸ ÀÔ·ÂÇÏ¿© Ãâ·Â) 
+              -- íŒŒë¼ë¯¸í„° ì‚¬ìš©í•˜ì§€ ì•Šê³  ì¡°ê±´ ê²€ìƒ‰ (ì´ë¦„ì—ì„œ ì„±ë§Œ ìž…ë ¥í•˜ì—¬ ì¶œë ¥) 
                 CREATE OR REPLACE PROCEDURE pEmpSelect 
                 (
                     pName VARCHAR2 
@@ -127,9 +127,9 @@
                 END;
                 /
                 
-                EXEC pEmpSelect('ÀÌ');
+                EXEC pEmpSelect('ì´');
                 
-              -- Ä¿¼­ FOR LOOP : ÀÚµ¿ OPEN - CLOSE / ¼±¾ð¸¸ ÇØÁÖ¸é µÊ 
+              -- ì»¤ì„œ FOR LOOP : ìžë™ OPEN - CLOSE / ì„ ì–¸ë§Œ í•´ì£¼ë©´ ë¨ 
                 CREATE OR REPLACE PROCEDURE pEmpSelect
                 IS
                     CURSOR cur_emp IS 
@@ -141,7 +141,7 @@
                 END;
                 /
                 
-           -- WHERE CURRENT OF : FETCH¹®¿¡ ÀÇÇØ °¡Àå ÃÖ±Ù¿¡ Ã³¸®µÈ ÇàÀ» ÂüÁ¶
+           -- WHERE CURRENT OF : FETCHë¬¸ì— ì˜í•´ ê°€ìž¥ ìµœê·¼ì— ì²˜ë¦¬ëœ í–‰ì„ ì°¸ì¡°
               CREATE TABLE  emp1  AS  SELECT * FROM  emp;
         
               CREATE OR REPLACE  PROCEDURE pEmpUpdateSeoul
@@ -150,8 +150,8 @@
                  vName  emp1.name%TYPE;
                  vSal   emp1.sal%TYPE;
                  CURSOR  cur_emp  IS
-                     SELECT  name, sal  FROM  emp1  WHERE city='¼­¿ï'  FOR  UPDATE; 
-                            -- FOR  UPDATE : Ä¿¼­¸¦ ÀÌ¿ëÇÏ¿© UPDATEÇÒ °æ¿ì ¹Ýµå½Ã ÇÊ¿ä
+                     SELECT  name, sal  FROM  emp1  WHERE city='ì„œìš¸'  FOR  UPDATE; 
+                            -- FOR  UPDATE : ì»¤ì„œë¥¼ ì´ìš©í•˜ì—¬ UPDATEí•  ê²½ìš° ë°˜ë“œì‹œ í•„ìš”
               BEGIN
                   vCnt := 0;
             
@@ -159,37 +159,37 @@
                   LOOP
                       FETCH  cur_emp INTO  vname, vsal;
                       UPDATE emp1 SET sal = TRUNC(sal * 1.1) 
-                      WHERE CURRENT OF cur_emp;    -- Ä¿¼­°¡ ÇöÀç À§Ä¡ÇÑ °ª 
-                      EXIT WHEN  cur_emp%NOTFOUND; -- ¸¶Áö¸· µ¥ÀÌÅÍ¸¦ Ã³¸®ÇÒ¶§ ¿¹¿Ü°¡ ¹ß»ýÇÔ
+                      WHERE CURRENT OF cur_emp;    -- ì»¤ì„œê°€ í˜„ìž¬ ìœ„ì¹˜í•œ ê°’ 
+                      EXIT WHEN  cur_emp%NOTFOUND; -- ë§ˆì§€ë§‰ ë°ì´í„°ë¥¼ ì²˜ë¦¬í• ë•Œ ì˜ˆì™¸ê°€ ë°œìƒí•¨
                       vCnt := vCnt + 1;
                       DBMS_OUTPUT.PUT_LINE(vCnt || ':' || vname || ':' || vsal);
                   END LOOP;
-                  -- ¿¹¿Ü°¡ ¹ß»ýÇÏ¿© ½ÇÇà ¾ÈÇÏ°í EXCEPTION Àý ½ÇÇà
+                  -- ì˜ˆì™¸ê°€ ë°œìƒí•˜ì—¬ ì‹¤í–‰ ì•ˆí•˜ê³  EXCEPTION ì ˆ ì‹¤í–‰
                   COMMIT;
                   CLOSE cur_emp;
             
-                  EXCEPTION  WHEN  OTHERS THEN   -- ±âÅ¸ ¿¹¿Ü°¡ ¹ß»ýÇØµµ Ä¿¹Ô (try~catch¿Í À¯»ç)
+                  EXCEPTION  WHEN  OTHERS THEN   -- ê¸°íƒ€ ì˜ˆì™¸ê°€ ë°œìƒí•´ë„ ì»¤ë°‹ (try~catchì™€ ìœ ì‚¬)
                       COMMIT;
-                      DBMS_OUTPUT.PUT_LINE('¼öÁ¤ ¿Ï·á !!!');
+                      DBMS_OUTPUT.PUT_LINE('ìˆ˜ì • ì™„ë£Œ !!!');
               END;
               /
               
               EXEC pEmpUpdateSeoul;
               
-3) Ä¿¼­ º¯¼ö
- - ½ÇÇàµÈ °á°ú¸¦ ÀúÀå ÇÒ ¼ö ÀÖ´Â °Í 
- - REF CURSOR Ä¿¼­ Å¸ÀÔ 
-    > °­ÇÑ Ä¿¼­ Å¸ÀÔ(ÇÑ ÁÙ¸¸ ÀúÀå °¡´É) 
+3) ì»¤ì„œ ë³€ìˆ˜
+ - ì‹¤í–‰ëœ ê²°ê³¼ë¥¼ ì €ìž¥ í•  ìˆ˜ ìžˆëŠ” ê²ƒ 
+ - REF CURSOR ì»¤ì„œ íƒ€ìž… 
+    > ê°•í•œ ì»¤ì„œ íƒ€ìž…(í•œ ì¤„ë§Œ ì €ìž¥ ê°€ëŠ¥) 
        TYPE refcur_emp IS REF CURSOR RETURN emp%ROWTYPE;     
-    > ¾àÇÑ Ä¿¼­ Å¸ÀÔ (¾ðÁ¦µçÁö »ç¿ë °¡´É, ¹«¾ùÀÌµçÁö ´ãÀ» ¼ö ÀÖÀ½, ¿©·¯ÁÙ ÀúÀå °¡´É)
+    > ì•½í•œ ì»¤ì„œ íƒ€ìž… (ì–¸ì œë“ ì§€ ì‚¬ìš© ê°€ëŠ¥, ë¬´ì—‡ì´ë“ ì§€ ë‹´ì„ ìˆ˜ ìžˆìŒ, ì—¬ëŸ¬ì¤„ ì €ìž¥ ê°€ëŠ¥)
        TYPE refcur IS REF CURSOR;       
- - SYS_REFCURSOR : ´ëÇ¥ÀûÀÎ ¾àÇÑ Ä¿¼­ Å¸ÀÔ. ¿ÀÇÂµÈ ÀÚ·áÇüÀ» °¡Áú ¼ö ÀÖÀ½ (2ÁÙ ÀÌ»ó ÀúÀå °¡´É) 
+ - SYS_REFCURSOR : ëŒ€í‘œì ì¸ ì•½í•œ ì»¤ì„œ íƒ€ìž…. ì˜¤í”ˆëœ ìžë£Œí˜•ì„ ê°€ì§ˆ ìˆ˜ ìžˆìŒ (2ì¤„ ì´ìƒ ì €ìž¥ ê°€ëŠ¥) 
  
-  -- SYS_REFCURSOR »ç¿ëÇÏ¿© ÇÁ·Î½ÃÀú »ý¼º 
+  -- SYS_REFCURSOR ì‚¬ìš©í•˜ì—¬ í”„ë¡œì‹œì € ìƒì„± 
          CREATE OR REPLACE PROCEDURE pEmpSelectList
          (
             pName IN VARCHAR2, 
-            pResult OUT SYS_REFCURSOR    -- °á°ú°¡ pResult·Î µé¾î°¡¹Ç·Î OUT »ç¿ë 
+            pResult OUT SYS_REFCURSOR    -- ê²°ê³¼ê°€ pResultë¡œ ë“¤ì–´ê°€ë¯€ë¡œ OUT ì‚¬ìš© 
          )
          IS 
          BEGIN
@@ -199,7 +199,7 @@
          END;
          /
  
-  -- Á¦´ë·Î ÀÛµ¿ ÇÏ´ÂÁö È®ÀÎ 
+  -- ì œëŒ€ë¡œ ìž‘ë™ í•˜ëŠ”ì§€ í™•ì¸ 
          CREATE OR REPLACE PROCEDURE pEmpSelectResult
          (
             pName IN VARCHAR2
@@ -219,17 +219,17 @@
          END;
          /
  
-         EXEC pEmpSelectResult('±è');
+         EXEC pEmpSelectResult('ê¹€');
          
 
-[µ¿Àû Äõ¸®] Dynamic SQL
- - ÇÁ·Î½ÃÀú µî¿¡¼­ ÅØ½ºÆ® Äõ¸®¸¦ ÀÔ·Â ¹Þ¾Æ µ¿ÀûÀ¸·Î Äõ¸®¸¦ »ý¼º 
+[ë™ì  ì¿¼ë¦¬] Dynamic SQL
+ - í”„ë¡œì‹œì € ë“±ì—ì„œ í…ìŠ¤íŠ¸ ì¿¼ë¦¬ë¥¼ ìž…ë ¥ ë°›ì•„ ë™ì ìœ¼ë¡œ ì¿¼ë¦¬ë¥¼ ìƒì„± 
  - EXECUTE IMMEDIATE 
-    - Å×ÀÌºí ÀÛ¼º ¹× ½ÃÄö½º ÀÛ¼º ±ÇÇÑ ºÎ¿© 
-      -- °ü¸®ÀÚ °èÁ¤ 
+    - í…Œì´ë¸” ìž‘ì„± ë° ì‹œí€€ìŠ¤ ìž‘ì„± ê¶Œí•œ ë¶€ì—¬ 
+      -- ê´€ë¦¬ìž ê³„ì • 
       GRANT CREATE TABLE TO sky;
       GRANT CREATE SEQUENCE TO sky;
-      -- sky °èÁ¤ (À¯ÀúÀÇ ½Ã½ºÅÛ ±ÇÇÑ È®ÀÎ)
+      -- sky ê³„ì • (ìœ ì €ì˜ ì‹œìŠ¤í…œ ê¶Œí•œ í™•ì¸)
       SELECT * FROM user_sys_privs;
 
     CREATE OR REPLACE PROCEDURE pBoardCreate
@@ -249,21 +249,21 @@
         
         FOR t IN (SELECT tname FROM tab WHERE tname = UPPER(pName)) LOOP 
             EXECUTE IMMEDIATE 'DROP TABLE ' || pName || ' PURGE'; 
-            DBMS_OUTPUT.PUT_LINE(pName || ' Å×ÀÌºí »èÁ¦...'); 
+            DBMS_OUTPUT.PUT_LINE(pName || ' í…Œì´ë¸” ì‚­ì œ...'); 
             EXIT;
         END LOOP;
         
-        EXECUTE IMMEDIATE s;     -- µ¿Àû Äõ¸® ½ÇÇà. Å×ÀÌºí »ý¼º. 
+        EXECUTE IMMEDIATE s;     -- ë™ì  ì¿¼ë¦¬ ì‹¤í–‰. í…Œì´ë¸” ìƒì„±. 
         
         FOR i IN (SELECT sequence_name FROM seq WHERE sequence_name=UPPER(pName||'_seq')) LOOP 
             EXECUTE IMMEDIATE 'DROP SEQUENCE ' || pName || '_seq';
-            DBMS_OUTPUT.PUT_LINE(pName || '_seq ½ÃÄö½º »èÁ¦...'); 
+            DBMS_OUTPUT.PUT_LINE(pName || '_seq ì‹œí€€ìŠ¤ ì‚­ì œ...'); 
             EXIT;
         END LOOP; 
         
-        EXECUTE IMMEDIATE 'CREATE SEQUENCE ' || pName || '_seq';    -- ½ÃÄö½º »ý¼º.
+        EXECUTE IMMEDIATE 'CREATE SEQUENCE ' || pName || '_seq';    -- ì‹œí€€ìŠ¤ ìƒì„±.
         
-        DBMS_OUTPUT.PUT_LINE('Å×ÀÌºí ¹× ½ÃÄö½º ÀÛ¼º ¼º°ø...');    
+        DBMS_OUTPUT.PUT_LINE('í…Œì´ë¸” ë° ì‹œí€€ìŠ¤ ìž‘ì„± ì„±ê³µ...');    
     END;
     /
     
