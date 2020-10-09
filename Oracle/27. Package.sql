@@ -9,8 +9,9 @@
    SELECT * FROM user_procedures WHERE object_type = 'PACKAGE';  -- 패키지 내의 프로시저, 함수 목록
    
  1) 패키지 생성 
+ 
   - 선언부 | 패키지에 포함될 PL/SQL 프로시저, 함수, 커서, 변수, 예외절 선언 (패키지 전체에 적용됨)
-   * 형식 
+     * 형식 
     CREATE OR REPLACE PACKAGE 패키지명 IS
         [변수 선언절] 
         [커서 선언절]
@@ -18,6 +19,7 @@
         [함수 선언절]       FUNCTION 함수명(인수) RETURN 리턴타입;
         [프로시저 선언절]    PROCEDURE 프로시저명(인수); 
     END 패키지명; 
+    
     
   - 구현부 | 패키지에서 선언된 프로시저나 함수의 몸체 구현 
    * 형식
@@ -45,62 +47,62 @@
     
    -----------------------------------------------------------------------------------------------------
     - 패키지 선언
-    CREATE OR REPLACE PACKAGE pEmp IS 
-        FUNCTION fnTax(p IN NUMBER) RETURN NUMBER;
-        PROCEDURE empList(pName VARCHAR2);
-        PROCEDURE empList;                 -- 프로시저 중복정의 
-    END pEmp;
-    /
+      CREATE OR REPLACE PACKAGE pEmp IS 
+          FUNCTION fnTax(p IN NUMBER) RETURN NUMBER;
+          PROCEDURE empList(pName VARCHAR2);
+          PROCEDURE empList;                 -- 프로시저 중복정의 
+      END pEmp;
+      /
     
     - 몸체 구현
-    CREATE OR REPLACE PACKAGE BODY pEmp IS 
-        FUNCTION fnTax(p IN NUMBER) 
-        RETURN NUMBER
-        IS 
-            t NUMBER := 0;
-        BEGIN
-            IF p >= 3000000 THEN t := TRUNC(p * 0.03, -1); 
-            ELSIF p >= 2000000 THEN t := TRUNC(p * 0.02, -1);
-            ELSE t := 0;
-            END IF;
-            
-            RETURN t;
-        END;
-        
-        PROCEDURE empList(pName VARCHAR2)
-        IS 
-            vName VARCHAR2(30);
-            vSal NUMBER;
-            CURSOR cur_emp IS 
-                SELECT name, sal FROM emp WHERE INSTR(name, pName)=1; 
-        BEGIN
-            OPEN cur_emp;
-            LOOP 
-                FETCH cur_emp INTO vName, vSal; 
-                EXIT WHEN cur_emp%NOTFOUND;
-                DBMS_OUTPUT.PUT_LINE(vName||' '||vSal); 
-            END LOOP;
-            CLOSE cur_emp;
-        END;
-        
-        PROCEDURE empList
-        IS 
-        BEGIN 
-            FOR rec IN (SELECT name, sal+bonus pay, fnTax(sal+bonus) tax FROM emp) LOOP
-                DBMS_OUTPUT.PUT_LINE(rec.name||' '||rec.pay||' '||rec.tax); 
-            END LOOP;
-        END;
-    END pEmp;
-    /
+      CREATE OR REPLACE PACKAGE BODY pEmp IS 
+          FUNCTION fnTax(p IN NUMBER) 
+          RETURN NUMBER
+          IS 
+              t NUMBER := 0;
+          BEGIN
+              IF p >= 3000000 THEN t := TRUNC(p * 0.03, -1); 
+              ELSIF p >= 2000000 THEN t := TRUNC(p * 0.02, -1);
+              ELSE t := 0;
+              END IF;
+
+              RETURN t;
+          END;
+
+          PROCEDURE empList(pName VARCHAR2)
+          IS 
+              vName VARCHAR2(30);
+              vSal NUMBER;
+              CURSOR cur_emp IS 
+                  SELECT name, sal FROM emp WHERE INSTR(name, pName)=1; 
+          BEGIN
+              OPEN cur_emp;
+              LOOP 
+                  FETCH cur_emp INTO vName, vSal; 
+                  EXIT WHEN cur_emp%NOTFOUND;
+                  DBMS_OUTPUT.PUT_LINE(vName||' '||vSal); 
+              END LOOP;
+              CLOSE cur_emp;
+          END;
+
+          PROCEDURE empList
+          IS 
+          BEGIN 
+              FOR rec IN (SELECT name, sal+bonus pay, fnTax(sal+bonus) tax FROM emp) LOOP
+                  DBMS_OUTPUT.PUT_LINE(rec.name||' '||rec.pay||' '||rec.tax); 
+              END LOOP;
+          END;
+      END pEmp;
+      /
     
     - 패키지 실행 
-    EXEC pEmp.empList('김');
-    EXEC pEmp.empList();
-    
+      EXEC pEmp.empList('김');
+      EXEC pEmp.empList();
+
     - 패키지 목록 확인 
-    SELECT * FROM user_objects;
-    SELECT * FROM user_procedures;
+      SELECT * FROM user_objects;
+      SELECT * FROM user_procedures;
     
     - 패키지 삭제 
-    DROP PACKAGE pEmp;
+      DROP PACKAGE pEmp;
          
