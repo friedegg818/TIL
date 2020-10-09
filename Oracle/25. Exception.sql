@@ -1,6 +1,8 @@
-[¿¹¿ÜÃ³¸®] 
+
+[Exception] (ì˜ˆì™¸ì²˜ë¦¬)  
+
       -------------------------------------------------------------
-      -- 
+       
       DECLARE
          vName  VARCHAR2(30);
          vSal   NUMBER;
@@ -13,16 +15,17 @@
     
           EXCEPTION
               WHEN  NO_DATA_FOUND THEN
-                  DBMS_OUTPUT.PUT_LINE('Á¸ÀçÇÏÁö ¾Ê´Â µ¥ÀÌÅÍ');
+                  DBMS_OUTPUT.PUT_LINE('ì¡´ìž¬í•˜ì§€ ì•ŠëŠ” ë°ì´í„°');
               WHEN  TOO_MANY_ROWS THEN
-                  DBMS_OUTPUT.PUT_LINE('µÎ°³ ÀÌ»ó Á¸Àç');
+                  DBMS_OUTPUT.PUT_LINE('ë‘ê°œ ì´ìƒ ì¡´ìž¬');
               WHEN  OTHERS THEN
-                  DBMS_OUTPUT.PUT_LINE('±âÅ¸ ¿¡·¯');
+                  DBMS_OUTPUT.PUT_LINE('ê¸°íƒ€ ì—ëŸ¬');
       END;
       /   
 
       ---------------------------------------------------------------
-      -- »ç¿ëÀÚ Á¤ÀÇ ¿¹¿Ü ¸¸µé±â
+      
+      -- ì‚¬ìš©ìž ì •ì˜ ì˜ˆì™¸ ë§Œë“¤ê¸°
       DECLARE
          vName  VARCHAR2(30);
          vSal   NUMBER;
@@ -38,8 +41,9 @@
     
           EXCEPTION
               WHEN  emp_sal_check THEN
-                  DBMS_OUTPUT.PUT_LINE('±Þ¿©°¡ 3000000¿ø ÀÌ»óÀÔ´Ï´Ù.');
+                  DBMS_OUTPUT.PUT_LINE('ê¸‰ì—¬ê°€ 3000000ì› ì´ìƒìž…ë‹ˆë‹¤.');
               WHEN  OTHERS THEN
-                  DBMS_OUTPUT.PUT_LINE('±âÅ¸ ¿¡·¯');
+                  DBMS_OUTPUT.PUT_LINE('ê¸°íƒ€ ì—ëŸ¬');
       END;
       / 
+      
