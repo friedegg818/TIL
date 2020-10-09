@@ -49,8 +49,9 @@
  > > - 참고 * [활용 예제](https://github.com/friedegg818/TIL/blob/master/Oracle/23-2.%20Procedure%20%ED%99%9C%EC%9A%A9%20%EC%98%88%EC%A0%9C.sql) / [문제](https://github.com/friedegg818/TIL/blob/master/Oracle/23-3.%20Procedure%20%EB%AC%B8%EC%A0%9C.sql)
  > - [Cursor](https://github.com/friedegg818/TIL/blob/master/Oracle/24.%20Cursor.sql)
  > - [Exception](https://github.com/friedegg818/TIL/blob/master/Oracle/25.%20Exception.sql) 
- > - Trigger
- > - Index 
+ > - [Trigger](https://github.com/friedegg818/TIL/blob/master/Oracle/26.%20Trigger.sql)
+ > - [Package](https://github.com/friedegg818/TIL/blob/master/Oracle/27.%20Package.sql)
+ > - [Index](https://github.com/friedegg818/TIL/blob/master/Oracle/28.%20Index.sql) 
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
