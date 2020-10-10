@@ -73,3 +73,5 @@ sql>
 
 -- 18c -> "ORA-28014: 관리 사용자를 삭제할 수 없습니다." 오류 발생시 아래 쿼리를 실행 후 DROP USER
    ALTER SESSION SET "_ORACLE_SCRIPT" = true;
+   
+   
