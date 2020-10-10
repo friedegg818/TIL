@@ -1,23 +1,23 @@
---- ¿À¶óÅ¬ 12CºÎÅÍ Ãß°¡µÈ »õ·Î¿î ±â´É
+# Oracle 12C ì¶”ê°€ ê¸°ëŠ¥ 
 
-[Top-N ±â´É] 
- - ¼ø¼­°¡ ÁöÁ¤µÈ µ¥ÀÌÅÍ ÁýÇÕ¿¡¼­ ¹ÝÈ¯µÇ´Â Çà ¼ö¸¦ Á¦ÇÑÇÏ´Â ¹æ¹ý Á¦°ø 
- - »óÀ§ or ÇÏÀ§ N°³ÀÇ Çà ¼ö¸¦ ¸®ÅÏÇÏ°Å³ª, µ¥ÀÌÅÍ¸¦ ÅëÇØ ÆäÀÌÂ¡ ÇÒ ¶§ ¸Å¿ì À¯¿ë
- - ·Î¿ì Á¦ÇÑ Àý(row_limiting_clause) »ç¿ë 
+[Top-N ê¸°ëŠ¥] 
+ - ìˆœì„œê°€ ì§€ì •ëœ ë°ì´í„° ì§‘í•©ì—ì„œ ë°˜í™˜ë˜ëŠ” í–‰ ìˆ˜ë¥¼ ì œí•œí•˜ëŠ” ë°©ë²• ì œê³µ 
+ - ìƒìœ„ or í•˜ìœ„ Nê°œì˜ í–‰ ìˆ˜ë¥¼ ë¦¬í„´í•˜ê±°ë‚˜, ë°ì´í„°ë¥¼ í†µí•´ íŽ˜ì´ì§• í•  ë•Œ ë§¤ìš° ìœ ìš©
+ - ë¡œìš° ì œí•œ ì ˆ(row_limiting_clause) ì‚¬ìš© 
   
-  *¿¹½Ã 
-   1) Ã³À½ºÎÅÍ 3°³ 
+  *ì˜ˆì‹œ 
+   1) ì²˜ìŒë¶€í„° 3ê°œ 
       SELECT * FROM emp
       WHERE ROWNUM <= 3;
  
 	  SELECT * FROM emp
 	  FETCH FIRST 3 ROWS ONLY;     
       
-    2) ±Þ¿© ³»¸²Â÷¼ø Á¤·ÄÇØ¼­ Ã³À½ºÎÅÍ 3°³
+    2) ê¸‰ì—¬ ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬í•´ì„œ ì²˜ìŒë¶€í„° 3ê°œ
 
 	  SELECT * FROM emp
 	  WHERE ROWNUM <= 3
-	  ORDER BY sal DESC;  -- °á°ú Ãâ·Â ¾ÈµÊ
+	  ORDER BY sal DESC;  -- ê²°ê³¼ ì¶œë ¥ ì•ˆë¨
 	  
 	  -- 11g
 	  SELECT * FROM (
@@ -30,37 +30,37 @@
      ORDER BY sal DESC
 	 FETCH FIRST 3 ROWS ONLY;
 	  
-    3) ±Þ¿© ³»¸²Â÷¼ø Á¤·ÄÇØ¼­ 2°³ °Ç³Ê ¶Ù°í 3°³
+    3) ê¸‰ì—¬ ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬í•´ì„œ 2ê°œ ê±´ë„ˆ ë›°ê³  3ê°œ
 	  -- 12C
      SELECT * FROM emp
      ORDER BY sal DESC
 	 OFFSET 2  ROWS FETCH FIRST 3 ROWS ONLY;
 	  
-	 -- ±Þ¿© »óÀ§ 10%
+	 -- ê¸‰ì—¬ ìƒìœ„ 10%
      SELECT * FROM emp
      ORDER BY sal DESC
 	 FETCH FIRST 10 PERCENT ROWS ONLY;
 	 
-	4) ÆäÀÌÂ¡ Ã³¸® 
+	4) íŽ˜ì´ì§• ì²˜ë¦¬ 
      -- 11g 
-	 -- sal ³»¸²Â÷¼ø Á¤·ÄÇØ¼­ 21~30
+	 -- sal ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬í•´ì„œ 21~30
 	 SELECT * FROM (
 	    SELECT ROWNUM rnum, tb.* FROM (
 		    SELECT name, sal FROM emp
-			-- WHERE Àý
+			-- WHERE ì ˆ
 			ORDER BY sal DESC
 		) tb WHERE ROWNUM <= 30
 	 ) WHERE rnum >= 21;
 	 
 	 -- 12c
 	 SELECT name, sal FROM emp
-	 -- WHERE Àý
+	 -- WHERE ì ˆ
 	 ORDER BY sal DESC
 	 OFFSET 20 ROWS FETCH FIRST 10 ROWS ONLY;
 
 
 [INVISIBLE column]
- - º¸ÀÌÁö ¾Ê´Â ÄÃ·³ »ý¼º 
+ - ë³´ì´ì§€ ì•ŠëŠ” ì»¬ëŸ¼ ìƒì„± 
 
 	  CREATE TABLE test (
 	      num  NUMBER  PRIMARY  KEY
@@ -68,17 +68,17 @@
 		  ,tel   VARCHAR2(30) INVISIBLE
 	  );
 	  
-	  DESC test;  -- tel ¾Èº¸ÀÓ
+	  DESC test;  -- tel ì•ˆë³´ìž„
 	  SELECT column_name, hidden_column
 	  FROM user_tab_cols WHERE table_name='TEST';
-	           -- º¸ÀÓ
+	           -- ë³´ìž„
 	  
 	  INSERT INTO test VALUES(1, 'a');
-	  INSERT INTO test VALUES(2, 'b', '010'); -- ¿¡·¯
-	  INSERT INTO test (num, name, tel)VALUES(2, 'b', '010'); -- °¡´É
+	  INSERT INTO test VALUES(2, 'b', '010'); -- ì—ëŸ¬
+	  INSERT INTO test (num, name, tel)VALUES(2, 'b', '010'); -- ê°€ëŠ¥
 	  
-	  SELECT * FROM test; -- tel ¾Èº¸ÀÓ
-	  SELECT num, name, tel FROM test; -- º¸ÀÓ
+	  SELECT * FROM test; -- tel ì•ˆë³´ìž„
+	  SELECT num, name, tel FROM test; -- ë³´ìž„
 	  
 	  -- VISIBLE
 	  ALTER TABLE test MODIFY (tel VISIBLE);
@@ -94,15 +94,15 @@
 	  ALTER TABLE test MODIFY (tel INVISIBLE);
 	  
 	  INSERT INTO test VALUES(1, 'a');
-	     -- ¿¡·¯. INVISIBLE ÀÌ¾îµµ Á¦¾àÁ¶°ÇÀº µ¿ÀÛ
+	     -- ì—ëŸ¬. INVISIBLE ì´ì–´ë„ ì œì•½ì¡°ê±´ì€ ë™ìž‘
 	  
 	  DROP TABLE test PURGE;
 
 
 [IDENTITY column]
- - ÀÚµ¿À¸·Î ¼ýÀÚ°¡ Áõ°¡µÇ´Â ÄÃ·³ 
+ - ìžë™ìœ¼ë¡œ ìˆ«ìžê°€ ì¦ê°€ë˜ëŠ” ì»¬ëŸ¼ 
     
-      -- ÀÚµ¿Áõ°¡ ÄÃ·³
+      -- ìžë™ì¦ê°€ ì»¬ëŸ¼
 	  CREATE TABLE  test (
 	      num  NUMBER GENERATED AS IDENTITY PRIMARY KEY
 		  -- num  NUMBER GENERATED AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY
@@ -110,25 +110,25 @@
 	  );
 	  
 	  INSERT INTO test VALUES('a');
-	      -- ¿¡·¯
+	      -- ì—ëŸ¬
 	  INSERT INTO test (subject) VALUES ('a');
 	  INSERT INTO test (subject) VALUES ('b');
 	  SELECT * FROM test;
 	  
 	  ROLLBACK;
-       -- ³»ºÎÀûÀ¸·Î ½ÃÄö½º¸¦ »ç¿ëÇÏ¹Ç·Î ·Ñ¹éÇØµµ ´Ù½Ã Ã³À½À¸·Î µ¹¾Æ°¡Áö ¾Ê´Â´Ù.
+       -- ë‚´ë¶€ì ìœ¼ë¡œ ì‹œí€€ìŠ¤ë¥¼ ì‚¬ìš©í•˜ë¯€ë¡œ ë¡¤ë°±í•´ë„ ë‹¤ì‹œ ì²˜ìŒìœ¼ë¡œ ëŒì•„ê°€ì§€ ì•ŠëŠ”ë‹¤.
 	  
 	  INSERT INTO test (subject) VALUES ('a');
 	  INSERT INTO test (subject) VALUES ('b');
 	  SELECT * FROM test;
 
 	  INSERT INTO test (num, subject) VALUES (1, 'x');
-	          -- ¿¡·¯ :  ±âº»ÀÌ ALWAYS ·Î IDENTITY ÄÃ·³Àº INSERT, UPDATE ½Ã ¼öÁ¤ ºÒ°¡
+	          -- ì—ëŸ¬ :  ê¸°ë³¸ì´ ALWAYS ë¡œ IDENTITY ì»¬ëŸ¼ì€ INSERT, UPDATE ì‹œ ìˆ˜ì • ë¶ˆê°€
 			  
 	  SELECT * FROM user_objects;
 	  SELECT ISEQ$$_xxx.CURRVAL FROM dual;
 	  
-	  -- IDENTITY ÄÃ·³¿¡ INSERT, UPDATE ½Ã ¼öÁ¤ °¡´É ÇÏµµ·Ï(Àß ÇÏÁö ¾ÊÀ½)
+	  -- IDENTITY ì»¬ëŸ¼ì— INSERT, UPDATE ì‹œ ìˆ˜ì • ê°€ëŠ¥ í•˜ë„ë¡(ìž˜ í•˜ì§€ ì•ŠìŒ)
 	     -- BY DEFAULT
 		 
 	  DROP TABLE test PURGE;
@@ -147,18 +147,18 @@
 	  INSERT INTO test (subject) VALUES ('c');
 	  SELECT * FROM test;
 	  
-	  -- BY DEFAULT Á¦°Å
+	  -- BY DEFAULT ì œê±°
 	  ALTER TABLE test MODIFY (num GENERATED ALWAYS IDENTITY);
 	  
 	  INSERT INTO test (num, subject) VALUES (33, 'd');
-	         -- ¿¡·¯
+	         -- ì—ëŸ¬
 
       DROP TABLE test PURGE;
 
 
-[DEFAULT °ª]
+[DEFAULT ê°’]
       -----------------------------------------------
-      -- 12C ºÎÅÍ´Â CREATE, ALTER ¿¡¼­ DEFAULT¿¡¼­ ½ÃÄö½ºÀÇ NEXTVAL, CURRVAL »ç¿ë °¡´É
+      -- 12C ë¶€í„°ëŠ” CREATE, ALTER ì—ì„œ DEFAULTì—ì„œ ì‹œí€€ìŠ¤ì˜ NEXTVAL, CURRVAL ì‚¬ìš© ê°€ëŠ¥
 	  
 	  CREATE SEQUENCE t_seq;
 	  CREATE TABLE  test (
@@ -176,7 +176,7 @@
 	  DROP SEQUENCE t_seq;
 	  DROP TABLE test PURGE;
 	  
-	  -- NULLÀ» À§ÇÑ DEFAULT
+	  -- NULLì„ ìœ„í•œ DEFAULT
 	  CREATE SEQUENCE t1_seq;
 	  CREATE SEQUENCE t2_seq;
 	  
