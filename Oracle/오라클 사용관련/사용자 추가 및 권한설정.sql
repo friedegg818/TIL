@@ -1,37 +1,37 @@
 -- ----------------------------------------------------
--- sys Á¢¼Ó
+-- sys ì ‘ì†
 cmd>sqlplus / as  sysdba
-¶Ç´Â
-cmd>sqlplus sys/"¾ÏÈ£" as  sysdba
+ë˜ëŠ”
+cmd>sqlplus sys/"ì•”í˜¸" as  sysdba
 
 -- ----------------------------------------------------
--- »ç¿ëÀÚ È®ÀÎ
+-- ì‚¬ìš©ìž í™•ì¸
 SELECT * FROM all_users; 
 
--- bluesky »ç¿ëÀÚ°¡ Á¸ÀçÇÏ¸é »èÁ¦
+-- bluesky ì‚¬ìš©ìžê°€ ì¡´ìž¬í•˜ë©´ ì‚­ì œ
 DROP USER bluesky CASCADE;
 
 -- ----------------------------------------------------
--- 12C ÀÌ»óÀÇ ¹öÀü¿¡¼­ 11g ¹æ½ÄÀ¸·Î »ç¿ëÀÚ Ãß°¡½Ã ORA-65096 ¿À·ù°¡ ¹ß»ýÇÏ´Â °æ¿ì
+-- 12C ì´ìƒì˜ ë²„ì „ì—ì„œ 11g ë°©ì‹ìœ¼ë¡œ ì‚¬ìš©ìž ì¶”ê°€ì‹œ ORA-65096 ì˜¤ë¥˜ê°€ ë°œìƒí•˜ëŠ” ê²½ìš°
  ALTER SESSION SET "_ORACLE_SCRIPT" = true;
 
--- sys ¶Ç´Â system °èÁ¤¿¡¼­
-  -- »ç¿ëÀÚ Ãß°¡
+-- sys ë˜ëŠ” system ê³„ì •ì—ì„œ
+  -- ì‚¬ìš©ìž ì¶”ê°€
   CREATE USER bluesky IDENTIFIED BY "java$!";
 
-   -- »ç¿ëÀÚ ±ÇÇÑ ºÎ¿© : CONN ¹× Å×ÀÌºí ÀÛ¼ºµî ±âº» ±ÇÇÑ
+   -- ì‚¬ìš©ìž ê¶Œí•œ ë¶€ì—¬ : CONN ë° í…Œì´ë¸” ìž‘ì„±ë“± ê¸°ë³¸ ê¶Œí•œ
    GRANT CONNECT, RESOURCE TO bluesky;
 
-   -- bluesky »ç¿ëÀÚ DEFAULT Å×ÀÌºí½ºÆäÀÌ½º¸¦ USERS·Î º¯°æ
+   -- bluesky ì‚¬ìš©ìž DEFAULT í…Œì´ë¸”ìŠ¤íŽ˜ì´ìŠ¤ë¥¼ USERSë¡œ ë³€ê²½
    ALTER USER bluesky DEFAULT TABLESPACE USERS;
 
-   -- bluesky »ç¿ëÀÚ TEMPORARY Å×ÀÌºí½ºÆäÀÌ½º¸¦ TEMP º¯°æ
+   -- bluesky ì‚¬ìš©ìž TEMPORARY í…Œì´ë¸”ìŠ¤íŽ˜ì´ìŠ¤ë¥¼ TEMP ë³€ê²½
    ALTER USER bluesky TEMPORARY TABLESPACE TEMP;
 
-   -- ORACLE 12C ÀÌ»óÀÇ ¹öÀü : USERS Å×ÀÌºí ½ºÆäÀÌ½º ±ÇÇÑ ºÎ¿©(SYS °èÁ¤)
+   -- ORACLE 12C ì´ìƒì˜ ë²„ì „ : USERS í…Œì´ë¸” ìŠ¤íŽ˜ì´ìŠ¤ ê¶Œí•œ ë¶€ì—¬(SYS ê³„ì •)
    ALTER USER bluesky DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS;
 
 
 -- ----------------------------------------------------
-  -- bluesky »ç¿ëÀÚ CONN
+  -- bluesky ì‚¬ìš©ìž CONN
   CONN bluesky/"java$!";
