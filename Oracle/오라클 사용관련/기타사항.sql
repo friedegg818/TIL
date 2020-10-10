@@ -1,8 +1,9 @@
-[±âÅ¸»çÇ×] 
- < µ¥ÀÌÅÍ ¸µÅ© > 
-  - ±ÇÇÑ ºÎ¿© (°ü¸®ÀÚ) 
+[ê¸°íƒ€ì‚¬í•­] 
+ < ë°ì´í„° ë§í¬ > 
+  - ê¶Œí•œ ë¶€ì—¬ (ê´€ë¦¬ì) 
     GRANT CREATE DATABASE LINK TO sky;
-  - µ¥ÀÌÅÍ ¸µÅ© ¼³Á¤ (ÀÏ¹İ À¯Àú)
+    
+  - ë°ì´í„° ë§í¬ ì„¤ì • (ì¼ë°˜ ìœ ì €)
     CREATE DATABASE LINK link_test
          CONNECT TO sky IDENTIFIED BY "java$!"
          USING 
@@ -17,15 +18,15 @@
     UNION ALL
     SELECT * FROM emp@link_test;
     
-  - ¸µÅ© Á¶È¸ 
+  - ë§í¬ ì¡°íšŒ 
     SELECT * FROM user_db_links;
     
-  - ¸µÅ© »èÁ¦
+  - ë§í¬ ì‚­ì œ
     DROP DATABASE LINK link_test;
 
 
- <³í¸®ÀûÀÎ ¹é¾÷>
-   - EXPORT : ÆÄÀÏÀ» ¸ğµÎ ¾ĞÃàÇÏ¿© ¿ÜºÎ·Î ³»º¸³»´Â °Í 
+ <ë…¼ë¦¬ì ì¸ ë°±ì—…>
+   - EXPORT : íŒŒì¼ì„ ëª¨ë‘ ì••ì¶•í•˜ì—¬ ì™¸ë¶€ë¡œ ë‚´ë³´ë‚´ëŠ” ê²ƒ 
      cmd>exp userid=sky/"java$!" file='C:\data\sky.dmp' owner sky
      cmd>dir c:\data
      -------------------------------------------------------------
@@ -33,6 +34,6 @@
      DROP TABLE emp_score PURGE;
      DROP TABLE emp;
      -------------------------------------------------------------    
-  - IMPORT : ¾ĞÃà ÇØÁ¦ÇÏ¿© °¡Á®¿À±â (³í¸®ÀûÀ¸·Î º¹¿ø) 
+  - IMPORT : ì••ì¶• í•´ì œí•˜ì—¬ ê°€ì ¸ì˜¤ê¸° (ë…¼ë¦¬ì ìœ¼ë¡œ ë³µì›) 
     cmd> imp userid=sky/"java$!" file='C:\data\sky.dmp' fromuser=sky touser=sky
     
