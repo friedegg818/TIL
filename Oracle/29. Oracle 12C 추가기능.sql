@@ -1,62 +1,62 @@
 # Oracle 12C 추가 기능 
 
-[Top-N 기능] 
+### Top-N 기능
  - 순서가 지정된 데이터 집합에서 반환되는 행 수를 제한하는 방법 제공 
  - 상위 or 하위 N개의 행 수를 리턴하거나, 데이터를 통해 페이징 할 때 매우 유용
  - 로우 제한 절(row_limiting_clause) 사용 
   
-  *예시 
-   1) 처음부터 3개 
-      SELECT * FROM emp
-      WHERE ROWNUM <= 3;
- 
-	  SELECT * FROM emp
-	  FETCH FIRST 3 ROWS ONLY;     
-      
-    2) 급여 내림차순 정렬해서 처음부터 3개
+	  * 예시 
+	   1) 처음부터 3개 
+	      SELECT * FROM emp
+	      WHERE ROWNUM <= 3;
 
-	  SELECT * FROM emp
-	  WHERE ROWNUM <= 3
-	  ORDER BY sal DESC;  -- 결과 출력 안됨
-	  
-	  -- 11g
-	  SELECT * FROM (
+		  SELECT * FROM emp
+		  FETCH FIRST 3 ROWS ONLY;     
+
+	    2) 급여 내림차순 정렬해서 처음부터 3개
+
+		  SELECT * FROM emp
+		  WHERE ROWNUM <= 3
+		  ORDER BY sal DESC;  -- 결과 출력 안됨
+
+		  -- 11g
+		  SELECT * FROM (
+		     SELECT * FROM emp
+		     ORDER BY sal DESC
+		  ) WHERE ROWNUM <= 3;
+
+		  -- 12c
 	     SELECT * FROM emp
 	     ORDER BY sal DESC
-	  ) WHERE ROWNUM <= 3;
-	  
-	  -- 12c
-     SELECT * FROM emp
-     ORDER BY sal DESC
-	 FETCH FIRST 3 ROWS ONLY;
-	  
-    3) 급여 내림차순 정렬해서 2개 건너 뛰고 3개
-	  -- 12C
-     SELECT * FROM emp
-     ORDER BY sal DESC
-	 OFFSET 2  ROWS FETCH FIRST 3 ROWS ONLY;
-	  
-	 -- 급여 상위 10%
-     SELECT * FROM emp
-     ORDER BY sal DESC
-	 FETCH FIRST 10 PERCENT ROWS ONLY;
-	 
-	4) 페이징 처리 
-     -- 11g 
-	 -- sal 내림차순 정렬해서 21~30
-	 SELECT * FROM (
-	    SELECT ROWNUM rnum, tb.* FROM (
-		    SELECT name, sal FROM emp
-			-- WHERE 절
-			ORDER BY sal DESC
-		) tb WHERE ROWNUM <= 30
-	 ) WHERE rnum >= 21;
-	 
-	 -- 12c
-	 SELECT name, sal FROM emp
-	 -- WHERE 절
-	 ORDER BY sal DESC
-	 OFFSET 20 ROWS FETCH FIRST 10 ROWS ONLY;
+		 FETCH FIRST 3 ROWS ONLY;
+
+	    3) 급여 내림차순 정렬해서 2개 건너 뛰고 3개
+		  -- 12C
+	     SELECT * FROM emp
+	     ORDER BY sal DESC
+		 OFFSET 2  ROWS FETCH FIRST 3 ROWS ONLY;
+
+		 -- 급여 상위 10%
+	     SELECT * FROM emp
+	     ORDER BY sal DESC
+		 FETCH FIRST 10 PERCENT ROWS ONLY;
+
+		4) 페이징 처리 
+	     -- 11g 
+		 -- sal 내림차순 정렬해서 21~30
+		 SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			    SELECT name, sal FROM emp
+				-- WHERE 절
+				ORDER BY sal DESC
+			) tb WHERE ROWNUM <= 30
+		 ) WHERE rnum >= 21;
+
+		 -- 12c
+		 SELECT name, sal FROM emp
+		 -- WHERE 절
+		 ORDER BY sal DESC
+		 OFFSET 20 ROWS FETCH FIRST 10 ROWS ONLY;
 
 
 [INVISIBLE column]
