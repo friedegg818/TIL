@@ -52,7 +52,7 @@
  > - [Trigger](https://github.com/friedegg818/TIL/blob/master/Oracle/26.%20Trigger.sql)
  > - [Package](https://github.com/friedegg818/TIL/blob/master/Oracle/27.%20Package.sql)
  > - [Index](https://github.com/friedegg818/TIL/blob/master/Oracle/28.%20Index.sql) 
- + [Oracle 12C 추가 기능](https://github.com/friedegg818/TIL/edit/master/Oracle/29.%20Oracle%2012C%20%EC%B6%94%EA%B0%80%EA%B8%B0%EB%8A%A5.md)
+ + [Oracle 12C 추가 기능](https://github.com/friedegg818/TIL/blob/master/Oracle/29.%20Oracle%2012C%20%EC%B6%94%EA%B0%80%EA%B8%B0%EB%8A%A5.md)
 * * * 
 ### Vue 
  + [**개발 환경 설정**](https://github.com/friedegg818/TIL/blob/master/Vue/0.%20%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95/%EA%B0%9C%EB%B0%9C%20%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95.md)
