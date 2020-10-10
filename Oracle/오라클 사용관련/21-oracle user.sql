@@ -1,72 +1,73 @@
-[¿À¶óÅ¬ °èÁ¤°ü¸®]
- - ¿À¶óÅ¬ÀÇ ÀÚ¿øÀ» È¿À²ÀûÀ¸·Î °ü¸®ÇÏ±â À§ÇØ ÇÊ¿ä
- - °ü¸®ÀÚ(sys) ¶Ç´Â CREATE USER ½Ã½ºÅÛ ±ÇÇÑÀ» °¡Á®¾ß »ç¿ëÀÚ¸¦ »ý¼º ÇÒ ¼ö ÀÖ´Ù.
+
+[ì˜¤ë¼í´ ê³„ì •ê´€ë¦¬]
+ - ì˜¤ë¼í´ì˜ ìžì›ì„ íš¨ìœ¨ì ìœ¼ë¡œ ê´€ë¦¬í•˜ê¸° ìœ„í•´ í•„ìš”
+ - ê´€ë¦¬ìž(sys) ë˜ëŠ” CREATE USER ì‹œìŠ¤í…œ ê¶Œí•œì„ ê°€ì ¸ì•¼ ì‚¬ìš©ìžë¥¼ ìƒì„± í•  ìˆ˜ ìžˆë‹¤.
  
- 1) °èÁ¤ Á¶È¸ 
-    SELECT * FROM ALL_USERS;  -- DB ¸ðµç »ç¿ëÀÚÀÇ ±âº» Á¤º¸ Á¶È¸
-    SELECT * FROM DBA_USERS;  -- DB ¸ðµç »ç¿ëÀÚÀÇ »ó¼¼ Á¤º¸ Á¶È¸ (¾ÏÈ£ Æ÷ÇÔ)
-    SELECT * FROM USER_USERS; -- ÇöÀç »ç¿ëÀÚÀÇ Á¤º¸ Á¶È¸ 
+ 1) ê³„ì • ì¡°íšŒ 
+    SELECT * FROM ALL_USERS;  -- DB ëª¨ë“  ì‚¬ìš©ìžì˜ ê¸°ë³¸ ì •ë³´ ì¡°íšŒ
+    SELECT * FROM DBA_USERS;  -- DB ëª¨ë“  ì‚¬ìš©ìžì˜ ìƒì„¸ ì •ë³´ ì¡°íšŒ (ì•”í˜¸ í¬í•¨)
+    SELECT * FROM USER_USERS; -- í˜„ìž¬ ì‚¬ìš©ìžì˜ ì •ë³´ ì¡°íšŒ 
 
- 2) °èÁ¤ »ý¼º ¹× º¯°æ (sys ¶Ç´Â system) 
+ 2) ê³„ì • ìƒì„± ë° ë³€ê²½ (sys ë˜ëŠ” system) 
     ------------------------------------------------------------------------------ 1
-  - 11g ¹æ½ÄÀ¸·Î °èÁ¤ »ý¼º ¹× »èÁ¦ 
-    ALTER SESSION SET "_ORACLE_SCRIPT" = true;
-  
-  - sky0 °èÁ¤ »ý¼º
-    CREATE USER sky0 IDENTIFIED BY 12345;
-      ¡æ °èÁ¤ÀÌ »ý¼ºµÇ¾îµµ ¹Ù·Î CONN ´Â ºÒ°¡´É
-      
-  - DB Á¢¼Ó ±ÇÇÑ ºÎ¿©   
-    GRANT CREATE SESSION TO sky0;
-  
-  - °èÁ¤ »èÁ¦   
-    DROP USER sky0;  -- Á¢¼Ó ÁßÀÌ¸é »èÁ¦ ºÒ°¡ 
-    ------------------------------------------------------------------------------ 2 
-  - °èÁ¤ Ãß°¡ ¹× º¯°æ 
-    CREATE USER sky0 IDENTIFIED BY 12345;
-    GRANT CONNECT, RESOURCE TO sky0; 
-     - CONNECT ·Ñ : Á¢¼Ó ±ÇÇÑ 
-     - RESOURCE ·Ñ : Å×ÀÌºí »ý¼º, ÇÁ·Î½ÃÀú »ý¼º µîÀÇ ±ÇÇÑ
-     
-  - °èÁ¤ ¼öÁ¤ : Å×ÀÌºí½ºÆäÀÌ½º ¹× ¿ë·® 
-    - 12C ºÎÅÍ´Â Å×ÀÌºí ½ºÆäÀÌ½º ¿ë·®À» ÁÖÁö ¾ÊÀ¸¸é Å×ÀÌºí »ý¼º ºÒ°¡ 
-    - 11g ¿¡¼­´Â RESOURCE ·Ñ¿¡ QUOTA °¡ UNLIMITED ·Î ÀÚµ¿ ÁöÁ¤µÇÁö¸¸(¼û°ÜÁ®ÀÖÀ½) 12CºÎÅÍ´Â ¾ø¾îÁü
-      ALTER USER sky0 DEFAULT TABLESPACE USERS;
-      ALTER USER sky0 TEMPORARY TABLESPACE TEMP;
-      ALTER USER sky0 QUOTA UNLIMITED ON USERS;
+     - 11g ë°©ì‹ìœ¼ë¡œ ê³„ì • ìƒì„± ë° ì‚­ì œ 
+       ALTER SESSION SET "_ORACLE_SCRIPT" = true;
 
-  - °èÁ¤ LOCK È®ÀÎ & ÇØÁ¦
-    SELECT * FROM dba_users;
-    ALTER USER sky0 ACCOUNT UNLOCK;   
+     - sky0 ê³„ì • ìƒì„±
+       CREATE USER sky0 IDENTIFIED BY 12345;
+         â†’ ê³„ì •ì´ ìƒì„±ë˜ì–´ë„ ë°”ë¡œ CONN ëŠ” ë¶ˆê°€ëŠ¥
+
+     - DB ì ‘ì† ê¶Œí•œ ë¶€ì—¬   
+       GRANT CREATE SESSION TO sky0;
+
+     - ê³„ì • ì‚­ì œ   
+       DROP USER sky0;  -- ì ‘ì† ì¤‘ì´ë©´ ì‚­ì œ ë¶ˆê°€ 
+    ------------------------------------------------------------------------------ 2 
+     - ê³„ì • ì¶”ê°€ ë° ë³€ê²½ 
+       CREATE USER sky0 IDENTIFIED BY 12345;
+       GRANT CONNECT, RESOURCE TO sky0; 
+        - CONNECT ë¡¤ : ì ‘ì† ê¶Œí•œ 
+        - RESOURCE ë¡¤ : í…Œì´ë¸” ìƒì„±, í”„ë¡œì‹œì € ìƒì„± ë“±ì˜ ê¶Œí•œ
+
+     - ê³„ì • ìˆ˜ì • : í…Œì´ë¸”ìŠ¤íŽ˜ì´ìŠ¤ ë° ìš©ëŸ‰ 
+       - 12C ë¶€í„°ëŠ” í…Œì´ë¸” ìŠ¤íŽ˜ì´ìŠ¤ ìš©ëŸ‰ì„ ì£¼ì§€ ì•Šìœ¼ë©´ í…Œì´ë¸” ìƒì„± ë¶ˆê°€ 
+       - 11g ì—ì„œëŠ” RESOURCE ë¡¤ì— QUOTA ê°€ UNLIMITED ë¡œ ìžë™ ì§€ì •ë˜ì§€ë§Œ(ìˆ¨ê²¨ì ¸ìžˆìŒ) 12Cë¶€í„°ëŠ” ì—†ì–´ì§
+         ALTER USER sky0 DEFAULT TABLESPACE USERS;
+         ALTER USER sky0 TEMPORARY TABLESPACE TEMP;
+         ALTER USER sky0 QUOTA UNLIMITED ON USERS;
+
+     - ê³„ì • LOCK í™•ì¸ & í•´ì œ
+       SELECT * FROM dba_users;
+       ALTER USER sky0 ACCOUNT UNLOCK;   
     ------------------------------------------------------------------------------ 3 
-  - ÇÑ¹ø¿¡ ÁöÁ¤ (°èÁ¤ »ý¼º ¹× Å×ÀÌºí ½ºÆäÀÌ½º, ¿ë·® ÁöÁ¤)   
-    CREATE USER sky0 IDENTIFIED BY 12345
-        DEFAULT TABLESPACE USERS
-        TEMPORARY TABLESPACE TEMP
-        QUOTA UNLIMITED ON USERS;
-   
-  - ±ÇÇÑ ºÎ¿©
-    GRANT CONNECT, RESOURCE TO sky0; 
-    
-  - ±ÇÇÑ È¸¼ö   
-    REVOKE CONNECT FROM sky0;
+     - í•œë²ˆì— ì§€ì • (ê³„ì • ìƒì„± ë° í…Œì´ë¸” ìŠ¤íŽ˜ì´ìŠ¤, ìš©ëŸ‰ ì§€ì •)   
+       CREATE USER sky0 IDENTIFIED BY 12345
+           DEFAULT TABLESPACE USERS
+           TEMPORARY TABLESPACE TEMP
+           QUOTA UNLIMITED ON USERS;
+
+     - ê¶Œí•œ ë¶€ì—¬
+       GRANT CONNECT, RESOURCE TO sky0; 
+
+     - ê¶Œí•œ íšŒìˆ˜   
+       REVOKE CONNECT FROM sky0;
     ------------------------------------------------------------------------------ 
     
- 3) ½Ã½ºÅÛ ±ÇÇÑ     
-  - ±ÇÇÑ : Æ¯Á¤ Å¸ÀÔÀÇ SQL ¹®À» ½ÇÇàÇÏ°Å³ª µ¥ÀÌÅÍº£ÀÌ½º, °´Ã¼¿¡ Á¢±Ù ÇÒ ¼ö ÀÖ´Â ±Ç¸® 
-  - »ç¿ëÀÚ°¡ µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ Æ¯Á¤ ÀÛ¾÷À» ¼öÇà ÇÒ ¼ö ÀÖµµ·Ï ÇÔ 
-  - ANY > »ç¿ëÀÚ°¡ ¸ðµç ½ºÅ°¸¶¿¡¼­ ±ÇÇÑÀ» °¡Áü 
+ 3) ì‹œìŠ¤í…œ ê¶Œí•œ     
+  - ê¶Œí•œ : íŠ¹ì • íƒ€ìž…ì˜ SQL ë¬¸ì„ ì‹¤í–‰í•˜ê±°ë‚˜ ë°ì´í„°ë² ì´ìŠ¤, ê°ì²´ì— ì ‘ê·¼ í•  ìˆ˜ ìžˆëŠ” ê¶Œë¦¬ 
+  - ì‚¬ìš©ìžê°€ ë°ì´í„°ë² ì´ìŠ¤ì—ì„œ íŠ¹ì • ìž‘ì—…ì„ ìˆ˜í–‰ í•  ìˆ˜ ìžˆë„ë¡ í•¨ 
+  - ANY > ì‚¬ìš©ìžê°€ ëª¨ë“  ìŠ¤í‚¤ë§ˆì—ì„œ ê¶Œí•œì„ ê°€ì§ 
   
-   * ½Ã½ºÅÛ ±ÇÇÑ °ü·ÃµÈ µ¥ÀÌÅÍ »çÀü  
-     SELECT * FROM SYSTEM_PRIVILEGE_MAP;  -- ÀüÃ¼ ½Ã½ºÅÛ ±ÇÇÑ ¸ñ·Ï Á¶È¸ 
-     SELECT * FROM DBA_SYS_PRIVS;         -- ¸ðµç À¯ÀúÀÇ ½Ã½ºÅÛ ±ÇÇÑ ¸ñ·Ï Á¶È¸ 
-     SELECT * FROM USER_SYS_PRIVS;        -- »ç¿ëÀÚÀÇ ½Ã½ºÅÛ ±ÇÇÑ ¸ñ·Ï Á¶È¸ 
+   * ì‹œìŠ¤í…œ ê¶Œí•œ ê´€ë ¨ëœ ë°ì´í„° ì‚¬ì „  
+     SELECT * FROM SYSTEM_PRIVILEGE_MAP;  -- ì „ì²´ ì‹œìŠ¤í…œ ê¶Œí•œ ëª©ë¡ ì¡°íšŒ 
+     SELECT * FROM DBA_SYS_PRIVS;         -- ëª¨ë“  ìœ ì €ì˜ ì‹œìŠ¤í…œ ê¶Œí•œ ëª©ë¡ ì¡°íšŒ 
+     SELECT * FROM USER_SYS_PRIVS;        -- ì‚¬ìš©ìžì˜ ì‹œìŠ¤í…œ ê¶Œí•œ ëª©ë¡ ì¡°íšŒ 
   
-   * ÁÖ¿ä ½Ã½ºÅÛ ±ÇÇÑ 
+   * ì£¼ìš” ì‹œìŠ¤í…œ ê¶Œí•œ 
      CREATE USER
-     SELECT ANY TABLE | ¸ðµç À¯ÀúÀÇ Å×ÀÌºí Á¶È¸ ±ÇÇÑ 
-     CREATE ANY TABLE | ¸ðµç À¯ÀúÀÇ Å×ÀÌºí »ý¼º ±ÇÇÑ
-     CREATE SESSION   | µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó ±ÇÇÑ 
+     SELECT ANY TABLE | ëª¨ë“  ìœ ì €ì˜ í…Œì´ë¸” ì¡°íšŒ ê¶Œí•œ 
+     CREATE ANY TABLE | ëª¨ë“  ìœ ì €ì˜ í…Œì´ë¸” ìƒì„± ê¶Œí•œ
+     CREATE SESSION   | ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ê¶Œí•œ 
      CREATE TABLE 
      CREATE VIEW 
      CREATE MATERIALIZED VIEW 
@@ -75,24 +76,24 @@
      CREATE PROCEDURE
      CREATE TRIGGER
      CREATE DATABASE LINK
-     SYSDBA | µ¥ÀÌÅÍº£ÀÌ½º¸¦ °ü¸®ÇÏ´Â ÃÖ°í ±ÇÇÑ
-     SYSOPER | µ¥ÀÌÅÍº£ÀÌ½º¸¦ °ü¸®ÇÏ´Â ±ÇÇÑ 
+     SYSDBA | ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ê´€ë¦¬í•˜ëŠ” ìµœê³  ê¶Œí•œ
+     SYSOPER | ë°ì´í„°ë² ì´ìŠ¤ë¥¼ ê´€ë¦¬í•˜ëŠ” ê¶Œí•œ 
     
- 4) ¿ÀºêÁ§Æ® ±ÇÇÑ   
-  - ÁöÁ¤µÈ ÇÑ °´Ã¼¿¡ Æ¯º°ÇÑ ÀÛ¾÷À» ¼öÇà ÇÒ ¼ö ÀÖ°Ô ÇÑ´Ù. (Å×ÀÌºí,ºä,½ÃÄö½º,ÇÁ·Î½ÃÀú,ÇÔ¼ö,ÆÐÅ°Áö..)
-  - ±âº»ÀûÀ¸·Î ¼ÒÀ¯ÇÑ °´Ã¼¿¡ ´ëÇØ¼­´Â ¸ðµå ±ÇÇÑÀÌ ÀÚµ¿ÀûÀ¸·Î È¹µæ µÈ´Ù. 
-  - °´Ã¼ ¼ÒÀ¯ÀÚ´Â ´Ù¸¥ »ç¿ëÀÚ¿¡°Ô Æ¯Á¤ °´Ã¼ ±ÇÇÑÀ» ºÎ¿© ÇÒ ¼ö ÀÖ´Ù. 
-  - PUBLIC À¸·Î ºÎ¿©ÇÑ ±ÇÇÑÀº È¸¼ö ÇÒ ¶§µµ PUBLIC À¸·Î ÇØ¾ß ÇÑ´Ù.
+ 4) ì˜¤ë¸Œì íŠ¸ ê¶Œí•œ   
+  - ì§€ì •ëœ í•œ ê°ì²´ì— íŠ¹ë³„í•œ ìž‘ì—…ì„ ìˆ˜í–‰ í•  ìˆ˜ ìžˆê²Œ í•œë‹¤. (í…Œì´ë¸”,ë·°,ì‹œí€€ìŠ¤,í”„ë¡œì‹œì €,í•¨ìˆ˜,íŒ¨í‚¤ì§€..)
+  - ê¸°ë³¸ì ìœ¼ë¡œ ì†Œìœ í•œ ê°ì²´ì— ëŒ€í•´ì„œëŠ” ëª¨ë“œ ê¶Œí•œì´ ìžë™ì ìœ¼ë¡œ íšë“ ëœë‹¤. 
+  - ê°ì²´ ì†Œìœ ìžëŠ” ë‹¤ë¥¸ ì‚¬ìš©ìžì—ê²Œ íŠ¹ì • ê°ì²´ ê¶Œí•œì„ ë¶€ì—¬ í•  ìˆ˜ ìžˆë‹¤. 
+  - PUBLIC ìœ¼ë¡œ ë¶€ì—¬í•œ ê¶Œí•œì€ íšŒìˆ˜ í•  ë•Œë„ PUBLIC ìœ¼ë¡œ í•´ì•¼ í•œë‹¤.
   
-  * ¿ÀºêÁ§Æ® ±ÇÇÑ °ü·Ã µ¥ÀÌÅÍ »çÀü
-    SELECT * FROM USER_TAB_PRIVS;        -- °´Ã¼ ±ÇÇÑ ¼ÒÀ¯ÀÚ/ºÎ¿©ÀÚ/ÇÇºÎ¿©ÀÚ Ãâ·Â
-    SELECT * FROM USER_TAB_PRIVS_MADE;   -- »ç¿ëÀÚ°¡ ºÎ¿©ÇÑ ¸ðµç °´Ã¼ ±ÇÇÑ
-    SELECT * FROM USER_TAB_PRIVS_RECD;   -- »ç¿ëÀÚ°¡ ºÎ¿© ¹ÞÀº ¸ðµç °´Ã¼ ±ÇÇÑ 
-    SELECT * FROM USER_COL_PRIVS;        -- °´Ã¼ ±ÇÇÑ ¼ÒÀ¯ÀÚ/ºÎ¿©ÀÚ/ÇÇºÎ¿©ÀÚÀÇ ÄÃ·³ÀÇ °´Ã¼ ±ÇÇÑ
-    SELECT * FROM USER_COL_PRIVS_MADE;   -- »ç¿ëÀÚ°¡ ºÎ¿©ÇÑ °´Ã¼ ÄÃ·³¿¡ ´ëÇÑ ¸ðµç °´Ã¼ ±ÇÇÑ
-    SELECT * FROM USER_COL_PRIVS_RECD;   -- »ç¿ëÀÚ°¡ ºÎ¿© ¹ÞÀº °´Ã¼ ÄÃ·³¿¡ ´ëÇÑ ¸ðµç °´Ã¼ ±ÇÇÑ
+  * ì˜¤ë¸Œì íŠ¸ ê¶Œí•œ ê´€ë ¨ ë°ì´í„° ì‚¬ì „
+    SELECT * FROM USER_TAB_PRIVS;        -- ê°ì²´ ê¶Œí•œ ì†Œìœ ìž/ë¶€ì—¬ìž/í”¼ë¶€ì—¬ìž ì¶œë ¥
+    SELECT * FROM USER_TAB_PRIVS_MADE;   -- ì‚¬ìš©ìžê°€ ë¶€ì—¬í•œ ëª¨ë“  ê°ì²´ ê¶Œí•œ
+    SELECT * FROM USER_TAB_PRIVS_RECD;   -- ì‚¬ìš©ìžê°€ ë¶€ì—¬ ë°›ì€ ëª¨ë“  ê°ì²´ ê¶Œí•œ 
+    SELECT * FROM USER_COL_PRIVS;        -- ê°ì²´ ê¶Œí•œ ì†Œìœ ìž/ë¶€ì—¬ìž/í”¼ë¶€ì—¬ìžì˜ ì»¬ëŸ¼ì˜ ê°ì²´ ê¶Œí•œ
+    SELECT * FROM USER_COL_PRIVS_MADE;   -- ì‚¬ìš©ìžê°€ ë¶€ì—¬í•œ ê°ì²´ ì»¬ëŸ¼ì— ëŒ€í•œ ëª¨ë“  ê°ì²´ ê¶Œí•œ
+    SELECT * FROM USER_COL_PRIVS_RECD;   -- ì‚¬ìš©ìžê°€ ë¶€ì—¬ ë°›ì€ ê°ì²´ ì»¬ëŸ¼ì— ëŒ€í•œ ëª¨ë“  ê°ì²´ ê¶Œí•œ
     
-   * °´Ã¼¿¡ µû¸¥ ±ÇÇÑ
+   * ê°ì²´ì— ë”°ë¥¸ ê¶Œí•œ
      SELECT  | Table, View, Sequence
      INSERT  | Table, View 
      UPDATE  | Table, View 
@@ -101,42 +102,42 @@
      INDEX   | Table
      EXECUTE | Procedure
        
-  - ¿ÀºêÁ§Æ® ±ÇÇÑ ºÎ¿©   
+  - ì˜¤ë¸Œì íŠ¸ ê¶Œí•œ ë¶€ì—¬   
     GRANT INSERT, SELECT ON jobs TO sky;
     
-  - ¿ÀºêÁ§Æ® ±ÇÇÑ È¸¼ö   
+  - ì˜¤ë¸Œì íŠ¸ ê¶Œí•œ íšŒìˆ˜   
     REVOKE INSERT, SELECT ON jobs FROM sky;
     
-    SELECT * FROM hr.jobs;  -- °¡´É 
+    SELECT * FROM hr.jobs;  -- ê°€ëŠ¥ 
     
- 5) ROLE (·Ñ) 
-  - ¼­·Î ¿¬°üµÈ ±ÇÇÑÀÇ ¹­À½ (±ÇÇÑ ºÎ¿©¿Í È¸¼ö°¡ ½¬¿ò) 
-  - CREATE ROLE ±ÇÇÑÀ» °¡Áö°í ÀÖ´Â USER ¿¡ ÀÇÇØ »ý¼ºµÊ 
-  - ROLE ¿¡ ROLE À» ºÎ¿© ÇÒ ¼ö ÀÖ´Ù 
-  - ¼ø¼­ : ROLE »ý¼º > ROLE ¿¡ ±ÇÇÑ ºÎ¿© > »ç¿ëÀÚ¿¡°Ô ROLE À» ºÎ¿© 
+ 5) ROLE (ë¡¤) 
+  - ì„œë¡œ ì—°ê´€ëœ ê¶Œí•œì˜ ë¬¶ìŒ (ê¶Œí•œ ë¶€ì—¬ì™€ íšŒìˆ˜ê°€ ì‰¬ì›€) 
+  - CREATE ROLE ê¶Œí•œì„ ê°€ì§€ê³  ìžˆëŠ” USER ì— ì˜í•´ ìƒì„±ë¨ 
+  - ROLE ì— ROLE ì„ ë¶€ì—¬ í•  ìˆ˜ ìžˆë‹¤ 
+  - ìˆœì„œ : ROLE ìƒì„± > ROLE ì— ê¶Œí•œ ë¶€ì—¬ > ì‚¬ìš©ìžì—ê²Œ ROLE ì„ ë¶€ì—¬ 
    
-  * ±âº»ÀûÀ¸·Î Á¦°øÇÏ´Â ·Ñ 
-    CONNECT ROLE : ¿À¶óÅ¬¿¡ Á¢¼Ó ÇÒ ¼ö ÀÖ´Â ±ÇÇÑ 
-    RESOURCE ROLE : Å×ÀÌºí »ý¼º, ÇÁ·Î½ÃÀú »ý¼º µîÀÇ ÀÏ¹ÝÀûÀÎ ±ÇÇÑ 
-    DBA ROLE : ¸ðµç ½Ã½ºÅÛ ±ÇÇÑÀÌ ºÎ¿©µÈ ·Ñ, µ¥ÀÌÅÍº£ÀÌ½º °ü¸®ÀÚ¿¡°Ô¸¸ ºÎ¿© 
+  * ê¸°ë³¸ì ìœ¼ë¡œ ì œê³µí•˜ëŠ” ë¡¤ 
+    CONNECT ROLE : ì˜¤ë¼í´ì— ì ‘ì† í•  ìˆ˜ ìžˆëŠ” ê¶Œí•œ 
+    RESOURCE ROLE : í…Œì´ë¸” ìƒì„±, í”„ë¡œì‹œì € ìƒì„± ë“±ì˜ ì¼ë°˜ì ì¸ ê¶Œí•œ 
+    DBA ROLE : ëª¨ë“  ì‹œìŠ¤í…œ ê¶Œí•œì´ ë¶€ì—¬ëœ ë¡¤, ë°ì´í„°ë² ì´ìŠ¤ ê´€ë¦¬ìžì—ê²Œë§Œ ë¶€ì—¬ 
     
-  * ·Ñ °ü·Ã µ¥ÀÌÅÍ »çÀü 
-    SELECT * FROM ROLE_SYS_PRIVS;   -- ·Ñ¿¡ ºÎ¿©µÈ ½Ã½ºÅÛ ±ÇÇÑ
-    SELECT * FROM ROLE_TAB_PRIVS;   -- ·Ñ¿¡ ºÎ¿©µÈ Å×ÀÌºí ±ÇÇÑ
-    SELECT * FROM ROLE_ROLE_PRIVS;  -- ·Ñ ¾ÈÀÇ ·Ñ È®ÀÎ
-    SELECT * FROM USER_ROLE_PRIVS;  -- ÇöÀç »ç¿ëÀÚ°¡ ACCESS ÇÒ ¼ö ÀÖ´Â ·Ñ 
+  * ë¡¤ ê´€ë ¨ ë°ì´í„° ì‚¬ì „ 
+    SELECT * FROM ROLE_SYS_PRIVS;   -- ë¡¤ì— ë¶€ì—¬ëœ ì‹œìŠ¤í…œ ê¶Œí•œ
+    SELECT * FROM ROLE_TAB_PRIVS;   -- ë¡¤ì— ë¶€ì—¬ëœ í…Œì´ë¸” ê¶Œí•œ
+    SELECT * FROM ROLE_ROLE_PRIVS;  -- ë¡¤ ì•ˆì˜ ë¡¤ í™•ì¸
+    SELECT * FROM USER_ROLE_PRIVS;  -- í˜„ìž¬ ì‚¬ìš©ìžê°€ ACCESS í•  ìˆ˜ ìžˆëŠ” ë¡¤ 
     
-  - ·Ñ »ý¼º ¹× ±ÇÇÑ ºÎ¿© 
+  - ë¡¤ ìƒì„± ë° ê¶Œí•œ ë¶€ì—¬ 
     CREATE ROLE role; 
     GRANT privilege TO role; 
     GRANT role TO user [PUBLIC]; 
   
-  - ·Ñ ±ÇÇÑ È¸¼ö   
+  - ë¡¤ ê¶Œí•œ íšŒìˆ˜   
     REVOKE role FROM user;
    
-  - ·Ñ ¼öÁ¤   
+  - ë¡¤ ìˆ˜ì •   
     ALTER ROLE role;
   
-  - ·Ñ »èÁ¦  
+  - ë¡¤ ì‚­ì œ  
     DROP ROLE role;
     
