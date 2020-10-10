@@ -1,8 +1,9 @@
-Oracle 11g
-    https://docs.oracle.com/cd/E11882_01/nav/portal_5.htm
-    https://docs.oracle.com/cd/E11882_01/server.112/e41084/toc.htm
+# Oracle API ÏÇ¨Ïù¥Ìä∏
 
-SELECT πÆ
+#### [Oracle 11g](https://docs.oracle.com/cd/E11882_01/nav/portal_5.htm)
+#### [Oracle 11g 2](https://docs.oracle.com/cd/E11882_01/server.112/e41084/toc.htm)
+
+SELECT ¬π¬Æ
    https://docs.oracle.com/cd/B28359_01/server.111/b28286/statements_10002.htm#SQLRF01702
 
 Oracle 12c Release 2
@@ -11,7 +12,7 @@ Oracle 12c Release 2
 Oracle 18c
    https://docs.oracle.com/en/database/oracle/oracle-database/18/sqlrf/index.html
 
-¡¶æ‡¡∂∞«
+√Å¬¶¬æ√†√Å¬∂¬∞√á
     https://docs.oracle.com/cd/B28359_01/server.111/b28286/clauses002.htm#SQLRF52163
 
 PL/SQL
