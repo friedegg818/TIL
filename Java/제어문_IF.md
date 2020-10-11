@@ -5,182 +5,57 @@
 - 형식   
 
 	  if(조건식) { 
-            실행문_1;
-	    실행문_2;
-         }
-          ※ 조건식의 결과는 반드시 true or false 
-            실행문이 한 개인 경우에만 {} 생략 가능 
+             실행문_1;
+	     실행문_2;
+          }
+         
+       ** 조건식의 결과는 반드시 true or false 
+       ** 실행문이 한 개인 경우에만 {} 생략 가능 
+       
 - 프로그램을 짤 때, 꼭 경우의 수를 생각 할 것! 
 - if 의 수를 줄이는게 좋다. (많으면 실수 ↑, 고치기 어려움) 
 
-import java.util.Scanner;
-
-public class IfEx2 {
-	public static void main(String[] args) {
-		// 정수를 입력 받아 입력 받은 수가 홀수인지 판별		
-		Scanner sc=new Scanner(System.in);
-		int n; 
-		
-		System.out.print("정수 ?");
-        n=sc.nextInt();
-        if(n%2==1) {     // if((n&1)==1)  { 
-        	System.out.println(n+"은 홀수");
-        }
-		        
-	    sc.close();				
-		
-	}
-}
-
-import java.util.Scanner;
-
-public class IfEx3 {
-	public static void main(String[] args) {
-		// 정수를 입력 받아 입력 받은 수가 홀수인지 판별		
-		Scanner sc=new Scanner(System.in);
-		int n; 
-		String s;
-		
-		System.out.print("정수 ?");
-        n=sc.nextInt();
-        s="홀수가 아님";     // s="" 도 가능 
-        if(n%2==1) {  
-        	s="홀수";        	
-        }
-                 
-        System.out.println(n+":"+s);
-	    sc.close();				
-	}
-}
-
-import java.util.Scanner;
-
-public class IfEx4 {
-	public static void main(String[] args) {
-		// 정수를 입력 받아 입력 받은 수가 짝수인지 홀수인지 판별		
-		Scanner sc=new Scanner(System.in);
-		int n; 
-		String s;
-		
-		System.out.print("정수 ?");
-        n=sc.nextInt();
-        
-        // s=n%2==1 ? "홀수":"짝수";ㅣ
-        
-        s="짝수";    
-        if(n%2==1) {  
-        	s="홀수";        	
-        }
-                 
-        System.out.println(n+":"+s);
-	    sc.close();				
-	}
-}
-
-import java.util.Scanner;
-
-public class IfEx5 {
-	public static void main(String[] args) {
-		// 세 수를 입력 받아 적은수에서 큰수 순으로 출력(정렬의 기초) 
-		Scanner sc=new Scanner(System.in);
-		int a,b,c, t;
-		
-		System.out.print("세 수?");
-		a=sc.nextInt();
-		b=sc.nextInt();
-		c=sc.nextInt();
-		
-		if(a > b) {
-			t=a; a=b; b=t;
-		}
-			// 실행하고 나면 a<b		
-		if(a > c) {
-			t=a; a=c; c=t;
-		}
-		    // 실행하고 나면 a<c -> a는 가장 작은 값 
-		if(b > c) {
-			t=b; b=c; c=t;
-		}
-		   // 실행하고 나면 b<c -> a<b<c가 됨. 
-		
-		System.out.println(a+","+b+","+c);		
-		
-		sc.close();		
-	}
-}
-
-import java.util.Scanner;
-
-public class IfEx6 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		char ch;
-		
-		System.out.print("한문자?");
-		ch=sc.next().charAt(0);
-		
-		if(ch >= 'A' && ch <= 'Z') {
-			System.out.println("입력문자는 대문자");
-		}
-		
-		if(ch >= 'a' && ch <= 'z') {
-			System.out.println("입력문자는 소문자");
-		}
-		
-		if(!(ch >= 'a' && ch <= 'z') && !(ch >= 'A' && ch <= 'Z')) {
-			System.out.println("입력문자는 기타문자");
-		}
-	}
-}
-
-▶ if 제어문 만들기
+  [관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/IF%20Ex1-6)
+  
+#
+### if 제어문 만들기
 - int형 변수 n이 10이상이고 20미만일때 true인 조건식
-   if( n>=10 && n<20   ) {  }
+   
+      if( n>=10 && n<20   ) {  }
 
 - char형 변수 ch가 공백이나 탭이 아닐때 true인 조건식
-   if( ch!=' ' && ch!='\t' ) {  }
+  
+      if( ch!=' ' && ch!='\t' ) {  }
 
 - char형 변수 ch가 'x' 또는 'X' 일때 true인 조건식
-   if( ch=='x' || ch=='X' ) {  }
+  
+      if( ch=='x' || ch=='X' ) {  }
 
 - int형 변수 n이 4의 배수이고 100의 배수이거나 400의 배수이면 true인 조건식
-   if( n%4==0 && n%100!=0 || n%400==0 ) {  }
+   
+       if( n%4==0 && n%100!=0 || n%400==0 ) {  }
    
 - char형 변수 ch가 'y' 나 'Y'가 아닐때 true인 조건식
-   if( ch!='y' && ch!='Y' ) {  }
+ 
+     if( ch!='y' && ch!='Y' ) {  }
 
 - char형 변수 ch가 영문자 일때 true인 조건식
-   if( ch>='A' && ch<='Z' || ch>='a'&& ch<='z' ) {  }
-   if( ch>=65 && ch<=90 || ch>=97 && ch<=122 )  {  }
+  
+      if( ch>='A' && ch<='Z' || ch>='a'&& ch<='z' ) {  }
+      if( ch>=65 && ch<=90 || ch>=97 && ch<=122 )  {  }
    
 - char형 변수 ch가 영문자가 아닐때 true인 조건식
-   if(!(ch>='A' && ch<='Z') && !(ch>='a'&& ch<='z')) {  }
+  
+      if(!(ch>='A' && ch<='Z') && !(ch>='a'&& ch<='z')) {  }
 
 - boolean형 변수 b가 false 일 때 true인 조건식
-   if( b==false ) {  }
-   if( ! b ) {  }
 
-▶ Scanner > charAt() 에 대한 부가 설명 
+      if( b==false ) {  }
+      if( ! b ) {  }
 
-import java.util.Scanner;
+ 참고 :: [Scanner > charAt() 에 대한 부가 설명](https://github.com/friedegg818/TIL/blob/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Test_Scanner.java)
 
-public class Test_Scanner {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		
-		System.out.print("문자열?");
-		String s=sc.next(); // sc.next() <- 문자열을 입력받는 기능
-		
-		char ch;
-		
-		ch = s.charAt(0); // 0 -> 가장 처음에 위치해있는 글자
-            // charAt() : 문자열에서 특정 위치에 있는 하나만 가져옴
-		System.out.println(ch);
-		
-		ch = s.charAt(2); // 2 -> 세번째 위치해있는 글자 
-		System.out.println(ch);
-	}
-}
+#
 
 <if~else 문>
 -if 다음의 조건이 참일 경우와 거짓일 경우에 따라 각각 다른 문장을 수행하고자 할 때
