@@ -1,5 +1,4 @@
-# 제어문
-## IF 문 
+# 제어문 - IF 문
 - if 다음의 조건이 참일 경우, 특정 문장을 수행 하고자 할 때
 - 삼항연산자로 표현 되는 모든 식은 if 문으로 바꿀 수 있다. (반대는 불가능) 
 - 형식   
@@ -53,345 +52,60 @@
       if( b==false ) {  }
       if( ! b ) {  }
 
- 참고 :: [Scanner > charAt() 에 대한 부가 설명](https://github.com/friedegg818/TIL/blob/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Test_Scanner.java)
+   *참고* :: [Scanner > charAt() 에 대한 부가 설명](https://github.com/friedegg818/TIL/blob/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Test_Scanner.java)
 
 #
 
-<if~else 문>
--if 다음의 조건이 참일 경우와 거짓일 경우에 따라 각각 다른 문장을 수행하고자 할 때
--형식   if(조건식) {
+### if~else 문
+- if 다음의 조건이 참일 경우와 거짓일 경우에 따라 각각 다른 문장을 수행하고자 할 때
+- 형식   
+
+       if(조건식) {
+        실행문_1;
+	  } else {
+        실행문_2;
+         }
+
+ [관련 소스](https://github.com/friedegg818/TIL/blob/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/IfelseEx7.java)
+
+
+### 다중 선택 if 문 - else if 문
+- if문의 처음 조건식이 거짓일 경우 계속된 다른 범위의 값을 추출하기 위해 
+- 형식  
+
+      if(조건식_1) {
        실행문_1;
-	 } else {
-	   실행문_2;
-	 }
-	 
-import java.util.Scanner;
+      } else if(조건식_2) {
+       실행문_2;
+	  } else if(조건식_n) {
+       실행문_n; 
+	  } else {
+	   실행문_o;
+	  } 
+	   실행문_p;
 
-public class IfelseEx7 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		int n;
-		String s;
-		
-		System.out.print("정수?");
-		n=sc.nextInt();
-		
-		if(n%2==0) {
-			s="짝수";
-		} else     {
-			s="홀수";
-		}
-	    System.out.println(n+":"+s);
-	}
-}
+       ** 조건1이면 실행문1.
+	    '그렇지 않고' 조건2면 실행문2.
+	    '그렇지 않고' 조건n면 실행문 n.
 
-<다중 선택 if 문> - else if 문
--if문의 처음 조건식이 거짓일 경우 계속된 다른 범위의 값을 추출하기 위해 
--형식  if(조건식_1) {
-      실행문_1;
-     } else if(조건식_2) {
-      실행문_2;
-	 } else if(조건식_n) {
-      실행문_n; 
-	 } else {
-	  실행문_o;
-	 } 
-	  실행문_p;
+ [관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Ifelse%20Ex8-10)
 
-     조건1이면 실행문1.
-	 '그렇지 않고' 조건2면 실행문2.
-	 '그렇지 않고' 조건n면 실행문 n.
+#
+### if 문 중첩
+- if문 안에 또 다른 if문을 두는 제어 구조 
+- 형식 
 
-import java.util.Scanner;
-
-public class IfelseifEx8 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		int n;
-		
-		System.out.print("정수?");
-		n=sc.nextInt();
-		
-		if(n%2==0 && n%3==0) {   //  if(n%6==0)  {
-			System.out.println(n+" : 2 와 3의 배수");
-		} else if(n%2==0) {
-			System.out.println(n+" : 2의 배수");
-		} else if(n%3==0) {
-			System.out.println(n+" : 3의 배수");
-		} else {
-			System.out.println(n+" : 2 또는 3의 배수가 아님");
-		}
-		
-		// if 문의  순서를 바꿔도 되지만, 바꾸면 안되는 경우도 있다.
-		
-		sc.close();
-	}
-}
-
-import java.util.Scanner;
-
-public class IfelseifEx9 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		int n;
-		
-		System.out.print("점수?");
-		n=sc.nextInt();
-		
-		if(n>=90)  {
-			System.out.println(n+": 수");
-		} else if(n>=80) {   // } else if(n>=80 && n<90)  {
-			System.out.println(n+": 우");
-		} else if(n>=70) {
-			System.out.println(n+": 미");
-		} else if(n>=60) {
-			System.out.println(n+": 양");
-		} else {
-			System.out.println(n+": 가");
-		}
-		
-		sc.close();		
-	}
-}
-
-import java.util.Scanner;
-
-public class IfelseifEx10 {    // IfEx6 예제 
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		char ch;
-		// if ~ else if 로 코딩하는 것이 더 효율적 
-		
-		System.out.print("문자?");
-		ch=sc.next().charAt(0);
-		
-		if(ch>='A'&&ch<='Z') {
-			System.out.println(ch+" : 대문자");
-		} else if (ch>='a'&&ch<='z') {
-			System.out.println(ch+" : 소문자");
-		} else {
-			System.out.println(ch+" : 기타문자");
-		}
-		
-		sc.close();
-	}
-}
-
-<if 문 중첩>
--if문 안에 또 다른 if문을 두는 제어 구조 
--형식 if(조건식_1) {
+      if(조건식_1) {
        if(조건식_2) {
 	    실행문_1;
-	   } else {
-	   실행문_2;
-	   } 
-     } else { 
-       실행문_3;
-     }	   
+	    } else {
+	    실행문_2;
+	    } 
+      } else { 
+        실행문_3;
+      }	   
 
-import java.util.Scanner;
-
-public class IfTest5 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		int a;
-		
-		System.out.print("점수?");
-		a=sc.nextInt();
-		
-		if(a>=0 && a<=100) {          // 점수 입력이 올바른 경우 
-		   if(a>=95) {
-			   System.out.println("점수 : "+a+"평점 : 4.5");
-			} else if(a>=90) {
-				   System.out.println("점수 : "+a+"평점 : 4.0");
-			} else if(a>=85) {
-				   System.out.println("점수 : "+a+"평점 : 3.5");
-			} else if(a>=80) {			
-				   System.out.println("점수 : "+a+"평점 : 3.0");
-			} else if(a>=75) {
-				   System.out.println("점수 : "+a+"평점 : 2.5");
-			} else if(a>=70) {
-				   System.out.println("점수 : "+a+"평점 : 2.0");
-			} else if(a>=65) {
-				   System.out.println("점수 : "+a+"평점 : 1.5");
-			} else if(a>=60) {
-				   System.out.println("점수 : "+a+"평점 : 1.0");
-			} else {
-				   System.out.println("점수 : "+a+"평점 : 0.0");
-			}
-		   
-		} else {
-			System.out.println("입력오류");
-		}
-		
-		sc.close(); 
-	}
-}
-
-package test0131;
-
-import java.util.Scanner;
-
-public class IfTest6 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		int t; 
-		
-		System.out.print("근무시간?");
-		t=sc.nextInt();
-		
-		if (t>0 && t<=8) {
-			System.out.printf("급여 : "+"%,d%n" ,t*10000);
-		} else if (t>8) {
-	     	System.out.printf("급여 : "+ "%,d%n", (t-8)*15000+80000);
-		}	
-		
-		sc.close();
-		
-		/* 
-		 int h, pay;
-		 
-		 System.out.print("근무시간?");
-		 h = sc.nextInt();
-		 
-		 if (h>8) {
-		     pay = 8*10000 + (int)((h-8)*10000*1.5);		 
-		 } else {
-		     pay = h*10000; 
-		 }
-		 
-		 System.out.printf("급여 : %,d\n", pay);
-		 
-		 sc.clsoe();
-		 
-		 */
-		}
-}
-
-import java.util.Scanner;
-
-public class IfEx1 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		int a,b;
-		char oper; 
-		
-		System.out.print("두 수?");
-		a=sc.nextInt();
-		b=sc.nextInt();
-		
-		System.out.print("연산자 [+,-,*,/]?");
-		oper=sc.next().charAt(0);
-			
-		if(oper=='+') {
-			System.out.printf("%d + %d = %d%n", a, b, a+b);
-		} else if(oper=='-') {
-	     	System.out.printf("%d - %d = %d%n", a, b, a-b);
-	    } else if(oper=='*') {
-	    	System.out.printf("%d * %d = %d%n", a, b, a*b);
-	    } else if(oper=='/') {
-	    	System.out.printf("%d / %d = %d%n", a, b, a/b);
-        } else {
-	    	System.out.println("연산자 입력 오류 !!!");
-        }	
-	     	sc.close();
-	}
-}
-
-import java.util.Scanner;
-
-public class IfEx2 {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-	    int a,b,c;
-		int tot;
-		double ave;
-		String name;
-		
-		System.out.print("이름?");
-		name=sc.next();
-		
-		System.out.print("세과목 점수?");
-		a=sc.nextInt();
-		b=sc.nextInt();
-		c=sc.nextInt();		
-		
-		tot=a+b+c;
-		ave=(double)tot/3;
-		
-		if(a>=40 && b>=40 && c>=40 && ave>=60) {
-			System.out.println(name+"님은 "+"합격 "+"입니다."); 
-		} else if(ave<60) {
-		   System.out.println(name+"님은 "+"불합격 "+"입니다.");
-		} else { // (a<40 || b<40 \\ c<40) && ave>=60 
-			System.out.println(name+"님은 "+"과락 "+"입니다.");
-		}
-		
-		// 식이 간단해 질 수 있는 조건 찾기 
-		
-		sc.close();				
-			
-	}
-}
-
-import java.util.Scanner;
-
-public class IfEx3 {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		String hak,name; // 학번.주민.우편.계좌번호 등은 반드시 문자열로 받아야 함 
-		int s1, s2, absence, report;
-		int score1, score2, attendscore, reportscore;
-		int score;
-		char grade; 
-		
-		System.out.print("학번?");
-		hak=sc.next();
-		System.out.print("이름?");
-	    name=sc.next();
-	    System.out.print("중간고사 점수?");
-		s1=sc.nextInt();
-		System.out.print("기말고사 점수?");
-		s2=sc.nextInt();
-		System.out.print("결석횟수?");
-		absence=sc.nextInt();
-		System.out.print("레포트 점수?");
-		report=sc.nextInt();
-		
-		//환산점수 계산
-		//중간,기말고사 		
-		score1=(int)(s1*0.4);
-		score2=(int)(s2*0.4);
-		//결석점수
-		if(absence>=6) 
-			attendscore=0;
-		else if (absence>=4)
-	        attendscore=50;
-	    else if (absence>=2)
-	     	attendscore=80;
-	    else 
-	     	attendscore=100;
-		attendscore=(int)(attendscore*0.1);
-		//리포트점수
-		reportscore=(int)(report*0.1);
-		//총합
-		score=score1+score2+attendscore+reportscore;
-		//학점계산
-		if(score>=90) grade='A';
-		else if(score>=80) grade='B';
-		else if(score>=70) grade='C';
-		else if(score>=60) grade='D';
-		else grade='F';
-		//출력
-		System.out.print("학번\t이름\t중간\t기말\t출석\t");
-		System.out.println("리포트\t합산점수\t학점");
-		System.out.print(hak+"\t"+name+"\t"+score1+"\t");
-		System.out.print(score2+"\t"+attendscore+"\t");
-		System.out.println(reportscore+"\t"+score+"\t"+grade);
-		
-		sc.close();
-	  }
-	}
+  [관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/IF%20Ex11-13)
 	
 <switch~case 문> - 다중 선택문
 - switch문의 수식 결과 값과 case문의 상수가 일치하는 곳의 문장을 실행 
