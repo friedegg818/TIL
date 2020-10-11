@@ -36,7 +36,7 @@
    
 - char형 변수 ch가 'y' 나 'Y'가 아닐때 true인 조건식
  
-     if( ch!='y' && ch!='Y' ) {  }
+      if( ch!='y' && ch!='Y' ) {  }
 
 - char형 변수 ch가 영문자 일때 true인 조건식
   
