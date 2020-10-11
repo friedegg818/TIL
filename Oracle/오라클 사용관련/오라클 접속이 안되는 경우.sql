@@ -1,6 +1,5 @@
 
 -- 오라클 서버 연결 확인
-
    사용법 : tnsping <address> <count> 
    cmd>tnsping 127.0.0.1 5
 
