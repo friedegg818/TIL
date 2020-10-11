@@ -1,6 +1,3 @@
-
-[기타사항] 
-
  < 데이터 링크 > 
   - 권한 부여 (관리자) 
     GRANT CREATE DATABASE LINK TO sky;
