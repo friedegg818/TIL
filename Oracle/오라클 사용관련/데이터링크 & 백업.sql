@@ -37,3 +37,5 @@
   - IMPORT : 압축 해제하여 가져오기 (논리적으로 복원) 
     cmd> imp userid=sky/"java$!" file='C:\data\sky.dmp' fromuser=sky touser=sky
     
+    
+    
