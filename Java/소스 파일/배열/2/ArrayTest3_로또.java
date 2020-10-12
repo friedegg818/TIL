@@ -11,7 +11,7 @@ public class ArrayTest3 {
 		int cnt;
 		
 		do {
-			System.out.print("±¸¸Å°³¼ö[1~5]?"); 
+			System.out.print("êµ¬ë§¤ê°œìˆ˜[1~5]?"); 
 			cnt=sc.nextInt();
 		} while(cnt<1||cnt>5);			
 		
@@ -19,7 +19,7 @@ public class ArrayTest3 {
 		for(int i=1; i<=cnt; i++) {
 			for(int a=0; a<num.length; a++) {
 		     	num[a]=(int)(Math.random()*45)+1;
-		     	for(int b=0; b<a; b++) {  // µ¿ÀÏ¼ýÀÚ Á¦°Å 
+		     	for(int b=0; b<a; b++) {  // ë™ì¼ìˆ«ìž ì œê±° 
 		     		if(num[a]==num[b]) {
 		     			a--;
 		     			break;
@@ -27,7 +27,7 @@ public class ArrayTest3 {
 		     	}
 		      }
 		      Arrays.sort(num);
-		      System.out.print(i+"¹øÂ° : ");
+		      System.out.print(i+"ë²ˆì§¸ : ");
 		      for(int n: num) {
 		    	  System.out.print(n+" ");
 		      }
