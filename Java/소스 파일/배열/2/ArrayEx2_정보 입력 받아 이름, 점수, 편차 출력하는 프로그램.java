@@ -6,8 +6,8 @@ public class ArrayEx2 {
 
 	public static void main(String[] args) {
 	/* 
-	 5¸íÀÇ ÀÌ¸§°ú Á¡¼ö¸¦ ÀÔ·Â ¹Ş¾Æ
-	 ÀÌ¸§ Á¡¼ö ÆíÂ÷(Á¡¼ö-Æò±Õ)À» Ãâ·ÂÇÏ´Â ÇÁ·Î±×·¥ ÀÛ¼º
+	 5ëª…ì˜ ì´ë¦„ê³¼ ì ìˆ˜ë¥¼ ì…ë ¥ ë°›ì•„
+	 ì´ë¦„ ì ìˆ˜ í¸ì°¨(ì ìˆ˜-í‰ê· )ì„ ì¶œë ¥í•˜ëŠ” í”„ë¡œê·¸ë¨ ì‘ì„±
 	 */
 		
 		Scanner sc=new Scanner(System.in);
@@ -17,16 +17,16 @@ public class ArrayEx2 {
 		
 		tot=0;
 		for(int i=0; i<name.length; i++) {
-			System.out.print((i+1)+"¹øÂ° ÀÌ¸§ : ");
+			System.out.print((i+1)+"ë²ˆì§¸ ì´ë¦„ : ");
 			name[i] = sc.next();
-			System.out.print("  Á¡¼ö : ");
+			System.out.print("  ì ìˆ˜ : ");
 			score[i] = sc.nextInt();
 			
-			tot+=score[i]; 		// ÀÔ·Â ¹ŞÀº Á¡¼öÀÇ ÇÕ ±¸ÇÏ±â
+			tot+=score[i]; 		// ì…ë ¥ ë°›ì€ ì ìˆ˜ì˜ í•© êµ¬í•˜ê¸°
 		}
-		// Æò±Õ °è»ê
+		// í‰ê·  ê³„ì‚°
 		ave = tot / name.length;
-		// Ãâ·Â 
+		// ì¶œë ¥ 
 		for(int i=0; i<name.length; i++) {
 			System.out.println(name[i]+"\t"+score[i]+"\t"+(score[i]-ave));
 		}
