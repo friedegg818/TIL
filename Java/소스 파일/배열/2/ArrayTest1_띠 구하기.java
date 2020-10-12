@@ -7,20 +7,20 @@ public class ArrayTest1 {
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
 			
-		String [] ani = {"¿ø¼şÀÌ","´ß","°³","µÅÁö","Áã","¼Ò","¹ü","Åä³¢","¿ë","¹ì","¸»","¾ç"};
+		String [] ani = {"ì›ìˆ­ì´","ë‹­","ê°œ","ë¼ì§€","ì¥","ì†Œ","ë²”","í† ë¼","ìš©","ë±€","ë§","ì–‘"};
 	
 		int y;
 		
 		do {
-			System.out.print("³âµµ?");
+			System.out.print("ë…„ë„?");
 			y=sc.nextInt();
 		} while (y<1900);
 				
-		System.out.println(y+"³âµµ´Â "+ani[y%12]+"¶ì ÀÇ ÇØÀÔ´Ï´Ù.");
+		System.out.println(y+"ë…„ë„ëŠ” "+ani[y%12]+"ë  ì˜ í•´ì…ë‹ˆë‹¤.");
 		
 		/*		 
 		 y%12 
-		 ani[0] ¿ø¼şÀÌ 		 
+		 ani[0] ì›ìˆ­ì´ 		 
 		 */		
 		
 		sc.close();
