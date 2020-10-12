@@ -7,9 +7,9 @@
   - 반복문이 다중으로 작성된 경우 특정한 반복문을 빠져 나오기 위해 사용 
   - **빠져나오려는 반복문 윗줄에 <라벨명:>** 적어줌. 라벨명은 어떤 것이든 상관 X 
   - 한 프로그램에서 동일한 이름으로 라벨명 사용 불가 
-  - **빠져나오려고 할 때 <break 라벨명;>** 작성
+  - **빠져나오려고 할 때 <break 라벨명;>** 
 
-[관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Break%20Ex)
+  [관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Break%20Ex)
 
 #
 ### Continue 
@@ -20,4 +20,4 @@
   - 반복문이 다중으로 작성된 경우 두개 이상의 반복문 조건식으로 올라가기 위해 사용되는
   - **다시 시행하려는 반복문 윗줄에 <라벨명:>**
     
-[관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Continue%20Ex)
+  [관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/Continue%20Ex)
