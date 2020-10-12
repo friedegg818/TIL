@@ -8,11 +8,11 @@
 		    	실행문				
        }
         
-	  · 초기식 - 무조건 실행
-	  · 조건식 - 반드시 true or false. 참이면 실행문 수행. 
-	  · 증감식 - 실행문 수행 후 재초기 (초기값 변경)
-	  · 다시 조건식 > 참 > 실행 > 증감식 > .... 
-	  · 거짓이면 for문을 빠져나감 
+	     · 초기식 - 무조건 실행
+	     · 조건식 - 반드시 true or false. 참이면 실행문 수행. 
+	     · 증감식 - 실행문 수행 후 재초기 (초기값 변경)
+	     · 다시 조건식 > 참 > 실행 > 증감식 > .... 
+	     · 거짓이면 for문을 빠져나감 
   
 - while 과 반대 개념  
 
@@ -30,8 +30,8 @@
 	                 실행문	  				
 	       for(초기식 ; 조건식 ; 증감식) {
 	                 실행문			
-		}			
-	   }
+		     }			
+	        }
 
    [관련 소스](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/%EB%8B%A4%EC%A4%91%20For%20Ex)   
    [Math.random(난수 발생)](https://github.com/friedegg818/TIL/tree/master/Java/%EC%86%8C%EC%8A%A4%20%ED%8C%8C%EC%9D%BC/%EB%B0%98%EB%B3%B5%EB%AC%B8_%EB%82%9C%EC%88%98%20%EB%B0%9C%EC%83%9D)   
