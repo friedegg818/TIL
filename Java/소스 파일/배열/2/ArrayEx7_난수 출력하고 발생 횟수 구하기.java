@@ -3,25 +3,25 @@ package test0207;
 public class ArrayEx7 {
 	
 	public static void main(String[] args) {
-		/* 1~10±îÁö ³­¼ö¸¦ ÇÑ ÁÙ¿¡ 10°³¾¿ Ãâ·ÂÇÏ°í 
-		     ¸¶Áö¸·¿¡ °¢ ¼ıÀÚÀÇ ¹ß»ı È½¼ö¸¦ Ãâ·Â 
+		/* 1~10ê¹Œì§€ ë‚œìˆ˜ë¥¼ í•œ ì¤„ì— 10ê°œì”© ì¶œë ¥í•˜ê³  
+		     ë§ˆì§€ë§‰ì— ê° ìˆ«ìì˜ ë°œìƒ íšŸìˆ˜ë¥¼ ì¶œë ¥ 
 		  (int)(Math.random()*10)+1  */
 		
 		int []count=new int[10];
 		int num;
 		
-		System.out.println("¹ß»ıµÈ ³­¼ö...");
+		System.out.println("ë°œìƒëœ ë‚œìˆ˜...");
 		for (int i=1; i<=100; i++) {
 			num=(int)(Math.random()*10)+1;
 			
-			count[num-1]++;  // count[0]~count[9]±îÁö ÀÖ°í 
+			count[num-1]++;  // count[0]~count[9]ê¹Œì§€ ìˆê³  
 						     // count[0]=1; count[1]=2; .... 
 			
 			System.out.printf("%3d", num);
 			if(i%10==0) System.out.println();
 		}
 		
-		System.out.println("\n¼ıÀÚº° ¹ß»ıÈ½¼ö : ");
+		System.out.println("\nìˆ«ìë³„ ë°œìƒíšŸìˆ˜ : ");
 		for(int i=0; i<count.length; i++) {
 			System.out.println((i+1)+"\t"+count[i]);
 		}
