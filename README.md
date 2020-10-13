@@ -23,16 +23,16 @@
  + [**REPL 터미널**](https://github.com/friedegg818/TIL/blob/master/Node.js/02.%20REPL%20%ED%84%B0%EB%AF%B8%EB%84%90.md)
  + [**NPM**](https://github.com/friedegg818/TIL/blob/master/Node.js/03.%20NPM.md) (Node Package Manager)
  + [**Module**](https://github.com/friedegg818/TIL/blob/master/Node.js/04.%20Module.md)
-   > - 내부 모듈 | os / url / Query String / util / crypto / File System 
-   > - 외부 모듈 
+ > - 내부 모듈 | os / url / Query String / util / crypto / File System 
+ > - 외부 모듈 
  + [**전역변수 / 전역객체**](https://github.com/friedegg818/TIL/blob/master/Node.js/05.%20%EC%A0%84%EC%97%AD%EB%B3%80%EC%88%98%EC%99%80%20%EC%A0%84%EC%97%AD%EA%B0%9D%EC%B2%B4.md)
-   > - 전역 변수 
-   > - 전역 객체 | console / process / exports
+ > - 전역 변수 
+ > - 전역 객체 | console / process / exports
  + [**이벤트**](https://github.com/friedegg818/TIL/blob/master/Node.js/06.%20%EC%9D%B4%EB%B2%A4%ED%8A%B8.md)
  + [**HTTP Module**](https://github.com/friedegg818/TIL/blob/master/Node.js/07.%20HTTP%20Module.md)
-   > - server 객체
-   > - request 객체 
-   > - response 객체
+ > - server 객체
+ > - request 객체 
+ > - response 객체
 * * *
 ### Oracle
  + [**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/01.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md) / [**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/02.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
