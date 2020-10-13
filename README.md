@@ -26,8 +26,6 @@
  > - 내부 모듈  
  > - 외부 모듈 
  + [**전역변수 / 전역객체**](https://github.com/friedegg818/TIL/blob/master/Node.js/05.%20%EC%A0%84%EC%97%AD%EB%B3%80%EC%88%98%EC%99%80%20%EC%A0%84%EC%97%AD%EA%B0%9D%EC%B2%B4.md)
- > - 전역 변수 
- > - 전역 객체  
  + [**이벤트**](https://github.com/friedegg818/TIL/blob/master/Node.js/06.%20%EC%9D%B4%EB%B2%A4%ED%8A%B8.md)
  + [**HTTP Module**](https://github.com/friedegg818/TIL/blob/master/Node.js/07.%20HTTP%20Module.md)
  > - server /  request / response 객체
