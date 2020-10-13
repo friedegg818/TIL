@@ -1,0 +1,67 @@
+■ HTTP Module
+ 1. 개요
+    - Node.js에서 가장 기본적인 웹 모듈(내장 모듈)이며 HTTP 웹 서버를 생성하는 것과 관련된 모든 기능을 담당한다.
+    - http 모듈 대신 HTTP 요청에 대하여 라우팅 및 미들웨어 기능을 제공하는 웹 프레임워크인 Express.js 등을 사용 한다.
+
+
+ 2. http 모듈 객체
+  ο server 객체
+    - http 모듈에서 가장 중요한 객체로 http 모듈의 createServer() 메서드를 사용하여 server 객체를 생성한다.
+    - server 객체의 메서드
+      ㆍlisten(port[, callback]) : 서버를 실행
+      ㆍclose() : 서버를 종료
+    - server 객체의 이벤트
+      ㆍrequest : 클라이언트가 요청할 때 발생하는 이벤트
+      ㆍconnection : 클라이언트가 접속할 때 발생하는 이벤트
+      ㆍclose : 서버가 종료될 때 발생하는 이벤트
+      ㆍcheckContinue : 클라이언트가 지속적인 연결을 하고 있을 때 발생하는 이벤트
+      ㆍupgrade : 클라이언트가 HTTP 업그레이드를 요청할 때 발생하는 이벤트
+      ㆍclientError : 클라이언트에서 오류가 발생할 때 발생하는 이벤트
+
+
+  ο response 객체
+    1) 개요
+       - server 객체의 response 이벤트가 발생할 때 이벤트 핸들러의 두 번째 매개 변수에 response 객체가 들어간다.
+       - response 객체의 메서드
+         ㆍwriteHead(statusCode, object) : 응답 헤더를 작성
+         ㆍwrite(chunk[, encoding][, callback]) : 응답 본문을 전송한다.
+         ㆍend([data], [encoding]) : 모든 응답 헤더와 본문이 전송되었음을 서버에 알린다. response.end ()는 반드시 각 응답에서 호출되어야하며 스트림에 보낼 데이터의 마지막 비트를 선택적으로 전달한다.
+       - HTTP Status Code
+         1XX : 처리 중, 100 : Continue 
+         2XX : 성공, 200 : OK 
+         3XX : 리다이렉트, 300 : Multiple Choices, 302 : 리다이렉트
+         4XX : 클라이언트 오류, 400 : Bad Request, 404 : 존재하지 않는 페이지
+         5XX : 서버 오류, 500 : Internal Server Error 
+
+
+    2) File System 모듈을 사용한 HTML 페이지 제공
+       - 자바스크립트 파일 위에서 모든 HTML 페이지를 문자열로 작성하는 것은 불가능하다. 
+ 
+    3) 이미지와 음악 파일
+ 
+    4) 쿠키 생성
+       - 쿠키는 키와 값이 들어 있는 작은 데이터 조각으로, 이름, 값, 파기 날짜와 경로 정보를 가지고 있다. 
+       - 쿠키는 서버와 클라이언트에서 모두 저장하고 사용할 수 있다. 쿠키는 일정 기간 동안 데이터를 저장할 수 있으므로 일정 기간 동안 로그인을 유지하는 데 사용할 수 있다.
+       - response 객체를 사용하면 클라이언트에게 쿠키를 할당할 수 있다. 
+       - 쿠키를 할당할 때 응답 헤더의 Set-Cookie 속성을 사용한다. Set-Cookie 속성에는 쿠키의 배열을 넣는다.
+ 
+    5) 페이지 강제 이동(redirect)
+ 
+
+  ο request 객체
+     - server 객체의 request 이벤트가 발생할 때 이벤트 핸들러의 첫 번째 매개 변수에 request 객체가 들어간다.
+     - request 객체의 속성
+      ㆍmethod : 클라이언트 요청 방식
+      ㆍurl : 클라이언트가 요청한 URL
+      ㆍheaders : 요청 메시지 헤더(요청 메시지 시작부분)
+      ㆍtrailers : 요청 메시지 트레일러(요청 메시지 끝부분)
+      ㆍhttpVersion : HTTP 프로토콜 버전
+
+   - JSON.stringify() 메소드
+     JSON.stringify() 메소드(method)는 자바스크립트 값을 JSON 문자열로 변환하고, 리플레이서(replacer) 함수가 지정되어있을 때 선택적으로 바꾸거나, 리플레이서 배열이 지정되어있을 때 지정된 속성만 선택적으로 포함할 수 있다.
+     형식 : JSON.stringify(value[, replacer[, space]])
+               value : JSON 문자열로 변환할 값
+               replacer | Optional
+                  문자열화 프로세스의 작동을 변경하는 함수, 혹은  JSON 문자열에 포함될 값 객체의 속성들을 선택하기 위한 화이트리스트(whitelist)로 쓰이는 String 과 Number 객체들의 배열. 이 값이 null 이거나 제공되지 않으면, 객체의 모든 속성들이 JSON 문자열 결과에 포함된다.
+               space : Optional
+                  가독성을 목적으로 JSON 문자열 출력에 공백을 삽입하는데 사용되는 String 또는 Number 객체. 이것이 Number 라면, 공백으로 사용되는 스페이스(space)의 수를 나타낸다; 이 수가 10 보다 크면 10 으로 제한된다. 1 보다 작은 값은 스페이스가 사용되지 않는 것을 나타낸다. 이것이 String 이라면, 그 문자열(만약 길이가 10 보다 길다면, 첫번째 10 개의 문자)이 공백으로 사용된다. 이 매개 변수가 제공되지 않는다면(또는 null 이면), 공백이 사용되지 않는다.

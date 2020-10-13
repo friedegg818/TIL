@@ -1,0 +1,32 @@
+■ 이벤트 연결과 제거
+ ο 이벤트의 연결
+    - 메소드
+      emitter.addListener(event, listener)
+      emitter.on(event, listener)
+      emitter.once(event, listener)
+
+      emitter : 이미터는 이벤트를 연결할 객체를 나타낸다.
+      event : 이벤트 이름
+      listener : 이벤트 핸들러를 작성
+      addListener() 메소드와 on() 메소드는 서로 같으며 on() 메소드는 이벤트를 계속 연결한 상태를 유지하는 반면 once() 메소드는 한 번만 연결한 후 제거한다. 세 메소드의 사용 방법은 같다.
+
+
+ ο 이벤트의 제거
+    - 메소드
+      emitter.removeListener(event, listener)
+      emitter.removeAllListeners([event])
+
+      addListener() 또는 on() 메소드를 통해 연결된 이벤트의 이벤트 핸들러를 제거하기 위해 사용
+      removeListener() 메소드는 특정 이벤트(event 매개변수)의 특정 이벤트 핸들러(listener 매개변수)를 제거하기 위해 사용
+      removeAllListeners() 메소드는 모든 이벤트의(또는 특정 이벤트의) 모든 이벤트 핸들러를 제거하기 위해 사용
+
+
+ ο 이벤트의 연결 개수 제한
+    - 메소드
+       emitter.setMaxListeners(n)
+
+       node.js는 기본값으로 한 이벤트에 10개의 이벤트 핸들러를 작성할 수 있다.
+       만약 11개 이상의 이벤트 핸들러를 사용하고 싶다면 setMaxListeners() 메소드의 매개변수로 최대 허용 개수 값을 넘겨주면 된다.
+       만약 매개변수 n값으로 0을 넘겨주게 되면 연결 개수 제한이 사라진다. 
+
+

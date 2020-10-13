@@ -1,0 +1,47 @@
+■ express-session
+ ο 개요
+   - express-session 은 Express 프레임워크에서 세션을 관리하기 위해 필요한 미들웨어이다.
+   - Express에 적용
+     var session = require('express-session');
+     app.use(session({
+         secret: '비밀키값',
+         resave: false,
+         saveUninitialized: true
+     }));
+
+     secret : 시크릿은 쿠키를 임의로 변조하는것을 방지하기 위한 값 이다. 이 값을 통하여 세션을 암호화 하여 저장한다.
+     resave : 세션을 언제나 저장할 지(변경되지 않아도) 정하는 값이다. express-session documentation에서는 이 값을 false 로 하는것을 권장하고 필요에 따라 true로 설정한다.
+     saveUninitialized : 세션이 저장되기 전에 uninitialized 상태로 미리 만들어서 저장한다.
+ 
+   - 세션 초기 설정(initialization)
+     app.get('/', function(req, res){
+         sess = req.session;
+     });
+
+     라우터 콜백함수 안에서 req.session 으로 세션에 접근 할 수 있다.
+
+   - 세션 변수 설정
+     app.get('/login', function(req, res){
+         sess = req.session;
+         sess.username = "velopert"
+     });
+
+    따로 키를 추가해줄 필요 없이 sess.[키 이름]  = 값 으로 세션 변수를 설정 할 수 있다.
+
+   - 세션 변수 사용
+     app.get('/', function(req, res){
+         sess = req.session;
+         console.log(sess.username);
+     });
+
+   - 세션 제거
+      req.session.destroy(function(err){
+         // cannot access session here
+      });
+
+      destroy() 메소드의 콜백함수에서는 세션에 접근 할 수 없다.
+
+    - express-seesion 설치
+      익스프레스에서 제공하는 기본 세션 미들웨어를 사용하기보다는, express-seesion을 사용하는게 편하다.
+      c:\work\myapp> npm install express-session --save
+
