@@ -18,14 +18,14 @@
  > - [수학 관련 함수](https://github.com/friedegg818/TIL/blob/master/mysql/4.%20%EC%A3%BC%EC%9A%94%20%ED%95%A8%EC%88%98%20(%EC%88%98%ED%95%99%20%EA%B4%80%EB%A0%A8).md)
 * * * 
 ### Node.js
- + [**설치 및 개발 도구**](https://github.com/friedegg818/TIL/blob/master/Node.js/00.%20%EC%84%A4%EC%B9%98%20%EB%B0%8F%20%EA%B0%9C%EB%B0%9C%20%EB%8F%84%EA%B5%AC.md(
+ + [**설치 및 개발 도구**](https://github.com/friedegg818/TIL/blob/master/Node.js/00.%20%EC%84%A4%EC%B9%98%20%EB%B0%8F%20%EA%B0%9C%EB%B0%9C%20%EB%8F%84%EA%B5%AC.md)
  + [**Node.js 란?**](https://github.com/friedegg818/TIL/blob/master/Node.js/01.%20Node.js%20%EA%B0%9C%EC%9A%94.md)
  + [**REPL 터미널**](https://github.com/friedegg818/TIL/blob/master/Node.js/02.%20REPL%20%ED%84%B0%EB%AF%B8%EB%84%90.md)
  + [**NPM**](https://github.com/friedegg818/TIL/blob/master/Node.js/03.%20NPM.md) (Node Package Manager)
  + [**Module**](https://github.com/friedegg818/TIL/blob/master/Node.js/04.%20Module.md)
    > - 내부 모듈 | os / url / Query String / util / crypto / File System 
    > - 외부 모듈 
- + [**전역변수 / 전역객체**](https://github.com/friedegg818/TIL/blob/master/Node.js/05.%20%EC%A0%84%EC%97%AD%EB%B3%80%EC%88%98%EC%99%80%20%EC%A0%84%EC%97%AD%EA%B0%9D%EC%B2%B4.md(
+ + [**전역변수 / 전역객체**](https://github.com/friedegg818/TIL/blob/master/Node.js/05.%20%EC%A0%84%EC%97%AD%EB%B3%80%EC%88%98%EC%99%80%20%EC%A0%84%EC%97%AD%EA%B0%9D%EC%B2%B4.md)
    > - 전역 변수 
    > - 전역 객체 | console / process / exports
  + [**이벤트**](https://github.com/friedegg818/TIL/blob/master/Node.js/06.%20%EC%9D%B4%EB%B2%A4%ED%8A%B8.md)
