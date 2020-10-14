@@ -41,7 +41,7 @@
  + **DB 연동** 
  > - [MySQL](https://github.com/friedegg818/TIL/blob/master/Node.js/11.%20MySql%20%EC%97%B0%EB%8F%99.js.md)
  > - [MongoDB](https://github.com/friedegg818/TIL/blob/master/Node.js/11.%20MongoDB%20%EC%97%B0%EB%8F%99.md)
- + **Socekt.io**
+ + [**Socekt.io**](https://github.com/friedegg818/TIL/blob/master/Node.js/12.%20Socket.io.md)
 * * *
 ### Oracle
  + [**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/01.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md) / [**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/02.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
