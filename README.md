@@ -36,6 +36,12 @@
  > - [**모듈 분석**](https://github.com/friedegg818/TIL/blob/master/Node.js/09.%20%EB%AA%A8%EB%93%88%20%EB%B6%84%EC%84%9D_Express.js.md)
  > - [**템플릿 엔진**](https://github.com/friedegg818/TIL/blob/master/Node.js/09.%20%ED%85%9C%ED%94%8C%EB%A6%BF%EC%97%94%EC%A7%84_Express.js.md)
  > - [**express-session**](https://github.com/friedegg818/TIL/blob/master/Node.js/09.%20session_Express.js.md)
+ + [**RESTful API**](https://github.com/friedegg818/TIL/blob/master/Node.js/10.%20RESTful%20API.md)
+ + [**파일 업로드**](https://github.com/friedegg818/TIL/blob/master/Node.js/10.%20%ED%8C%8C%EC%9D%BC%EC%97%85%EB%A1%9C%EB%93%9C.md)
+ + **DB 연동** 
+ > - [MySQL](https://github.com/friedegg818/TIL/blob/master/Node.js/11.%20MySql%20%EC%97%B0%EB%8F%99.js.md)
+ > - [MongoDB](https://github.com/friedegg818/TIL/blob/master/Node.js/11.%20MongoDB%20%EC%97%B0%EB%8F%99.md)
+ + **Socekt.io**
 * * *
 ### Oracle
  + [**데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/01.%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.md) / [**관계형 데이터 베이스**](https://github.com/friedegg818/TIL/blob/master/Oracle/02.%20%EA%B4%80%EA%B3%84%ED%98%95%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B2%A0%EC%9D%B4%EC%8A%A4.md)
