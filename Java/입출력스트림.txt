@@ -1,0 +1,41 @@
+ < 바이트 입출력 스트림 >
+ · InputStream in = System.in;
+ · OutputStream out = System.out;
+
+ - 1byte 입력 받기 (1byte를 입력 받아 ASCII 코드 반환)
+    int data = System.in.read();		[한글은 두번 입력 받음] 
+	  char ch = (char)System.in.read(); [문자로 변환, 한글은 깨짐] 
+
+ - 1byte 출력 
+	int data = 65;
+    System.out.write(data); [하위 1byte 출력] 
+    System.out.flush();     [버퍼 내용을 출력 장치로 보냄] 
+	
+	
+ < 문자 입출력 스트림 > byte → 문자스트림으로 변환 
+ · Reader rd =  new InputStreamReader(System.in);
+ · Writer wt = new OutputStreamWriter(System.out);
+ 
+ - 한 문자 입력 받기 (1문자를 입력 받아 ASCII 코드 반환)
+	int data = rd.read(); [한글도 한번에 입력 받음]
+	
+ - 한 문자 출력 
+	wt.write(data);
+	wt.flush();
+	  System.out.println((char)data);  [한글 안깨짐] 
+	  
+	  
+ < 파일 바이트 입출력 스트림>	  
+ · FileInputStream fis = new FileInputStream("파일명.확장자");  [파일이 없으면 FileNotFoundException 발생]
+ · FileOutputStream fos = new FileOutputStream("파일명.확장자"); [파일이 있으면 지우고 만듦] 
+ 
+ - 파일 입력 (파일 복사) 
+	byte[] b = new byte[2048]
+	int len;
+	while((len=fis.read(b))!=-1) { 
+		fos.write(b,o,len);
+	}
+	fos.flush();
+	fis.close();
+	fos.close(); 
+	  
