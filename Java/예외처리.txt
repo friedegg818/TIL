@@ -1,0 +1,367 @@
+[예외 처리]
+
+- 프로그램 에러
+ · 컴파일 에러 : 컴파일 시 발생, 문법적 에러 
+ · 런타임 에러 : 실행 시 발생, 발생하면 프로그램 종료 
+			- 에러
+			- 예외 
+ · 논리적 에러 : 개발자 실수. 엉뚱한 결과가 나오는 경우. 치명적.
+
+- 예외 
+ · 돌발적인 상태, 비정상적 상황
+ · 사용자의 잘못된 조작 or 개발자의 잘못된 코딩으로 발생
+	1) checked exception - 컴파일 시 체크 됨. 명시적으로 예외처리를 해 주어야 함. < Exception
+	2) unchecked exception - 컴파일 시 체크 되지 않고 런타임 시 발생. < RuntimeException 
+
+- 예외 처리 
+ · 예외에 대비하기 위한 코드 작성 
+ · 장점 
+   - 프로그램 종료 방지 + 정상적 실행 상태 유지 
+   - 프로그램 실행 코드 / 에러 처리 코드 분류 가능 (구역이 나누어짐)
+   - 예외 타입 종류별 분류 가능 
+ 
+- try ~ catch ~ (finally)
+    : try 영역에서 예외 상황이 발생하면, catch문에서 예외 상황 처리 
+	  finally 는 필요 여부에 따라 작성
+	  
+	  try { 
+		예외 발생 가능성 있는 코드 
+	  } catch { 
+		예외 발생 시 실행 할 코드 
+	  } finally {
+		예외 발생 여부와 상관 없이 항상 실행
+	  }
+		코드 
+ 
+	 import java.util.Scanner;
+
+	public class Ex02 {
+		public static void main(String[] args) {
+			Scanner sc=new Scanner(System.in);
+			int a, b, c;
+			
+			try {
+				System.out.print("두정수?");
+				a = sc.nextInt();
+				b = sc.nextInt();
+				
+				c = a / b;							
+			
+				System.out.println(a+"/"+b+"="+c);
+			} catch (Exception e) {   // Excetion e → 모든 예외 처리 
+				System.out.println("입력 사항이 올바르지 않거나...");
+			}
+			
+			System.out.println("end...");
+			
+			sc.close();
+		}
+	}
+	
+- checked exception 
+  · 메소드를 정의 할 때 throws 한 예외 
+  · 반드시 예외 처리를 해야 한다.
+  · 예외 처리를 하지 않으면 컴파일 오류 발생 
+  · Exception 상속 받음
+  · IOException _ 입출력에 문제 있을 때 발생 
+  
+- unchecked exception
+  · 반드시 catch 할 필요는 없지만 예외가 발생하면 프로그램 비정상 종료
+  · RuntimeException 상속 받음
+  · NumberFormatException 
+  · AirthmeticException
+  · ArrayIndexOutOfBoundsException 
+  · InputMismatchException
+  · NullPointerException / ClassCastException
+  
+		import java.io.BufferedReader;
+		import java.io.IOException;
+		import java.io.InputStreamReader;
+
+		public class Ex03_checekd {
+			public static void main(String[] args) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+				String s;
+				int a, b, c;
+				
+				try {
+					System.out.print("첫번째 수?");
+					s=br.readLine(); // 한 줄을 입력 받는다. 			
+					// 메소드 자체가 문제를 가지고 있어서, 사용시 해결해야 한다고 외부에 명시 해 놓음
+					// → checked exception (반드시 예외 처리 해야함 : IOException 예외 ) 		
+					a=Integer.parseInt(s); 
+					
+					System.out.println("두번째 수?");
+					b=Integer.parseInt(br.readLine());
+					
+					c = a / b;
+					
+					System.out.println(a+"/"+b+"="+c);
+					
+				} catch (IOException e) {
+					// IOException : 입출력에 문제가 있을 때 발생 하는 예외
+					// checked 예외로 반드시 예외 처리를 해야한다. 
+					// checked exception 은 메소드를 정의 할 때 throws 한 예외
+					// 예외 처리를 하지 않으면 컴파일 오류가 발생 
+					e.printStackTrace();
+				}  	
+				
+				System.out.println("end...");
+			}
+		}
+		
+		
+	import java.io.BufferedReader;
+	import java.io.IOException;
+	import java.io.InputStreamReader;
+
+	public class Ex04_unchecked {
+		public static void main(String[] args) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			int a, b, c;
+			
+			try {
+				System.out.print("첫번째 수?");
+				a=Integer.parseInt(br.readLine());
+				
+				System.out.print("두번째 수?");
+				b=Integer.parseInt(br.readLine());
+				
+				c = a / b;
+				
+				System.out.println(a+"/"+b+"="+c);
+				
+			} catch (IOException e) {	// checked 예외 
+				e.printStackTrace();
+			} catch (NumberFormatException e) { 
+					// unchecked 예외 
+					// 반드시 catch 할 필요는 없지만 예외가 발생하면 프로그램은 비정상 종료
+					// 문자열을 숫자로 변경 불가능한 경우 발생 
+					
+				// System.out.println("숫자만 입력 가능합니다.");	// 클라이언트 보여 줄 때
+				// System.out.println(e.toString()); // 개발자에게 보여 줄 때 (오류 타입:메세지)
+				// System.out.println(e.getMessage());  // 메세지만 
+				e.printStackTrace(); // 자세한 이유와 경로를 보여줌 
+			} catch (ArithmeticException e) {
+					// unchecked 예외 			  
+				System.out.println("0으로 나눌 수 없습니다.");
+			} catch (Exception e) {
+					// 모든 예외를 다 catch 가능
+					// 여러 예외를 catch 한 경우 가장 마지막에 기술 해야 함 
+				System.out.println(e.toString());
+			}		
+			System.out.println("end...");		
+		}
+	}
+	
+- 예외의 명시적 발생 
+  · 클래스에서 메소드를 실행 했을 때, 예외를 만든 것이 오히려 문제를 일으킨 경우
+  · 메소드 속에서 명시적으로 예외를 던져 프로그램을 컨트롤
+  · throw _ 메소드 속에서 예외를 던짐
+  · throws _ 메소드를 호출 하는 함수에게 예외를 잡으라고 알려줌
+
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Ex08 {
+	public static void main(String[] args) {
+		User8 u = new User8();
+		u.input(); 
+	}
+}
+
+	class User8 { 
+		private Scanner sc = new Scanner(System.in);
+		
+		// throws Exception : 메소드를 호출 한 곳에서 Exception checked 예외를 catch 하도록 설정 
+		private int inputScore() throws Exception { 
+			int result=0;
+			try {
+				result = sc.nextInt();
+				
+				if(result<0 || result>100) { 
+					// 예외 던짐. 실행을 중지하고 호출 함수쪽에서 예외를 발생시킴.
+					throw new Exception("점수는 0~100 사이만 가능합니다."); 					 
+				}
+				
+			} catch (InputMismatchException e) {
+							
+				sc.nextLine(); 	// 문제가 있는 데이터를 읽어서 버림 
+				
+				// 예외를 명시적으로 발생한다.
+				throw new Exception("숫자만 입력 가능합니다.");
+			}
+			return result;
+		}
+		
+		public void input() { 
+			String name, tel;
+			int kor, eng;
+			
+			try { 
+				System.out.print("이름?");
+				name = sc.next(); 
+				
+				System.out.println("국어?");
+				kor = inputScore();
+				
+				System.out.println("영어?");
+				eng = inputScore();
+				
+				System.out.println("전화번호?");
+				tel = sc.next(); 
+				
+				System.out.println(name+":"+kor+":"+eng+":"+tel);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			System.out.println("-----------------------");
+		}
+	}	
+	
+	
+- 예외 작성 
+ · checked 예외 작성 < Exception 클래스 상속 받아서 
+   → 반드시 catch 해 주어야 한다. 
+   → 호출 되는 메소드에서 throws 하는 것이 가장 좋다.
+      
+ · unchecked 예외 작성 < RuntimeException 클래스 상속 받아서 
+   → 반드시 catch 할 필요는 없다. (throws 생략 가능) 
+   → 예외 처리는 해 주어야 한다. 
+   
+   
+   public class Ex10 {
+	public static void main(String[] args) {
+		User10 ob = new User10(); 
+		try {
+			ob.setValue(-3);	
+		int n = ob.getValue();
+		System.out.println(n);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		//	e.printStackTrace();
+		}
+		System.out.println("--------------------------");
+	}
+}
+
+class User10 { 
+	private int value;
+	
+	public void setValue(int value) throws Exception { // 메소드를 호출하는 곳에서 예외를 catch 하도록 설정 
+		if(value<0)
+			throw new Exception("0 이상만 가능합니다.");	// 강제로 checked 예외를 발생(Exception 예외)
+		
+		this.value=value;
+	}
+	
+	public int getValue() { 
+		return value; 
+	}
+}
+
+
+public class Ex13_throwruntime {
+	public static void main(String[] args) {
+		User13 uu = new User13();
+		/*
+		 * uu.setValue(-3); // value가 0보다 적어 RuntimeException 예외가 발생 // 예외처리를 하지 않아
+		 * 프로그램은 이 곳에서 강제 종료 int n = uu.getValue(); System.out.println(n);
+		 * System.out.println("end...");
+		 */
+		try {
+			uu.setValue(-3);
+			int n = uu.getValue();
+			System.out.println(n);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		System.out.println("end...");
+	}
+}
+
+class User13 {
+	private int value;
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		if (value < 0) {
+			// RuntimeException은 unchecked 예외로 반드시 catch 할 필요 없다. (throws 생략 가능)
+			throw new RuntimeException("0이상만 가능합니다.");
+		}
+		this.value = value;
+	}
+	
+	
+- 사용자 정의 예외 
+ · 사용자에 의해 만들어짐
+ · 예외명 → Exception or RuntimeException 상속 받기 → 생성자 
+ 
+	import java.util.InputMismatchException;
+	import java.util.Scanner;
+
+	public class Ex16_userException {
+		public static void main(String[] args) {
+			Scanner sc = new Scanner(System.in);
+			User16 user = new User16();
+
+			try {
+				System.out.print("이름?");
+				user.setName(sc.next());
+				System.out.print("나이?");
+				user.setAge(sc.nextInt());
+
+				System.out.println(user.getName() + ":" + user.getAge());
+			} catch (InputMismatchException e) {
+				System.out.println("숫자만 입력 하세요.");
+			} catch (AgeValidException e) {
+				System.out.println("나이 입력 오류 입니다."); 
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			} finally {
+				sc.close();
+			}
+			System.out.println("end...");
+		}
+	}
+
+	// 사용자 정의 예외 클래스 
+	// throw new Exception 만 사용하면 예외를 묶어서 잡을 수 밖에 없으니까 자바에 기존에 없는 예외 클래스를 만들어서 사용하는 것
+	// 예외명 정하고 > Exception 상속받고 > 생성자 만들기 
+	class AgeValidException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		public AgeValidException(String msg) {
+			super(msg);
+		}
+	}
+
+	class User16 {
+		private String name;
+		private int age;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public int getAge() {
+			return age;
+		}
+
+		public void setAge(int age) throws AgeValidException {
+			if (age < 10) {
+				throw new AgeValidException("나이는 0보다 크거나 같아야 합니다.");
+			}
+			this.age = age;
+		}
+
+	}
+	
