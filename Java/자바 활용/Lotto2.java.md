@@ -8,8 +8,8 @@
        4등 4개 일치 
        5등 3개 일치 
 
-
-- Lotto.java
+#
+#### Lotto.java
 
       import java.util.*; 
 
@@ -39,8 +39,8 @@
             } 
        }
 
-
- - LottoProgram.java
+#
+ #### LottoProgram.java
  
  public class LottoProgram {
  
@@ -191,19 +191,19 @@
          }
          
          
-      //Process 
-      public void process() {
-      
-         //1. 복권 몇 개를 구매할 건가(구매한 복권 다 출력함) 
-         lottoBuy(); printAll(); 
-         
-         //2. 당첨번호 추첨 
-         lottoResultNumberCreate(); 
-         
-         //3. 게임결과 확인
-         result();
-         }
-      }
+        //Process 
+        public void process() {
+
+           //1. 복권 몇 개를 구매할 건가(구매한 복권 다 출력함) 
+           lottoBuy(); printAll(); 
+
+           //2. 당첨번호 추첨 
+           lottoResultNumberCreate(); 
+
+           //3. 게임결과 확인
+           result();
+           }
+        }
 
 
 
