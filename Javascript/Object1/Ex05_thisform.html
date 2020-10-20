@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+function send(f) {
+	var s;
+	s=f.name.value + "," + f.kor.value;
+	alert(s);
+}
+</script>
+
+</head>
+<body>
+
+<p>form 요소들의 이벤트 핸들러 안에서의 this는 이벤트를 발생시킨 자기 자신이다.</p>
+<form name="myForm">
+<p>이름 : <input type="text" name="name"></p>
+<p>국어 : <input type="text" name="kor"></p>
+<p> <button type="button" onclick="send(this.form);">확인</button> </p>
+</form>
+
+</body>
+</html>

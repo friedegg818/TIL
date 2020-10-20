@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script type="text/javascript">
+	function calendar() {
+		var objYear = document.getElementById("inputYear");
+		var objMonth = document.getElementById("inputMonth");
+		var objResult = document.getElementById("resultLayout");
+
+		if (!/^(\d){4}$/.test(objYear.value)) {
+			objYear.focus();
+			return;
+		}
+
+		if (!/^(\d){1,2}$/.test(objMonth.value)) {
+			objMonth.focus();
+			return;
+		}
+
+		var y = parseInt(objYear.value);
+		var m = parseInt(objMonth.value);
+		if (m<1||m>12) {
+			objMonth.focus();
+			return;
+		}
+		
+		var s = calendarCreate(y,m);
+		
+		objResult.innerHTML = s;
+	}
+
+	function calendarCreate(y,m) {
+		var now = new Date();
+		var ny = now.getFullYear();
+		var nm = now.getMonth() + 1;
+		var nd = now.getDate();
+
+		var date = new Date(y, m-1, 1);
+		var w = date.getDay(); // 요일 (0~6)
+
+		var week = [ "일", "월", "화", "수", "목", "금", "토" ];
+
+		var html = "";
+
+		html = '<table border="1" style="margin: 10px auto; width: 210px; border-spacing: 0; border-collapse: collapse;">';
+
+		var color;
+		
+		html += '<tr align="center" height="25">';
+		for (var i = 0; i < week.length; i++) {			
+			color = (i==0 ? "red" : (i==6 ? "blue" : "black"));					
+			html += '<td style="width=30px; color:'+color+';">'+week[i]+'</td>';			
+		}
+		html += '</tr>';
+		
+		html += '<tr align="center" height="25">';
+		for(var i=0; i < w; i++) {
+			html += '<td>&nbsp;</td>';
+		}		
+		
+		var n = 1;		
+		color="";
+		while(true) {
+			if(y==ny && m==nm && n==nd) { // 오늘 
+				color = "#52E252"
+			} else {
+				color = (w%7==0 ? "red" : (w%7==6 ? "blue" : "black"));		// 요일별 글자색 
+			}
+			
+			html += '<td style="color:'+color+';">'+n+'</td>';
+			
+			n++; 
+			// date = = new Date(y, m-1, n); 
+			date.setDate(n);
+			if(date.getMonth()+1 != m) {
+				break;
+			}		
+			
+			if(++w % 7 == 0) { 		// 일주일씩 줄바꿈
+				html += '</tr><tr align="center" height="25">';
+			}
+		}	
+		
+		
+		for(var i=w%7; i<6; i++) {	// 마지막 날짜 후 공백 
+			html += '<td>&nbsp;</td>';
+		}
+		html += "</tr>";		
+
+		html += '</table>';
+
+		return html;
+
+	}
+</script>
+
+
+</head>
+<body>
+
+	<div>
+		<input type="text" id="inputYear" placeholder="년도"> <input
+			type="text" id="inputMonth" placeholder="월">
+		<button type="button" onclick="calendar();">확인</button>
+	</div>
+	<hr>
+	<div id="resultLayout"></div>
+
+</body>
+</html>

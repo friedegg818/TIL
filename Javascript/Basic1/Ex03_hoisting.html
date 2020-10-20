@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+
+/* 호이스팅 : 변수 선언은 초기화나 할당 시에 발생 하는 것이 아니라 무조건 최상위로 간주.
+			→ 나중에 선언된 변수 참조 가능  */
+			
+console.log(x === undefined);
+var x=10;
+
+/*  => var x; 
+   	   console.log(x === undefined);
+       x=10;                         */
+       
+
+function fun() {
+    console.log(x);
+    console.log(window.x);
+    console.log(window);  /* window : global 객체. 전역 변수는 window의 속성이 된다. */
+    console.dir(window);
+}       
+fun();        
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

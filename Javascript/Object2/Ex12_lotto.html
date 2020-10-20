@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+function lotto() {
+	var objsBox = document.getElementById("box");
+	var cnt = document.getElementById("count").value;
+	if(!/^[1-5]$/g.test(cnt)) {
+		alert("로또 개수는 1~5 사이만 가능합니다.");
+		document.getElementById("count").focus();
+		return;
+	}
+	
+	cnt = parseInt(cnt);
+	var num = new Array(6);
+	// Math.floor((Math.random()*45))+1 // 1~45 사이의 난수 6개 
+	var s = "";
+	
+	for(var n=1; n<=cnt; n++) {
+		for(var i=0; i<6; i++) {
+			num[i] = Math.floor((Math.random()*45))+1;	
+			for(var j=0; j<i; j++) {
+				if(num[i] == num[j]) {
+					i--;
+					break;
+				}
+			}
+		} 
+		// num.sort(); // 정렬 안된다 (기준값이 필요)
+		num.sort(function(a,b){
+			return a-b;
+		}); 		
+		s += n+ "번째 : "+ num.join() + "<br>";
+	}	
+		objsBox.innerHTML = s;	
+}
+
+
+
+</script>
+
+</head>
+<body>
+
+<div>
+	<input type="text" id="count" placeholder="구매개수">
+	<button type="button" onclick="lotto();">구매</button>	
+</div>
+<br><hr>
+<div id="box"></div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+
+<p> <input type="text" id="inputs"> </p>
+<div id="layout1"></div>
+<div id="layout2"></div>
+<div id="layout3"></div>
+
+<script>
+	document.getElementById("inputs").onkeydown = function(e) {
+		var objs = document.getElementById("layout1");
+		
+		var code = e.keyCode;
+		var s = "keydown 키코드:" + code;		// 어떤 키보드가 눌려졌는지 (대소문자 구분X), 모든 키에서 다 일어남 
+		
+		objs.innerHTML = s;
+	};
+	
+	document.getElementById("inputs").onkeypress = function(e) {
+		var objs = document.getElementById("layout2");
+		
+		var code = e.keyCode;
+		var s = "keypress 키코드:" + code;	// 모든 키보드 값을 알 수 있다. (대소문자 구분도 가능)
+											// down 후 up 전에 press 가 발생하는 키가 있음 : A~Z, 0~9, 엔터 
+											// press 발생하지 않는 키 : F1~F12, ctrl, shift, alt
+		
+		objs.innerHTML = s;
+	};
+	
+	document.getElementById("inputs").onkeyup = function(e) {
+		var objs = document.getElementById("layout3");
+		
+		var code = e.keyCode;
+		var s = "keyup 키코드:" + code;	
+</script>
+
+</body>
+</html>

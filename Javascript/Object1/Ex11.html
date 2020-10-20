@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+var objs = {
+		name : "자바",
+		age : 20
+};
+
+// 객체에 속성이 존재하는지 확인
+console.log("name" in objs);	// true
+console.log("subject" in objs)	// false
+
+// console.log(objs.name); 단축형 
+with(objs) {
+	console.log(name);	// 자바
+	console.log(age);	// 20
+}
+
+
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

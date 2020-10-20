@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script type="text/javascript">
+
+function isValidDate(y,m,d) {	// 날짜 적합성 검사 
+	var date = new Date(y, m-1, d);
+	if(date.getFullYear()!=y || date.getMonth()+1 !=m || date.getDate() !=d) {
+		return false;
+	}		
+	return true;
+}
+
+function dday() {
+	var inputs = document.getElementById("inputDate").value; 
+	
+	if(inputs.length != 10) {
+		alert("날짜 입력 형식 오류 [yyyy-mm-dd]");
+		return;
+	}
+	
+	var y = parseInt(inputs.substr(0,4));
+	var m = parseInt(inputs.substr(5,2));
+	var d = parseInt(inputs.substr(8));
+	
+	// var ss = inputs.split("-"); 
+	// alert(ss[0]+","+ss[1]+","+ss[2]);
+
+	if(!isValidDate(y,m,d)) {
+		alert("없는 날짜 입니다.");
+		return;
+	}
+	
+	var date1 = new Date(); // 시스템 날짜 
+	var date2 = new Date(y,m-1,d); 
+	// (date2 - date1) : 두 날짜의 차이를 밀리세컨드로 돌려줌 
+	
+	var s = (date2 - date1) / 1000 / 60 / 60 / 24; 
+	s = Math.ceil(s); // 올림
+	
+	var out = "<b>디데이 : " + s + "일...</b>";
+	
+	document.getElementById("resultLayout").innerHTML=out;	
+}
+
+</script>
+
+
+</head>
+<body>
+
+<div>
+	날짜 : <input type="text" id ="inputDate">
+	<button type="button" onclick="dday();">확인</button>
+</div>
+<hr>
+<div id="resultLayout"></div>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+function sub1() {
+	var objs = document.getElementById("box");
+	var s = objs.innerHTML;	// HTML을 설정하거나 반환 
+	alert(s);
+}
+
+function sub2() {
+	var objs = document.getElementById("box");
+	var s = objs.innerText;	// 텍스트를 설정하거나 반환 
+	alert(s);
+}
+
+function sub3() {
+	var objs = document.getElementById("box");
+	var s = "<span style='color:red;'>자바</span>, <b>스프링</b>";
+	objs.innerHTML = s;
+	alert(s);
+}
+
+function sub4() {
+	var objs = document.getElementById("box");
+	var s = "<span style='color:red;'>자바</span>, <b>스프링</b>";
+	objs.innerText = s;
+	alert(s);
+}
+
+
+
+
+</script>
+
+
+</head>
+<body>
+
+<div id="box"><b>자바 : </b> 프로그래밍 </div>
+
+<p>
+	<button type="button" onclick="sub1();">확인1</button>
+	<button type="button" onclick="sub2();">확인2</button>
+	<button type="button" onclick="sub3();">변경1</button>
+	<button type="button" onclick="sub4();">변경2</button>
+</p>
+
+</body>
+</html>

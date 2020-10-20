@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+* {
+   margin: 0px; padding: 0px;
+}
+
+#layout {
+    width: 500px;
+    height: 180px;
+    margin:5px;
+    border: 1px solid #333;
+    background: #FFFCF1;
+    text-align: center;
+    padding: 72px 0;
+    box-sizing: border-box;
+}
+</style>
+
+</head>
+<body>
+
+<div style="height: 100px; margin:5px;">
+    <h3>screenLeft, screenTop / screenX, screenY</h3>
+    <p>
+       window창이 screen(0,0)인 좌표에서 떨어진 브라우저의 상단 모서리인 x, y 값<br>
+        즉, 윈도우화면 (0,0)에서 브라우저의 좌표까지의 거리
+        <br>브라우저의 크기를 변경하여 이동후 확인하면 확인 가능하다.
+    </p>
+</div>
+
+<div id="layout"></div>
+
+<script type="text/javascript">
+document.getElementById("layout").onclick = function() {
+	var x = event.screenX;
+    var y = event.screenX; 
+    alert('x좌표:' +x + ', y좌표:' + y);
+}
+</script>
+
+</body>
+</html>
