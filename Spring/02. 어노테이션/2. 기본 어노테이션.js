@@ -46,3 +46,5 @@
 			- prototype 설정 
 			- @Scope(value="prototype") 	
 			- @Scope(value="prototype" , proxyMode=Scoped ProxyMode.TARGET_CLASS) 
+			
+			
