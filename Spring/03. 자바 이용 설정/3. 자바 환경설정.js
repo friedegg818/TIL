@@ -1,5 +1,6 @@
 
 - 순수 자바를 이용한 환경설정 
+
 	- 실행 파일에서 
 	  - 스프링 컨테이너 생성
 	    AbstractApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
@@ -21,3 +22,4 @@
 			public UserBean beanDevice() {
 				return new UserBean();
 			}
+			  
