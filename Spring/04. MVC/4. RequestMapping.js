@@ -1,4 +1,6 @@
+
 - 주소 매핑 관련
+
    - Controller 파일 
      - @Controller 
 	   - 컨트롤러 역할을 하는 클래스에 표기. 객체 자동 생성 
@@ -86,6 +88,7 @@
 		  - 리턴값 : 뷰 이름 
 	
 	
+	
 	- 동일한 이름을 가진 parameter 넘겨 받기 
 	  1) dto에서는 List로 받기 
 			@PostMapping("/user5/request")
@@ -148,6 +151,7 @@
 	    - @RequestParam 어노테이션 필요 
 		- Map의 경우 이름이 동일한 파라미터는 하나만 넘어온다. ※ 주의(이름을 다르게 해주어야 함)
 		
+		
 	
 	- @RequestHeader 
 	  - 헤더 정보 가져 올 때 사용 
@@ -159,6 +163,7 @@
 	  * referer(이전주소)는 @RequestHeader로는 확인이 불가능함
 	    - String referer = req.getHeader("Referer"); 
 	  
+	  
 	- @CookieValue 
 	  - 쿠키 정보 가져오기 
 	  - 값이 필수로 주어져야 함 
@@ -167,6 +172,7 @@
       *쿠키 설정 방법 	  
 	   	Cookie c = new Cookie("subject", "spring");
 		resp.addCookie(c);
+	
 	
     - @ModelAttribute 
 	  1) 메소드의 인수에서 사용하는 경우 
@@ -185,6 +191,7 @@
 		
 			return list;
 		}
+   
    
     - Redirect 
 	  - 리다이렉트 하기 
@@ -206,4 +213,6 @@
 			
 	  - 보내진 값을 넘겨 받기 
 	    - 메소드의 인수에 @ModelAttribute 어노테이션 사용 
+	  
+	  
 	  
