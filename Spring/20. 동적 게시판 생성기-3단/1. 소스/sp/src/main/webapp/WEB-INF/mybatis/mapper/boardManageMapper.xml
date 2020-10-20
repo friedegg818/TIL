@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardManage">
+	<!-- 테이블 생성 -->
+	<update id="createBoardTable" parameterType="String">
+		CREATE TABLE ${value} (
+			num NUMBER NOT NULL
+			,userId VARCHAR2(50) NOT NULL
+			,subject  VARCHAR2(255) NOT NULL
+			,content  CLOB NOT NULL
+			,hitCount NUMBER DEFAULT 0
+			,notice NUMBER(1) DEFAULT 0
+			,created  DATE DEFAULT SYSDATE
+			,groupNum NUMBER NOT NULL
+			,depth    NUMBER(9) NOT NULL
+			,orderNo  NUMBER(9) NOT NULL
+			,parent   NUMBER NOT NULL
+			,PRIMARY KEY(num)
+			,FOREIGN KEY(userId) REFERENCES member2(userId)
+	)
+	</update>
+
+	<update id="createBoardFileTable" parameterType="String">
+		CREATE TABLE ${value}_File (
+			fileNum  NUMBER NOT NULL
+			,num  NUMBER NOT NULL
+			,saveFilename VARCHAR2(255) NOT NULL
+			,originalFilename VARCHAR2(255) NOT NULL
+			,fileSize  NUMBER
+			,PRIMARY KEY(fileNum)
+			,FOREIGN KEY(num) REFERENCES ${value}(num) ON DELETE CASCADE
+		)
+	</update>
+
+	<update id="createBoardLikeTable" parameterType="String">
+		CREATE TABLE ${value}_Like (
+			num  NUMBER NOT NULL
+			,userId   VARCHAR2(50) NOT NULL
+			,boardLike NUMBER(1) NOT NULL
+			,PRIMARY KEY(num, userId)
+			,FOREIGN KEY(num) REFERENCES ${value}(num) ON DELETE CASCADE
+			,FOREIGN KEY(userId) REFERENCES member2(userId) ON DELETE CASCADE
+		)
+	</update>
+
+	<update id="createBoardReplyTable" parameterType="String">
+		CREATE TABLE ${value}_Reply (
+			replyNum NUMBER NOT NULL
+			,num NUMBER NOT NULL
+			,userId VARCHAR2(50) NOT NULL
+			,content VARCHAR2(4000) NOT NULL
+			,created DATE DEFAULT SYSDATE
+			,answer   NUMBER NOT NULL
+			,PRIMARY KEY(replyNum)
+			,FOREIGN KEY(num) REFERENCES ${value}(num) ON DELETE CASCADE
+			,FOREIGN KEY(userId) REFERENCES member2(userId) ON DELETE CASCADE
+		)
+	</update>
+
+	<update id="createBoardReplyLikeTable" parameterType="String">
+		CREATE TABLE ${value}_ReplyLike (
+			replyNum  NUMBER NOT NULL
+			,userId   VARCHAR2(50) NOT NULL
+			,replyLike NUMBER(1) NOT NULL
+			,PRIMARY KEY(replyNum, userId)
+			,FOREIGN KEY(replyNum) REFERENCES ${value}_Reply(replyNum) ON DELETE CASCADE
+			,FOREIGN KEY(userId) REFERENCES member2(userId) ON DELETE CASCADE
+		)
+	</update>
+
+	<!-- 테이블 확인 -->
+	<select id="tableCount" parameterType="String" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM tab
+		WHERE tname=UPPER(#{value})
+			OR tname=UPPER(#{value}||'_LIKE')
+			OR tname=UPPER(#{value}||'_REPLY')
+			OR tname=UPPER(#{value}||'_REPLYLIKE')
+			OR tname=UPPER(#{value}||'_FILE')
+	</select>
+	
+	<!-- 테이블 삭제 -->
+	<update id="dropBoardTable" parameterType="String">
+		DROP TABLE ${value} PURGE
+	</update>
+	<update id="dropBoardFileTable" parameterType="String">
+		DROP TABLE ${value}_File PURGE
+	</update>
+	<update id="dropBoardLikeTable" parameterType="String">
+		DROP TABLE ${value}_Like PURGE
+	</update>
+	<update id="dropBoardReplyLikeTable" parameterType="String">
+	       DROP TABLE ${value}_ReplyLike PURGE
+	</update>
+	<update id="dropBoardReplyTable" parameterType="String">
+		DROP TABLE ${value}_Reply PURGE
+	</update>
+	
+	<!-- 게시판 정보 저장 -->
+	<insert id="insertBoardManage" parameterType="com.sp.admin.boardManage.BoardManage">
+		INSERT INTO boardManage(num, board, title, updateMembership, answerMembership, icon, info, notice, attach, boardLike, replyLike, answer, reply, created)
+			VALUES(boardManage_seq.NEXTVAL, #{board}, #{title},
+				#{updateMembership}, #{answerMembership},
+				#{icon, jdbcType=VARCHAR}, #{info, jdbcType=VARCHAR}, 
+				#{notice}, #{attach}, 
+				#{boardLike}, #{replyLike}, #{answer}, #{reply}, SYSDATE)
+	</insert>
+
+	<select id="dataCount" resultType="Integer">
+		SELECT NVL(COUNT(num), 0) FROM boardManage
+	</select>
+
+	<select id="listBoardManage" resultType="com.sp.admin.boardManage.BoardManage" >
+		SELECT num, board, title, updateMembership, answerMembership, icon, info, notice, attach, boardLike, replyLike, answer, reply, TO_CHAR(created, 'yyyy-mm-dd') as created 
+		FROM boardManage
+	</select>
+
+	<select id="readBoardManage1" parameterType="Integer" resultType="com.sp.admin.boardManage.BoardManage">
+		SELECT num, board, title, updateMembership, answerMembership, icon, info, notice, attach, boardLike, replyLike, answer, reply, created
+		FROM boardManage WHERE num = #{num}
+	</select>
+	<select id="readBoardManage2" parameterType="String" resultType="com.sp.admin.boardManage.BoardManage">
+		SELECT num, board, title, updateMembership, answerMembership, icon, info, notice, attach, boardLike, replyLike, answer, reply, created
+		FROM boardManage WHERE board = #{board}
+	</select>
+
+	<update id="updateBoardManage" parameterType="com.sp.admin.boardManage.BoardManage">
+		UPDATE boardManage SET title=#{title}, 
+			updateMembership=#{updateMembership}, answerMembership=#{answerMembership},
+			attach=#{attach}, notice=#{notice},
+			icon=#{icon, jdbcType=VARCHAR}, info=#{info, jdbcType=VARCHAR},
+			boardLike=#{boardLike}, replyLike=#{replyLike}, 
+			answer=#{answer}, reply=#{reply}
+			WHERE num = #{num}
+	</update>
+
+	<delete id="deleteBoardManage" parameterType="Integer">
+		DELETE FROM boardManage WHERE num = #{num}
+	</delete>
+      
+	<select id="listBoardFile1" parameterType="String" resultType="com.sp.admin.boardManage.BoardFile">
+		SELECT fileNum, num, originalFilename, saveFilename
+		FROM ${value}_FILE
+	</select>
+	<select id="listBoardFile2" parameterType="String" resultType="com.sp.admin.boardManage.BoardFile">
+		SELECT fileNum, num, originalFilename, saveFilename
+		FROM ${value}_FILE
+		WHERE num IN 
+			( SELECT num FROM ${value} WHERE depth &gt; 0 )
+      </select>
+      
+	<delete id="deleteBoardAnswer" parameterType="String">
+		DELETE FROM ${value} WHERE depth &gt; 0      		      
+	</delete>
+      
+	<delete id="deleteBoardLike" parameterType="String">
+		DELETE FROM ${value}_FILE
+	</delete>
+	<delete id="deleteBoardReplyLike" parameterType="String">
+		DELETE FROM ${value}_REPLYLIKE
+	</delete>
+	<delete id="deleteBoardReply" parameterType="String">
+		DELETE FROM ${value}_REPLY
+	</delete>
+      
+	<delete id="deleteBoardFile1" parameterType="String">
+		DELETE FROM ${value}_FILE
+	</delete>
+        
+	<delete id="deleteBoardFile2" parameterType="String">
+		DELETE FROM ${value}_FILE
+		WHERE num IN 
+			( SELECT num FROM ${value} WHERE depth &gt; 0 )      		
+	</delete>
+
+</mapper>

@@ -1,0 +1,136 @@
+--------------------------------------------------
+-- 오라클 SID : xe
+-- 오라클 사용자 : spring
+-- 패스워드 : java$!
+
+--------------------------------------------------
+-- spring 계정
+CONN spring/"java$!"
+
+--------------------------------------------------
+-- 기존테이블이 존재하는 경우 테이블 삭제
+SELECT * FROM tab;
+
+DROP TABLE boardManage PURGE;
+
+DROP TABLE memberRole PURGE;
+DROP TABLE member2 PURGE;
+DROP TABLE member1 PURGE;
+
+--------------------------------------------------
+-- 시퀀스 삭제
+SELECT * FROM seq;
+
+DROP SEQUENCE member_seq;
+
+--------------------------------------------------
+-- role 테이블
+CREATE TABLE memberRole (
+     membership      NUMBER(3)
+     ,memberRole     VARCHAR2(50) NOT NULL
+     ,CONSTRAINT    pk_memberRole_membership PRIMARY KEY(membership)
+);
+-- membership : 비회원(0), 일반회원(1), 사원(50), 준관리자(90), 관리자(99)
+
+-- 회원 테이블
+CREATE TABLE member1 (
+     memberIdx       NUMBER
+     ,membership     NUMBER(3)
+     ,CONSTRAINT    pk_member1_memberIdx PRIMARY KEY(memberIdx)
+     ,CONSTRAINT   fk_member1_membership FOREIGN KEY(membership)
+                 REFERENCES memberRole(membership)
+);
+
+CREATE TABLE member2 (
+     memberIdx     NUMBER
+     ,userId           VARCHAR2(50) NOT NULL
+     ,userName     VARCHAR2(50) NOT NULL
+     ,userPwd        VARCHAR2(100) NOT NULL
+     ,enabled         NUMBER(1) DEFAULT 1
+     ,birth             DATE
+     ,email            VARCHAR2(100)
+     ,tel                VARCHAR2(15)
+     ,created_date DATE DEFAULT SYSDATE
+     ,modify_date  DATE DEFAULT SYSDATE
+     ,last_login      DATE
+     ,CONSTRAINT pk_member2_memberIdx PRIMARY KEY(memberIdx)
+     ,CONSTRAINT uq_member2_userId UNIQUE(userId)
+     ,CONSTRAINT fk_member2_memberIdx FOREIGN KEY(memberIdx)
+                 REFERENCES member1(memberIdx)
+);
+
+-- 회원 시퀀스
+CREATE SEQUENCE member_seq
+    INCREMENT BY 1
+    START WITH 1
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+-- 자료
+INSERT INTO memberRole(membership, memberRole) VALUES (0, '비회원');
+INSERT INTO memberRole(membership, memberRole) VALUES (1, '일반회원');
+INSERT INTO memberRole(membership, memberRole) VALUES (50, '사원');
+INSERT INTO memberRole(membership, memberRole) VALUES (90, '준관리자');
+INSERT INTO memberRole(membership, memberRole) VALUES (99, '관리자');
+
+INSERT INTO member1(memberIdx, membership) VALUES (member_seq.NEXTVAL, 99);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'admin', '관리자', 'admin');
+INSERT INTO member1(memberIdx, membership) VALUES (member_seq.NEXTVAL, 1);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'han', '한대한', 'han');
+INSERT INTO member1(memberIdx, membership) VALUES (member_seq.NEXTVAL, 1);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'kim', '김대한', 'kim');
+INSERT INTO member1(memberIdx, membership) VALUES (member_seq.NEXTVAL, 1);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'lee', '이대한', 'lee');
+INSERT INTO member1(memberIdx, membership) VALUES (member_seq.NEXTVAL, 1);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'spring', '스프링', 'spring');
+
+COMMIT;
+
+--------------------------------------------------
+-- 게시판 정보 저장 테이블
+CREATE TABLE boardManage (
+   num NUMBER NOT NULL
+   ,board VARCHAR2(512) NOT NULL
+   ,title VARCHAR2(512) NOT NULL
+   ,updateMembership NUMBER(2) NOT NULL
+   ,answerMembership NUMBER(2) NOT NULL
+   ,info VARCHAR2(1024)
+   ,icon VARCHAR2(1024)
+   ,notice NUMBER(1) DEFAULT 0
+   ,answer NUMBER(1) DEFAULT 0
+   ,reply NUMBER(1) DEFAULT 0
+   ,attach NUMBER(1) DEFAULT 0
+   ,boardLike NUMBER(1) DEFAULT 0
+   ,replyLike NUMBER(1) DEFAULT 0
+   ,created DATE DEFAULT SYSDATE
+   ,CONSTRAINT pk_boardManage_num PRIMARY KEY(num)
+   ,CONSTRAINT uq_boardManage_board UNIQUE(board)
+);
+
+CREATE SEQUENCE boardManage_seq
+    INCREMENT BY 1
+    START WITH 1
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+-- 테이블 컬럼 설명
+   -- board : 게시판 테이블명으로 게시판주소로사용
+   -- updateMembership : 게시판 글을 등록 할 수 있는 권한.
+   -- answerMembership : 게시판 답글을 등록 할 수 있는 권한.
+   -- title : 게시판 제목
+   -- icon : 게시판 제목 아이콘 css
+   -- info : 게시판 제목 다음에 표시할 메시지
+   -- notice : 1페이지 공지 표시 여부
+   -- answer : 답변형여부
+   -- reply : 리플가능여부
+   -- attach : 파일업로드가능여부
+   -- boardLike : 게시물좋아요가능여부
+   -- replyLike : 리플좋아요가능여부
+

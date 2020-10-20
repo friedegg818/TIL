@@ -1,0 +1,17 @@
+package com.sp.nbbs;
+
+import java.util.List;
+import java.util.Map;
+
+public interface BoardService {
+	public void insertBoard(Board dto, String pathname) throws Exception;
+	public List<Board> listBoard(Map<String, Object> map);
+	public int dataCount(Map<String, Object> map);
+	public Board readBoard(int num);
+	public void updateHitCount(int num) throws Exception;
+	public Board preReadBoard(Map<String, Object> map);
+	public Board nextReadBoard(Map<String, Object> map);
+	public void updateBoard(Board dto, String pathname) throws Exception;
+	public void deleteBoard(int num, String pathname) throws Exception;
+	public void deleteFile(int num, String pathname) throws Exception;
+}

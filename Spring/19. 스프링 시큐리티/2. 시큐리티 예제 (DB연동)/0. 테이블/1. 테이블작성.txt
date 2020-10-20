@@ -1,0 +1,61 @@
+------------------------------------------------
+-- 사용자 green
+sql>CONN green/"java$!"
+
+-- 기존 테이블 및 테이블 삭제
+DROP TABLE memberAuthority PURGE;
+DROP TABLE member PURGE;
+
+
+------------------------------------------------
+-- 회원 테이블
+CREATE TABLE member (
+     userId       VARCHAR2(50) NOT NULL
+     ,userName     VARCHAR2(50) NOT NULL
+     ,userPwd      VARCHAR2(100) NOT NULL
+     ,enabled      NUMBER(1) DEFAULT 1
+     ,birth        DATE
+     ,email        VARCHAR2(100)
+     ,tel          VARCHAR2(15)
+     ,created_date DATE DEFAULT SYSDATE
+     ,modify_date  DATE DEFAULT SYSDATE
+     ,last_login   DATE
+     ,CONSTRAINT pk_member_userId PRIMARY KEY(userId)
+);
+
+-- 어쏘러티(권한) 테이블
+CREATE TABLE memberAuthority (
+     userId     VARCHAR2(20) NOT NULL
+     ,authority  VARCHAR2(100) NOT NULL
+     ,CONSTRAINT pk_memberAuthority_authority PRIMARY KEY(userId, authority)
+     ,CONSTRAINT fk_memberAuthority_userId FOREIGN KEY(userId)
+            REFERENCES member(userId)  ON DELETE CASCADE
+);
+
+
+------------------------------------------------
+-- 테스트 데이터 입력
+-- admin 암호 : admin
+INSERT INTO member(userId, userName, userPwd) VALUES 
+    ('admin', '관리자', 'admin');
+-- han 암호 : han
+INSERT INTO member(userId, userName, userPwd) VALUES 
+    ('han', '스프링', 'han' );
+
+INSERT INTO memberAuthority(userId, authority) VALUES ('admin', 'ROLE_ADMIN');
+INSERT INTO memberAuthority(userId, authority) VALUES ('admin', 'ROLE_USER');
+INSERT INTO memberAuthority(userId, authority) VALUES ('han', 'ROLE_USER');
+
+COMMIT;
+
+
+------------------------------------------------
+-- 패스워드 암호화로 변경
+UPDATE member SET userPwd='$2a$10$PGlW5sEH5ha0q6srHUubgOTIy4.3nSv9IkvbJxuRd1lzByL1UDsja'
+  WHERE userId='admin';
+
+-- 패스워드 : han
+UPDATE member SET userPwd='$2a$10$PlMmFZOQQgUmKhRU815ZhO./Hu6OsS0zxiQzH.1Zamt1IJgjyiBvK'
+     WHERE userId='han';
+
+COMMIT;

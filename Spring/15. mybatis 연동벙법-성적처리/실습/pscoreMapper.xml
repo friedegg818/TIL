@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pscore">
+	<!-- dto의 property와 테이블의 column명이 다른 경우 property와 column을 매핑 -->
+	<resultMap type="com.sp.pscore.Score" id="listScoreMap">
+		<result property="hak" column="hak"/>
+		<result property="name" column="name"/>
+		<result property="birth" column="birth"/>
+		<result property="kor" column="kor"/>
+		<result property="eng" column="eng"/>
+		<result property="mat" column="mat"/>
+		<result property="tot" column="tot"/>
+		<result property="ave" column="ave"/>
+	</resultMap>
+	
+	<resultMap type="com.sp.pscore.Score" id="readScoreMap">
+		<result property="hak" column="hak"/>
+		<result property="name" column="name"/>
+		<result property="birth" column="birth"/>
+		<result property="kor" column="kor"/>
+		<result property="eng" column="eng"/>
+		<result property="mat" column="mat"/>
+	</resultMap>
+
+	<insert id="insertScore" parameterType="com.sp.pscore.Score"
+			statementType="CALLABLE"
+			useGeneratedKeys="false">  		<!-- 자동 숫자 실행 x -->
+	{
+		call insertScore 
+		(
+			#{hak, jdbcType=VARCHAR, mode=IN},
+			#{name, jdbcType=VARCHAR, mode=IN},
+			#{birth, jdbcType=VARCHAR, mode=IN},
+			#{kor, jdbcType=INTEGER, mode=IN},
+			#{eng, jdbcType=INTEGER, mode=IN},
+			#{mat, jdbcType=INTEGER, mode=IN}
+		)		
+	} 	
+	</insert>
+	
+	<!-- 프로시저의 select는 parameterType을 map으로  -->
+	<select id="dataCount" parameterType="map" statementType="CALLABLE">
+	{
+		call countScore(#{result, jdbcType=INTEGER, mode=OUT})
+	}
+	</select>
+	
+	<select id="listScore" parameterType="map" statementType="CALLABLE">
+	{
+		call listScore
+			(
+			  #{result, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=listScoreMap},
+			  #{offset, jdbcType=INTEGER, mode=IN},
+			  #{rows, jdbcType=INTEGER, mode=IN}			 
+			 )		
+	}
+	</select>
+	
+	<select id="readScore" parameterType="map" statementType="CALLABLE">
+	{
+		call readScore
+			(
+			  #{result, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=readScoreMap},		
+			  #{hak, jdbcType=VARCHAR, mode=IN}			 
+			 )		
+	}
+	</select>
+
+	<update id="updateScore" statementType="CALLABLE" parameterType="com.sp.pscore.Score" useGeneratedKeys="false">
+		{
+		call updateScore 
+		(
+			#{hak, jdbcType=VARCHAR, mode=IN},
+			#{name, jdbcType=VARCHAR, mode=IN},
+			#{birth, jdbcType=VARCHAR, mode=IN},
+			#{kor, jdbcType=INTEGER, mode=IN},
+			#{eng, jdbcType=INTEGER, mode=IN},
+			#{mat, jdbcType=INTEGER, mode=IN}
+		)		
+	} 		
+	</update>
+	
+	<delete id="deleteScore" statementType="CALLABLE" parameterType="String">
+	{
+		call deleteScore(#{hak, jdbcType=VARCHAR, mode=IN})
+	}	
+	</delete>
+	
+</mapper>

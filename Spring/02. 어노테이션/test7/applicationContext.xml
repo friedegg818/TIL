@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+<!-- 	
+	 <context:component-scan/> 태그를 이용한 등록 
+	  *객체 생성 
+	 - @Component > @Service [비즈니스 로직을 담당하는 클래스] ex) MyUtil, FileManager 
+	              > @Controller [MVC 패턴 - 컨트롤러에만 사용] 
+	              > @Repository [DB 작업 - DAO 클래스] 
+	 - @Required
+	 - @Autowired
+	 - @Resource 등 
+-->
+
+   <!--  해당 폴더의 클래스 스캔 -->
+    <context:component-scan base-package="com.test7"/>
+    
+   <!--  모든 폴더의 클래스 스캔 -->
+<!-- <context:component-scan base-package="*"/> -->
+
+   <!--  test의 모든 하위 폴더의 클래스 스캔 -->
+<!-- <context:component-scan base-package="test.*"/> -->
+
+
+    
+</beans>  

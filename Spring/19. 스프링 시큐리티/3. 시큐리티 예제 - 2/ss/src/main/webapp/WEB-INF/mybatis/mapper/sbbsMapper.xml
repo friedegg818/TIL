@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sbbs">
+	<!-- 게시판 -->
+	<insert id="insertBoard" parameterType="com.sp.sbbs.Board">
+		INSERT INTO sbbs(num, categoryNum, userId, subject, content, hitCount, created)
+			VALUES (sbbs_seq.NEXTVAL, #{categoryNum}, #{userId}, #{subject}, #{content}, 0, SYSDATE)
+	</insert>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'all' ">
+			   ( INSTR(subject, #{keyword}) &gt; 0
+		          OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 
+		          OR INSTR(LOWER(c1.category), LOWER(#{keyword})) &gt; 0 )
+			</when>
+			<when test="condition == 'created' ">
+			   ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+			<when test="condition == 'content'">
+			    DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+			</when>
+			<otherwise>
+			    INSTR(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM sbbs b
+		JOIN member1 m ON b.userId=m.userId
+		JOIN sbbsCategory c1 ON b.categoryNum = c1.categoryNum
+		JOIN sbbsCategory c2 ON c1.parent = c2.categoryNum
+		<where>
+			<if test="group!=0">
+				c1.parent = #{group}
+			</if>
+			<if test="keyword!=null and keyword!='' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+
+	<select id="listBoard" parameterType="map" resultType="com.sp.sbbs.Board">
+		SELECT b.num, b.userId, userName, subject, 
+			TO_CHAR(b.created, 'YYYY-MM-DD') created, hitCount,
+			c2.categoryNum groupCategoryNum, c2.category groupCategory,
+			c1.categoryNum, c1.category,
+			NVL(replyCount, 0) replyCount
+		FROM sbbs b
+		JOIN member1 m ON b.userId=m.userId
+		JOIN sbbsCategory c1 ON b.categoryNum = c1.categoryNum
+		JOIN sbbsCategory c2 ON c1.parent = c2.categoryNum
+		LEFT OUTER JOIN (
+			SELECT num, COUNT(*) replyCount FROM sbbsReply
+			GROUP BY num
+		) r ON b.num = r.num
+		<where>
+			<if test="group!=0">
+				c1.parent = #{group}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY num DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readBoard" parameterType="Integer" resultType="com.sp.sbbs.Board">
+		SELECT b.num, b.userId, userName, subject, content,
+			hitCount, b.created,  
+			c2.categoryNum groupCategoryNum, c2.category groupCategory,
+			c1.categoryNum, c1.category
+		FROM sbbs b
+		JOIN member1 m ON b.userId=m.userId
+		JOIN sbbsCategory c1 ON b.categoryNum = c1.categoryNum
+		JOIN sbbsCategory c2 ON c1.parent = c2.categoryNum
+		WHERE b.num = #{num}
+	</select>
+
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE sbbs SET hitCount=hitCount+1 WHERE num = #{num}
+	</update>
+
+	<select id="preReadBoard" parameterType="map" resultType="com.sp.sbbs.Board">
+		SELECT num, subject
+		FROM sbbs b
+		JOIN member1 m ON b.userId=m.userId
+		JOIN sbbsCategory c1 ON b.categoryNum = c1.categoryNum
+		JOIN sbbsCategory c2 ON c1.parent = c2.categoryNum
+		<where>
+			<if test="group!=0">
+				c1.parent = #{group}
+			</if>
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+			AND (num &gt; #{num})
+		</where>
+		ORDER BY num ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<select id="nextReadBoard" parameterType="map" resultType="com.sp.sbbs.Board">
+		SELECT num, subject
+		FROM sbbs b
+		JOIN member1 m ON b.userId=m.userId
+		JOIN sbbsCategory c1 ON b.categoryNum = c1.categoryNum
+		JOIN sbbsCategory c2 ON c1.parent = c2.categoryNum
+		<where>
+			<if test="group!=0">
+				c1.parent = #{group}
+			</if>
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+			AND (num &lt; #{num})
+		</where>
+		ORDER BY num DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<update id="updateBoard" parameterType="com.sp.sbbs.Board">
+		UPDATE sbbs SET categoryNum=#{categoryNum}, subject=#{subject},
+			content=#{content}
+		WHERE num = #{num} AND userId = #{userId}
+	</update>
+
+	<delete id="deleteBoard" parameterType="map">
+		DELETE FROM sbbs WHERE num = #{num}
+		<if test="userId != 'admin' ">
+			AND userId = #{userId}
+		</if>
+	</delete>
+	
+	<!-- 카테고리 -->
+	<select id="listCategory" parameterType="map" resultType="com.sp.sbbs.Board">
+		SELECT categoryNum, category, NVL(parent, 0) parent
+		FROM sbbsCategory
+		<where>
+			<choose>
+				<when test="parent==null">
+					parent IS NULL
+				</when>
+				<otherwise>
+					parent = #{parent}
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY categoryNum
+	</select>
+	
+	<insert id="insertCategory" parameterType="map">
+		INSERT INTO sbbsCategory(categoryNum, category, parent) 
+			VALUES (sbbsCategory_seq.NEXTVAL, #{category}, 
+				#{parent, jdbcType=INTEGER})
+	</insert>
+	
+	<update id="updateCategory" parameterType="map">
+		UPDATE sbbsCategory SET category=#{category}, parent=#{parent, jdbcType=INTEGER}
+		WHERE categoryNum = #{categoryNum}
+	</update>
+	
+	<delete id="deleteCategory" parameterType="Integer">
+		DELETE FROM sbbsCategory
+		WHERE categoryNum = #{categoryNum}
+	</delete>
+
+	<!-- 리플 -->
+	<insert id="insertReply" parameterType="com.sp.sbbs.Reply">
+		INSERT INTO sbbsReply(replyNum, num, userId, content, created)
+			VALUES (sbbsReply_seq.NEXTVAL, #{num}, #{userId}, #{content}, SYSDATE)
+	</insert>
+
+	<select id="listReply" parameterType="map" resultType="com.sp.sbbs.Reply">
+		SELECT r.replyNum, r.userId, userName, num, content, r.created 
+		FROM sbbsReply r
+		JOIN member1 m ON r.userId = m.userId
+		WHERE num=#{num}
+		ORDER BY r.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM sbbsReply
+		WHERE num=#{num}
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM sbbsReply
+		WHERE replyNum = #{replyNum}
+	</delete>
+	
+</mapper>

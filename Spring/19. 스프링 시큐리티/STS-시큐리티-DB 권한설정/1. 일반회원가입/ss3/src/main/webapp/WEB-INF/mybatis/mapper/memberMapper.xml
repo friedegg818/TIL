@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!-- 회원정보 추가  -->    
+	<select id="memberSeq" resultType="Long">
+		SELECT member_seq.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="insertMember1" parameterType="Long">
+		INSERT INTO member1(memberIdx, membership) VALUES (#{memberIdx}, 1) 
+	</insert>
+
+	<insert id="insertMember2" parameterType="com.sp.member.Member">
+		INSERT INTO member2(memberIdx, userId, userName, userPwd, email, tel, birth, created_date, modify_date)
+			VALUES (#{memberIdx}, #{userId}, #{userName}, #{userPwd}, #{email}, #{tel}, #{birth}, SYSDATE, SYSDATE)
+	</insert>
+
+	<!-- 회원 정보 가져오기 -->
+	<select id="readMember1" parameterType="Long" resultType="com.sp.member.Member">
+		SELECT m1.memberIdx, membership, userId, userName, userPwd, 
+			created_date, modify_date, last_login,
+			NVL(enabled, 0) enabled, email, tel, 
+			TO_CHAR(birth, 'YYYY-MM-DD') birth
+		FROM member1 m1 
+		LEFT OUTER JOIN member2 m2 ON m1.memberIdx = m2.memberIdx
+		WHERE memberIdx = #{memberIdx}
+	</select>
+
+	<select id="readMember2" parameterType="String" resultType="com.sp.member.Member">
+		SELECT memberIdx, m2.userId, userName, userPwd, 
+			m2.created_date, m2.modify_date, last_login, enabled, email, tel, 
+			TO_CHAR(birth, 'YYYY-MM-DD') birth,
+			m3.authority, m4.role_name
+		FROM member2 m2
+		LEFT OUTER JOIN authorities_member m3 ON m2.userId = m3.userId
+		LEFT OUTER JOIN roles m4 ON m3.authority = m4.authority
+		WHERE m2.userId = #{userId} 
+	</select>
+
+	<sql id="where-list">
+		<if test="condition=='userId'">
+			INSTR(m2.userId, #{keyword}) = 1
+		</if>
+		<if test="condition=='userName'">
+			INSTR(userName, #{keyword}) &gt;= 1
+		</if>
+		<if test="condition=='email'">
+			INSTR(email, #{keyword}) &gt;= 1
+		</if>
+		<if test="condition=='tel'">
+			INSTR(tel, #{keyword}) &gt;= 1
+		</if>
+		<if test="condition=='role_name'">
+			INSTR(role_name, #{keyword}) &gt;= 1
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*)
+		FROM member2 m2 
+		LEFT OUTER JOIN authorities_member m3 ON m2.userId = m3.userId
+		LEFT OUTER JOIN roles m4 ON m3.authority = m4.authority
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+			<if test="enabled!=''">
+				AND enabled = #{enabled}
+			</if>
+			AND m2.userId != 'admin'
+		</where> 
+    </select>
+    
+	<select id="listMember" parameterType="map" resultType="com.sp.member.Member">
+		SELECT m2.memberIdx, m2.userId, userName, 
+			m2.created_date, m2.modify_date, last_login,
+			enabled, email, tel, 
+			TO_CHAR(birth, 'YYYY-MM-DD') birth,
+			m3.authority, m4.role_name
+		FROM member2 m2
+		LEFT OUTER JOIN authorities_member m3 ON m2.userId = m3.userId
+		LEFT OUTER JOIN roles m4 ON m3.authority = m4.authority
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+			<if test="enabled!=''">
+				AND enabled = #{enabled}
+			</if>
+			AND m2.userId != 'admin'
+		</where> 
+		ORDER BY created_date DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<!-- 회원정보 수정  -->    
+	<update id="updateMember1" parameterType="Long">
+		UPDATE member1 SET membership=0
+		WHERE memberIdx=#{memberIdx}
+	</update>
+	
+	<update id="updateMember2" parameterType="com.sp.member.Member">
+		UPDATE member2 SET userPwd=#{userPwd}, 
+			email=#{email}, tel=#{tel}, birth=#{birth},
+			modify_date=SYSDATE 
+		WHERE userId=#{userId}
+	</update>
+    
+	<update id="updateLastLogin" parameterType="String">
+		UPDATE member2 SET last_login=SYSDATE 
+		WHERE userId=#{userId}
+	</update>
+
+	<update id="updateEnabled" parameterType="map">
+		UPDATE member2 SET enabled=#{enabled} 
+		WHERE userId=#{userId}
+	</update>
+    
+	<!-- 회원 정보 삭제  -->
+	<delete id="deleteMember2" parameterType="String">
+		DELETE FROM member2 WHERE userId=#{userId}
+	</delete>
+    
+	<!-- 회원 어쏘러티(권한) 저장 -->    
+	<insert id="insertAuthoritiesMember" parameterType="com.sp.member.Member">
+		INSERT INTO authorities_member(userId, authority)
+			VALUES (#{userId}, #{authority})
+	</insert>
+     
+	<select id="listAuthoritiesMember" parameterType="String" resultType="com.sp.member.Member">
+		SELECT userId, authority
+		FROM authorities_member
+		WHERE userId=#{userId}
+	</select>
+	
+	<update id="updateAuthoritiesMember" parameterType="com.sp.member.Member">
+		UPDATE authorities_member SET authority=#{authority}
+		WHERE userId=#{userId} AND authority=#{oldAuthority}
+	</update>
+	
+	<delete id="deleteAuthoritiesMember" parameterType="map">
+		DELETE FROM authorities_member WHERE userId=#{userId} AND authority=#{authority}
+	</delete>
+</mapper>

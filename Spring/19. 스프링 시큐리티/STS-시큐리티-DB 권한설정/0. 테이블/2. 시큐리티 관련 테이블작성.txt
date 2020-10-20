@@ -1,0 +1,202 @@
+--------------------------------------
+-- 사용자 darkblue
+sql>CONN darkblue/"java$!"
+
+
+-----------------------------------------------------------------
+-- 권한 관련 테이블 삭제
+DROP TABLE roles_hierarchy PURGE;
+DROP TABLE secured_resources_role PURGE;
+DROP TABLE secured_resources PURGE;
+DROP TABLE authorities_member PURGE;
+DROP TABLE roles PURGE;
+
+-- 권한 관련 시퀀스 삭제
+DROP SEQUENCE secured_resources_seq;
+
+
+--------------------------------------------------------------------
+-- // 어쏘러티(권한) 관련 테이블 및 시퀀스
+
+-- roles(역할) 저장 테이블
+CREATE TABLE roles (
+     authority        VARCHAR2(200) NOT NULL
+     ,role_name  VARCHAR2(500) NOT NULL
+     ,description    VARCHAR2(1000)
+     ,created_date   DATE  DEFAULT  SYSDATE
+     ,modify_date  DATE DEFAULT  SYSDATE
+     ,CONSTRAINT pk_roles_authority PRIMARY KEY(authority)
+);
+
+  -- authority : 역할아이디(ROLE_USER 등)
+  -- role_name: 역할명
+  -- description : 설명
+
+  
+-- 권한(롤) 상속 구조(parent_role:하위권한, child_role:상위권한 저장)
+CREATE TABLE roles_hierarchy(
+    parent_role  VARCHAR2(200) NOT NULL
+    ,child_role  VARCHAR2(200) NOT NULL
+    ,created_date   DATE  DEFAULT  SYSDATE
+    ,modify_date  DATE DEFAULT  SYSDATE
+    ,PRIMARY KEY(parent_role, child_role)
+    ,FOREIGN KEY(parent_role) REFERENCES roles(authority)
+    ,FOREIGN KEY(child_role) REFERENCES roles(authority)
+);
+
+
+-- resource 권한 패턴 저장 테이블
+CREATE TABLE secured_resources (
+     resource_id            NUMBER NOT NULL
+     ,resource_name      VARCHAR2(100) NOT NULL
+     ,resource_pattern   VARCHAR2(1000) NOT NULL
+     ,resource_type       VARCHAR2(100) NOT NULL
+     ,description            VARCHAR2(1000)
+     ,sort_order             NUMBER
+     ,created_date          DATE  DEFAULT  SYSDATE
+     ,modify_date            DATE DEFAULT  SYSDATE
+     ,PRIMARY KEY(resource_id)
+);
+
+    -- resource_pattern : /bbs/**  =>  resource_type : url
+    -- resource_pattern : /bbs/list  =>  resource_type : url
+    -- sort_order : 정렬순서
+    -- resource_type : url, pointcut, method
+	-- /bbs/**  => sort_order : 2
+	-- /bbs/list => sort_order : 1 순이어야함
+
+    -- resource_pattern : get*  =>  resource_type : method
+    -- resource_pattern : set*  =>  resource_type : method
+    -- resource_pattern : execution(* com.sp..service.*Service.*(..))  =>  resource_type : pointcut
+	
+-- resource(uri) 권한 설정 저장 테이블
+CREATE TABLE secured_resources_role (
+     resource_id                NUMBER NOT NULL
+     ,authority                    VARCHAR2(200) NOT NULL	 
+     ,created_date              DATE  DEFAULT  SYSDATE
+     ,modify_date               DATE DEFAULT  SYSDATE
+     ,PRIMARY KEY(resource_id, authority)
+     ,FOREIGN KEY(resource_id) REFERENCES secured_resources(resource_id)
+     ,FOREIGN KEY(authority) REFERENCES roles(authority)
+);
+
+-- 회원 어쏘러티(권한) 테이블
+CREATE TABLE authorities_member (
+     userId      VARCHAR2(20) NOT NULL
+     ,authority   VARCHAR2(200) NOT NULL
+     ,PRIMARY KEY(userId, authority)
+     ,FOREIGN KEY(authority) REFERENCES roles(authority)
+     ,FOREIGN KEY(userId) REFERENCES member2(userId)
+                   ON DELETE CASCADE
+);
+
+-- resource(uri) 권한 패턴 저장 테이블 시퀀스
+CREATE SEQUENCE secured_resources_seq
+    INCREMENT BY 1
+    START WITH 1
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+
+-----------------------------------------------------------------
+-- 권한 종류
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_ADMIN', '관리자', '관리자');
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_USER', '일반사용자', '일반사용자');
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_ANONYMOUS', '모든사용자', '모든사용자');
+
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_SYM', '시스템담당자', '시스템담당자');
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_SEC', '보안담당자', '보안담당자');
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_MBER_MANAGER', '일반회원관리자', '일반회원관리자');
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_ENTRPRSMBER_MANAGER', '기업회원관리자', '기업회원관리자');
+
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_MBER', '일반회원', '일반회원');
+INSERT INTO roles(authority, role_name, description) VALUES ('ROLE_ENTRPRSMBER', '기업회원', '기업회원');
+COMMIT;
+
+
+-- 권한 하이어라키(상속) 구조(parent_role:하위권한, child_role:상위권한)
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_SYM', 'ROLE_ADMIN');
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_SEC', 'ROLE_ADMIN');
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_MBER_MANAGER', 'ROLE_ADMIN');
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_ENTRPRSMBER_MANAGER', 'ROLE_ADMIN');
+
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_MBER', 'ROLE_MBER_MANAGER');
+
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_ENTRPRSMBER', 'ROLE_ENTRPRSMBER_MANAGER');
+
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_USER', 'ROLE_MBER');
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_USER', 'ROLE_ENTRPRSMBER');
+
+INSERT INTO roles_hierarchy(parent_role, child_role) VALUES ('ROLE_ANONYMOUS', 'ROLE_USER');
+
+COMMIT;
+
+
+-- 권한 상속 구조 출력
+SELECT a.child_role child,  a.parent_role parent
+FROM roles_hierarchy a
+LEFT JOIN roles_hierarchy b ON a.child_role = b.parent_role;
+
+
+-- resource(uri) 권한 패턴 저장 테이블
+INSERT INTO secured_resources(resource_id, resource_name, resource_pattern, resource_type, description, sort_order) VALUES
+          (secured_resources_seq.NEXTVAL, '관리자 메뉴', '/admin/**', 'url', '관리자 메뉴', 1);
+		  
+INSERT INTO secured_resources(resource_id, resource_name, resource_pattern, resource_type, description, sort_order) VALUES
+          (secured_resources_seq.NEXTVAL, '게시판', '/bbs/**', 'url', '게시판', 1);
+
+INSERT INTO secured_resources(resource_id, resource_name, resource_pattern, resource_type, description, sort_order) VALUES
+          (secured_resources_seq.NEXTVAL, '자주하는질문 리스트', '/faq/faq', 'url', '자주하는질문 리스트', 1);
+
+INSERT INTO secured_resources(resource_id, resource_name, resource_pattern, resource_type, description, sort_order) VALUES
+          (secured_resources_seq.NEXTVAL, '자주하는질문', '/faq/**', 'url', '자주하는질문', 2);
+
+COMMIT;
+
+
+-- resource(uri) 권한 설정 테이블
+INSERT INTO secured_resources_role(resource_id, authority)
+       VALUES (1, 'ROLE_ADMIN');
+INSERT INTO secured_resources_role(resource_id, authority)
+       VALUES (2, 'ROLE_MBER');
+INSERT INTO secured_resources_role(resource_id, authority)
+       VALUES (3, 'ROLE_ADMIN');
+INSERT INTO secured_resources_role(resource_id, authority)
+       VALUES (4, 'ROLE_MBER');
+
+COMMIT;
+
+
+-- 회원 권한 설정
+INSERT INTO authorities_member(userId, authority) VALUES ('admin', 'ROLE_ADMIN');
+-- INSERT INTO authorities_member(userId, authority) VALUES ('admin', 'ROLE_MBER');
+INSERT INTO authorities_member(userId, authority) VALUES ('han', 'ROLE_MBER_MANAGER');
+INSERT INTO authorities_member(userId, authority) VALUES ('han2', 'ROLE_MBER');
+INSERT INTO authorities_member(userId, authority) VALUES ('han3', 'ROLE_MBER');
+INSERT INTO authorities_member(userId, authority) VALUES ('spring', 'ROLE_ENTRPRSMBER_MANAGER');
+INSERT INTO authorities_member(userId, authority) VALUES ('spring2', 'ROLE_ENTRPRSMBER');
+COMMIT;
+
+
+--------------------------------------------------------------------
+-- 패스워드 암호화
+-- 패스워드 : admin
+UPDATE member2 SET userPwd='$2a$10$PGlW5sEH5ha0q6srHUubgOTIy4.3nSv9IkvbJxuRd1lzByL1UDsja'
+  WHERE userId='admin';
+
+-- 패스워드 : han
+UPDATE member2 SET userPwd='$2a$10$PlMmFZOQQgUmKhRU815ZhO./Hu6OsS0zxiQzH.1Zamt1IJgjyiBvK'
+     WHERE userId='han';
+UPDATE member2 SET userPwd='$2a$10$PlMmFZOQQgUmKhRU815ZhO./Hu6OsS0zxiQzH.1Zamt1IJgjyiBvK'
+     WHERE userId='han2';
+UPDATE member2 SET userPwd='$2a$10$PlMmFZOQQgUmKhRU815ZhO./Hu6OsS0zxiQzH.1Zamt1IJgjyiBvK'
+     WHERE userId='han3';
+
+-- 패스워드 : spring
+UPDATE member2 SET userPwd='$2a$10$5d8HifTcRmf/570MvrHp4.HY4yZ/RvV2i5FDZxtdPjzLq4dxa3oue'
+     WHERE userId='spring';
+UPDATE member2 SET userPwd='$2a$10$5d8HifTcRmf/570MvrHp4.HY4yZ/RvV2i5FDZxtdPjzLq4dxa3oue'
+     WHERE userId='spring2';
+
+COMMIT;

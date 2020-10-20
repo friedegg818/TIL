@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+<!-- 
+	1) Advice 클래스 작성 : 공통 관심사항을 담고 있는 클래스 
+	2) Pointcut : Joinpoint의 부분집합으로 실제 Advice가 적용 되는 Joinpoint   [어떤 메소드에 적용 할 것인가]
+			            정규식이나 AspectJ의 문법을 사용 
+	   Joinpoint : Advice를 적용할 지점(메소드 호출, 필드값 변경 등)
+	3) Advisor 설정 : Advice와 Pointcut를 연결하는 작업 
+	4) AOP 적용
+		ProxyFactoryBean 클래스를 이용하여 대상 빈 객체에 Advice를 적용 
+ -->
+
+   <bean id="userServiceTarget" class="com.aop.before.UserServiceImpl"/>
+   
+   <!-- Advice -->
+   <bean id="beforeAdvice" class="com.aop.before.BeforeLogAdvice"/>
+  
+   <!-- Pointcut -->
+   <bean id="myPointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+   		<property name="pattern" value=".*write.*"/>
+   </bean>
+   
+   <!-- Advisor 설정 -->
+   <bean id="userAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+   		<property name="advice" ref="beforeAdvice"/>
+   		<property name="pointcut" ref="myPointcut"/>   	
+   </bean>
+   
+   <!-- AOP 적용 -->
+   <bean id="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
+   		<property name="target" ref="userServiceTarget"/>
+   		<property name="interceptorNames">
+   			<list>
+   				<value>userAdvisor</value>
+   			</list>
+   		</property>
+   </bean>   
+</beans>

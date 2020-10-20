@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="rolesHierarchy">
+	<insert id="insertRolesHierarchy" parameterType="map">
+		INSERT INTO roles_hierarchy (parent_role, child_role, created_date, modify_date)
+			VALUES (#{parent_role}, #{child_role}, SYSDATE, SYSDATE)
+	</insert>
+	
+	<select id="dataCount" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM roles_hierarchy
+	</select>	
+	
+	<select id="listRolesHierarchy" parameterType="map" resultType="map">
+		SELECT parent_role, child_role,
+			TO_CHAR(created_date, 'YYYY-MM-DD HH24:MI:SS') created_date,
+			TO_CHAR(modify_date, 'YYYY-MM-DD HH24:MI:SS') modify_date
+		FROM roles_hierarchy
+		ORDER BY child_role
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<update id="updateRolesHierarchy" parameterType="map">
+		UPDATE roles_hierarchy SET parent_role=#{parent_role}, child_role=#{child_role},
+			modify_date=SYSDATE
+		WHERE parent_role=#{parent_OldRole} AND child_role=#{child_OldRole}
+	</update>
+	
+	<delete id="deleteRolesHierarchy" parameterType="map">
+		DELETE FROM roles_hierarchy WHERE parent_role=#{parent_role} AND child_role=#{child_role}
+	</delete>
+</mapper>

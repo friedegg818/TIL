@@ -1,0 +1,129 @@
+DTO > 인터페이스 Service (@Service) > 인터페이스 DAO(@Repository) > Impl 생성 
+
+<UPDATE / DELETE >
+
+[scoreMapper]
+
+	<select id="readScore" parameterType="String" resultType="com.sp.score.Score">
+		SELECT hak, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, kor, eng, mat, (kor+eng+mat) tot, (kor+eng+mat)/3 ave 
+		FROM score 
+		WHERE hak=#{hak}				
+	</select>
+	
+	<update id="updateScore" parameterType="com.sp.score.Score">
+		UPDATE score SET name=#{name}, birth=#{birth}, kor=#{kor}, eng=#{eng}, mat=#{mat} WHERE hak=#{hak}	
+	</update>
+	
+	<delete id="deleteScore" parameterType="String">	
+		DELETE FROM score WHERE hak=#{hak}
+	</delete>
+
+
+
+[ScoreDAOImpl] 
+
+@Resource(name="sqlSession")		[@Autowired]	
+private SqlSession sqlSession;	
+
+	@Override
+	public int updateScore(Score dto) throws Exception {
+		int result = 0;
+		
+		try {
+			result = sqlSession.update("score.updateScore", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}		
+		return result;
+	}
+
+	@Override
+	public int deleteScore(String hak) throws Exception {
+		int result = 0;
+		
+		try {
+			result = sqlSession.delete("score.deleteScore", hak);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}		
+		return result;		
+	}
+	
+
+[ScoreServiceImpl]
+
+@Autowired
+	private ScoreDAO scoreDAO;
+	
+	@Override
+	public int updateScore(Score dto) throws Exception {
+		int result = 0;
+		try {
+			result = scoreDAO.updateScore(dto);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteScore(String hak) throws Exception {
+		int result = 0; 
+		try {
+			result = scoreDAO.deleteScore(hak);
+		} catch (Exception e) {
+			throw e;
+		}
+		return result;
+	}
+
+
+
+[ScoreController]
+
+@Autowired
+private ScoreService service;
+
+	@GetMapping("update")
+	public String updateForm(
+			@RequestParam String hak,
+			@RequestParam String page,
+			Model model
+			) throws Exception {
+		
+		Score dto = service.readScore(hak);
+		if(dto==null) {
+			return "redirect:/score/list?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("mode", "update");		
+		
+		return "score/write;";
+	}
+	
+	@PostMapping("update")
+	public String updateSubmit(
+			Score dto, 
+			@RequestParam String page
+			) throws Exception {
+		
+		service.updateScore(dto);		
+		return "redirect:/score/list?page="+page;
+	}
+	
+	@RequestMapping("delete")
+	public String delete(
+			@RequestParam String hak,
+			@RequestParam String page
+			) throws Exception {
+		
+		service.deleteScore(hak);		
+		return "redirect:/score/list?page="+page;
+	}
+	
+	

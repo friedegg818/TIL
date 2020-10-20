@@ -1,0 +1,38 @@
+-- ------------------------------------------------------------------------
+-- darkblue 사용자 추가 및 권한설정
+
+-- ------------------------------------------------------------------------
+-- sys 계정 connect 및 사용자 목록 확인
+cmd>sqlplus  sys/"패스워드"  as  sysdba
+또는
+cmd>sqlplus  /  as  sysdba
+
+sql> 
+
+-- 사용자 목록 확인(sys 계정)
+SELECT * FROM all_users;
+
+-- ------------------------------------------------------------------------
+-- 12C 이상의 버전에서 11g와 같은 방식으로 사용자 추가 및 삭제
+ ALTER SESSION SET "_ORACLE_SCRIPT" = true;
+
+-- darkblue 사용자 추가, 아이덴티파이드는 "java$!" 로 설정(sys 계정에서)
+CREATE USER darkblue IDENTIFIED BY "java$!";
+
+-- 사용자 권한 부여(sys 계정에서)
+GRANT CONNECT, RESOURCE TO darkblue;
+
+-- DEFAULT 테이블스페이스를 USERS로 변경(sys 계정)
+ALTER USER darkblue DEFAULT TABLESPACE USERS;
+
+-- TEMPORARY 테이블스페이스(정렬등에서 사용)를 TEMP 변경(sys 계정)
+ALTER USER darkblue TEMPORARY TABLESPACE TEMP;
+
+   -- USERS 테이블스페이스 권한 부여(SYS 계정) - 권한을 부여하지 않으면 INSERT 시 오류
+ALTER USER darkblue DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS;
+
+
+-- ------------------------------------------------------------------------
+-- darkblue 계정으로 CONNECT
+CONN darkblue/"java$!"
+

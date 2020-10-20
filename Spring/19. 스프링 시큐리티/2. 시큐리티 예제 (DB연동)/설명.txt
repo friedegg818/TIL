@@ -1,0 +1,69 @@
+<시큐리티 환경설정>
+
+1. web.xml 
+
+>>> 
+
+ <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+                classpath:spring/application-config.xml
+                classpath:spring/security-context.xml
+        </param-value>
+ </context-param>
+	
+ 확인 
+ 
+ <!-- 스프링 시큐리티 -->
+	<filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+ 확인
+ 
+ 
+2. MyAuthenticationSuccessHandler 를 com.sp.member 에 추가 
+
+3. security-context.xml 파일을 src/main/resources > spring 에 추가 
+
+   >>> 67번쯤 있는  users-by-username-query 의 테이블명 확인 
+   
+4. jsp 파일 확인 
+
+5. mvc-config.xml 에 interceptor 관련 코드 있을 시 삭제  (관련 class도 지우기)
+
+6. MemberController 
+   
+   @RequestMapping(value="login", method=RequestMethod.GET)
+	public String loginForm(String login_error, Model model) { 
+		boolean bLoingError = login_error != null;
+		
+		if(bLoingError) {
+			String msg = "아이디 또는 패스워드를 잘못 입력하셨습니다.";
+			model.addAttribute("message", msg);
+		}
+		
+		return ".member.login";
+	}
+	
+	@RequestMapping(value="/noAuthorized")
+	public String noAuthorized() throws Exception {
+		return ".member.noAuthorized";
+	}
+	
+	@RequestMapping(value="/expired")
+	public String expired() throws Exception {
+		return ".member.expired";
+	}
+
+	추가 
+	
+	loginSubmit / logout 삭제 
+	
+	
+

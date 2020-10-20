@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <context:annotation-config/>
+     
+  <!--   아버지가 userService로 동일하므로 같은 타입으로 인식  -->
+  
+	<bean id="userService2" class="com.test2.UserServiceImpl">
+		<property name="name" value="자동"/>
+		<property name="tel" value="010"/>
+		<property name="age" value="10"/>
+	</bean>
+	
+	<bean id="userService" class="com.test2.UserServiceImpl2">
+		<property name="name" value="이자동"/>
+		<property name="tel" value="010"/>
+		<property name="age" value="10"/>
+	</bean>
+ 	
+ 	<bean id="userBean" class="com.test2.UserBean"/>
+</beans>  

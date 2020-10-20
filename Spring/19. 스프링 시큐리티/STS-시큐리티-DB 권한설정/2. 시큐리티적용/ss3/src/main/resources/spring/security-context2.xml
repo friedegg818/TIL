@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+    <context:component-scan base-package="com.sp"/>
+    
+    <security:http auto-config="true" use-expressions="true">
+    	<security:csrf disabled="true"/>
+    	
+    	<security:form-login
+    	         login-page="/member/login"
+	             login-processing-url="/member/login_check"
+	             username-parameter="userId"
+	             password-parameter="userPwd"
+	             authentication-failure-url="/member/login?login_error" 
+	             default-target-url="/"
+	             always-use-default-target="false"
+	             authentication-success-handler-ref="loginSuccessHandler"
+    	/>
+    	<security:logout
+    			logout-url="/member/logout"
+    			logout-success-url="/"
+    			invalidate-session="true"
+    	/>
+    	
+    	<security:custom-filter ref="filterSecurityInterceptor"
+    	              before="FILTER_SECURITY_INTERCEPTOR"/>
+    	              
+    	<security:access-denied-handler error-page="/member/noAuthorized"/>
+    	
+    	<security:session-management>
+    		<security:concurrency-control max-sessions="1"/>
+    	</security:session-management>
+    </security:http>
+
+	<!-- DB를 이용한 자원 접근 권한 커스터마이징 -->
+	<bean id="filterSecurityInterceptor"
+	        class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="authenticationManager" ref="org.springframework.security.authenticationManager" />
+		<property name="accessDecisionManager" ref="accessDecisionManager" />
+		<property name="securityMetadataSource" ref="myFilterInvocationSecurityMetadataSource" />
+	</bean>
+	
+	<!-- 
+	       AffirmativeBased : 단 한 개의 조건이라도 허락하면 허가함
+	       UnanimousBased : 모든 조건이 허락해야 허가함
+	       RoleVoter : 지정된 role을 갖는 경우 허가됨
+	       AuthenticatedVoter : 인증되고 IS_AUTHENTICATED_*를 role을 갖는 경우 허가됨
+	 -->
+	<bean id="accessDecisionManager"
+	        class="org.springframework.security.access.vote.AffirmativeBased">
+		<constructor-arg>
+			<list>
+<!-- 			
+				<bean class="org.springframework.security.access.vote.RoleVoter">
+					<property name="rolePrefix" value="" />
+				</bean>
+ -->				
+				<bean class="org.springframework.security.access.vote.RoleHierarchyVoter">
+					<constructor-arg ref="roleHierarchy" />
+				</bean>
+			</list>
+		</constructor-arg>
+		<property name="allowIfAllAbstainDecisions" value="false" />
+	</bean>
+	
+	<bean id="myFilterInvocationSecurityMetadataSource"
+			class="com.sp.security.intercept.MyFilterInvocationSecurityMetadataSource">
+		<constructor-arg ref="requestMap" />
+		<property name="securedObjectService" ref="securedObjectService" />
+	</bean>
+
+	<bean id="securedObjectService"
+			class="com.sp.security.intercept.SecuredObjectServiceImpl">
+		<property name="securedObjectDao" ref="securedObjectDao" />
+	</bean>
+
+	<bean id="securedObjectDao"
+			class="com.sp.security.intercept.SecuredObjectDAO">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sqlRolesAndUrl"
+			value="SELECT a.resource_pattern AS url, b.authority AS authority
+						FROM secured_resources a
+						JOIN secured_resources_role b ON a.resource_id = b.resource_id
+						WHERE a.resource_type = 'url'
+						ORDER BY a.sort_order"
+		/>
+	</bean>
+
+	<bean id="requestMap"
+			class="com.sp.security.intercept.UrlResourcesMapFactoryBean" init-method="init">
+		<property name="securedObjectService" ref="securedObjectService" />
+	</bean>
+	
+	<!-- DB에서 계층 역할을 관리 -->
+	<bean id="roleHierarchy"
+			class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+		<property name="hierarchy" ref="hierarchyStrings" />
+	</bean>
+	<bean id="hierarchyStrings"
+			class="com.sp.security.intercept.HierarchyStringsFactoryBean" init-method="init">
+		<property name="securedObjectService" ref="securedObjectService" />
+	</bean>
+	
+	<!-- 로그인을 성공할 경우 실행 객체 -->
+    <bean id="loginSuccessHandler"
+               class="com.sp.security.LoginSuccessHandler"/>
+
+	<!-- DB를 이용한 로그인 및 사용자 권한 설정 -->
+     <security:jdbc-user-service 
+         data-source-ref="dataSource"
+         id="userService"
+         users-by-username-query="SELECT userId AS username, userPwd AS password, enabled FROM member2 WHERE userId=?"
+         authorities-by-username-query="SELECT userId AS username, authority FROM authorities_member WHERE userId=?"/>
+    
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userService">
+		     <security:password-encoder ref="bcryptEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	
+</beans>

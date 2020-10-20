@@ -1,0 +1,154 @@
+DTO > 인터페이스 Service (@Service) > 인터페이스 DAO(@Repository) > Impl 생성 
+
+<List> 전체 리스트, 검색 리스트, 페이징 처리 모두 포함 
+
+[scoreMapper]
+
+	<sql id="where-list">							*반복적인 쿼리는 <sql> 태그 이용 
+		<if test="condition=='hak' ">
+			hak = #{keyword}
+		</if>
+		<if test="condition=='name' ">
+			INSTR(name, #{keyword}) &gt;=1				 *&gt; → >  //  &lt; → < 
+		</if>
+		<if test="condition=='birth' ">
+			( TO_CHAR(birth, 'YYYY-MM-DD') = #{keyword} OR 
+			  TO_CHAR(birth, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">	  *resultType : select에 반드시 존재하는 속성. 돌려받는 값
+		SELECT NVL(COUNT(*), 0)
+		FROM score
+
+		<where>															  *where절을 선택적으로 사용 가능
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		
+	</select>
+
+    *mybatis-config 파일에서 java.util.map의 별명을 map으로 설정
+	<select id="listScore" parameterType="map" resultType="com.sp.score.Score">
+		SELECT hak, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, kor, eng, mat, (kor+eng+mat) tot, (kor+eng+mat)/3 ave 
+		FROM score
+		
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		
+		ORDER BY hak ASC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY 
+	</select>
+
+
+[ScoreController]
+
+@Autowired
+private ScoreService service;
+
+@Autowired
+private MyUtil myUtil;
+		
+	@RequestMapping("list")
+	public String list(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="hak") String condition,
+			@RequestParam(defaultValue="") String keyword, 
+			HttpServletRequest req,
+			Model model
+			) throws Exception {	
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "UTF-8");
+		}
+		
+		int rows = 10;
+		int dataCount, total_page; 
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(rows, dataCount);
+		if(current_page>total_page) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page-1)*rows;
+		if(offset<0) offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		
+		List<Score> list = service.listScore(map);
+		
+		String cp = req.getContextPath();
+		String listUrl = cp+"/score/list";
+		if(keyword.length()!=0) {
+			listUrl += "?condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);		
+		model.addAttribute("page", current_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);		
+		
+		return "score/list";
+	}
+	
+	
+
+[ScoreDAOImpl] 
+
+@Resource(name="sqlSession")		[@Autowired]	
+private SqlSession sqlSession;	
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			// selectOne : SELECT 실행 후 1개의 행만 반환 받는 경우 
+			result = sqlSession.selectOne("score.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		return result;
+	}
+
+	@Override
+	public <T> List<T> listScore(Map<String, Object> map) {
+		List<T> list = null; 
+		
+		try {
+			list = sqlSession.selectList("score.listScore", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+
+[ScoreServiceImpl]
+
+@Autowired
+	private ScoreDAO scoreDAO;
+	
+	@Override
+	public int dataCount(Map<String, Object> map) {		
+		return scoreDAO.dataCount(map);
+	}
+
+	@Override
+	public List<Score> listScore(Map<String, Object> map) {
+		return scoreDAO.listScore(map);
+	}

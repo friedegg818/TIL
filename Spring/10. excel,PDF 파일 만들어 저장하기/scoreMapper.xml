@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="score">  <!-- 확장자 들어가도 됨  -->
+	<insert id="insertScore" parameterType="com.sp.score.Score">
+		INSERT INTO score(hak, name, birth, kor, eng, mat) VALUES (#{hak}, #{name}, #{birth}, #{kor}, #{eng}, #{mat})
+	</insert>
+	
+<!-- 반복적인 쿼리는 sql 태그를 이용하여 처리한다. -->
+	<sql id="where-list">
+		<if test="condition=='hak' ">
+			hak = #{keyword}
+		</if>
+		<if test="condition=='name' ">
+			INSTR(name, #{keyword}) &gt;=1				<!-- &gt; → >  //  &lt; → < -->
+		</if>
+		<if test="condition=='birth' ">
+			( TO_CHAR(birth, 'YYYY-MM-DD') = #{keyword} OR 
+			  TO_CHAR(birth, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<!-- resultType : select에 반드시 존재하는 속성. 돌려받는 값  -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM score
+   <!-- where : 안에 있는 조건이 하나라도 남아 있으면 실행 됨  -->
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+<!-- mybatis-config 파일에서 java.util.map의 별명을 map으로 설정해 주었기 떄문에 파라미터 타입에 바로 사용이 가능  -->
+	<select id="listScore" parameterType="map" resultType="com.sp.score.Score">
+		SELECT hak, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, kor, eng, mat, (kor+eng+mat) tot, (kor+eng+mat)/3 ave 
+		FROM score
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY hak ASC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readScore" parameterType="String" resultType="com.sp.score.Score">
+		SELECT hak, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, kor, eng, mat, (kor+eng+mat) tot, (kor+eng+mat)/3 ave 
+		FROM score 
+		WHERE hak=#{hak}				
+	</select>
+	
+	<update id="updateScore" parameterType="com.sp.score.Score">
+		UPDATE score SET name=#{name}, birth=#{birth}, kor=#{kor}, eng=#{eng}, mat=#{mat} WHERE hak=#{hak}	
+	</update>
+	
+	<delete id="deleteScore" parameterType="String">	
+		DELETE FROM score WHERE hak=#{hak}
+	</delete>
+	
+	<delete id="deleteListScore" parameterType="java.util.List">
+		DELETE FROM score WHERE hak IN 
+		<!-- item 이름과 밑의 이름이 같아야 함  -->
+			<foreach item="hak" collection="list" index="index" open="(" separator="," close=")">
+				#{hak} 
+			</foreach>
+	</delete>
+	
+	<select id="listAllScore" resultType="com.sp.score.Score">
+		SELECT hak, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, kor, eng, mat, (kor+eng+mat) tot, (kor+eng+mat)/3 ave 
+		FROM score
+		ORDER BY hak
+	</select>
+	
+</mapper>

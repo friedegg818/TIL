@@ -1,0 +1,84 @@
+--------------------------------------
+-- 사용자 darkblue
+sql>CONN darkblue/"java$!"
+
+
+-----------------------------------------------------------------
+-- 기존 테이블 삭제
+
+DROP TABLE member2 PURGE;
+DROP TABLE member1 PURGE;
+
+
+-- 기존 시퀀스 삭제
+DROP SEQUENCE member_seq;
+
+
+-----------------------------------------------------------------
+-- 테이블 생성
+-- 회원 테이블
+CREATE TABLE member1 (
+     memberIdx      NUMBER
+     ,membership    NUMBER(1) DEFAULT 1
+     ,CONSTRAINT  pk_member1_memberIdx PRIMARY KEY(memberIdx)
+);
+
+CREATE TABLE member2 (
+     memberIdx     NUMBER
+     ,userId       VARCHAR2(50) NOT NULL
+     ,userName     VARCHAR2(50) NOT NULL
+     ,userPwd      VARCHAR2(100) NOT NULL
+     ,enabled      NUMBER(1) DEFAULT 1
+     ,birth        DATE
+     ,email        VARCHAR2(100)
+     ,tel          VARCHAR2(15)
+     ,created_date DATE DEFAULT SYSDATE
+     ,modify_date  DATE DEFAULT SYSDATE
+     ,last_login   DATE
+     ,CONSTRAINT pk_member2_memberIdx PRIMARY KEY(memberIdx)
+     ,CONSTRAINT uq_member2_userId UNIQUE(userId)
+     ,CONSTRAINT fk_member2_memberIdx FOREIGN KEY(memberIdx)
+                 REFERENCES member1(memberIdx)
+);
+
+-- 회원 시퀀스
+CREATE SEQUENCE member_seq
+    INCREMENT BY 1
+    START WITH 1
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+
+-----------------------------------------------------------------
+-- admin 암호 : admin
+INSERT INTO member1(memberIdx) VALUES (member_seq.NEXTVAL);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'admin', '관리자', 'admin');
+	
+-- han 암호 : han
+INSERT INTO member1(memberIdx) VALUES (member_seq.NEXTVAL);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'han', '자바다', 'han' );
+
+-- han2 암호 : han
+INSERT INTO member1(memberIdx) VALUES (member_seq.NEXTVAL);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'han2', '오라클', 'han' );
+
+-- han3 암호 : han
+INSERT INTO member1(memberIdx) VALUES (member_seq.NEXTVAL);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'han3', '서블릿', 'han' );
+
+-- spring 암호 : spring
+INSERT INTO member1(memberIdx) VALUES (member_seq.NEXTVAL);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'spring', '스프링', 'spring' );
+
+-- spring2 암호 : spring
+INSERT INTO member1(memberIdx) VALUES (member_seq.NEXTVAL);
+INSERT INTO member2(memberIdx, userId, userName, userPwd) VALUES 
+    (member_seq.CURRVAL, 'spring2', '프레임', 'spring' );
+
+COMMIT;

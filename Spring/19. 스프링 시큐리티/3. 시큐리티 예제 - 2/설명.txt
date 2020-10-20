@@ -1,0 +1,20 @@
+[ss]
+
+com.sp.security - 시큐리티 관련 작업 
+
+- AjaxSessionTimeoutFilter | ajax로 들어왔을 때의 처리 
+- LoginSuccessHandler      | 로그인 성공시 처리 
+   > 로그인 정보 변경 및 저장 
+   > 일정 기간 지날 시 패스워드 변경 권유
+- LoginFailuerHandler      | 로그인 실패시 처리 
+   > 아이디 틀렸을 때 
+   > 패스워드 틀렸을 때 
+
+** security를 사용하면 스마트에디터를 사용 할 수 없어서 설정에서 따로 풀어줘야 함 
+ security-context.xml 에 설정 추가 
+	
+	
+
+FAQ 
+customer > faq   (ajax 와 아닌것 함께 사용) 
+tab 메뉴 ajax 

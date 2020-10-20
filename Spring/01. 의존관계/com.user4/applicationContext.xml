@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+     
+    <!-- User의 객체 3개 생성    -->
+	<bean id="user1" class="com.user4.User" p:addr="서울" p:zip="111"/>
+	<bean id="user2" class="com.user4.User" p:addr="서울" p:zip="122"/>
+	<bean id="user3" class="com.user4.User" p:addr="경기" p:zip="200"/>
+	
+	<bean id="userService" class="com.user4.UserServiceImpl">
+		<property name="name" value="홍자바"/>
+		<property name="address">
+			<map>
+				<!-- entry : 키 + 값  -->
+				<entry>
+					<key><value>박지송아</value></key>					
+					<ref bean="user1"/>      <!-- 값이 객체이므로 ref 를 사용 해야 함. X <value>서울</value> X  -->  
+				</entry>
+				<entry key="혜화" value-ref="user2"/>
+				<entry key="우진" value-ref="user3"/>			
+			</map>	
+		</property>
+		<property name="hobby">
+			<list>
+				<!-- String인 경우 value 로 가능  -->
+				<value>걷기</value>
+				<value>영화보기</value>
+				<value>음악듣기</value>
+				<value>맛있는 것 먹기</value>		<!-- 객체인 경우 : <ref bean="객체명"/> -->
+			</list>
+		</property>
+	</bean>     
+	
+	<bean id="userBean" class="com.user4.UserBean">
+		<property name="userService" ref="userService"/>
+	</bean>	   
+</beans>  

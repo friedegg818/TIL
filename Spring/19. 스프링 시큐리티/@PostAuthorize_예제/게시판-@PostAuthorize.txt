@@ -1,0 +1,2 @@
+- 게시판의 BoardServiceImpl 에서 @PostAuthorize 어노테이션을 사용하여, 게시글을 올린 사람만 수정하거나, 게시글을 올린 사람과 관리자만 삭제할수 있도록 수정
+- 환경 설정 변경 : mvc-config.xml 파일

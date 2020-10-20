@@ -1,0 +1,75 @@
+-- 객체명은 최대 30자까지 지정 가능
+
+DROP TABLE cboard_File PURGE;
+DROP TABLE cboard_ReplyLike PURGE;
+DROP TABLE cboard_Reply PURGE;
+DROP TABLE cboard PURGE;
+
+-- 게시판테이블
+CREATE TABLE cboard (
+   num NUMBER NOT NULL
+   ,userId VARCHAR2(50) NOT NULL
+   ,subject  VARCHAR2(255) NOT NULL
+   ,content  CLOB NOT NULL
+   ,notice   NUMBER(1) DEFAULT 0
+   ,hitCount NUMBER DEFAULT 0
+   ,created  DATE DEFAULT SYSDATE
+   ,groupNum NUMBER NOT NULL
+   ,depth    NUMBER(9) NOT NULL
+   ,orderNo  NUMBER(9) NOT NULL
+   ,parent   NUMBER NOT NULL
+   ,PRIMARY KEY(num)
+   ,FOREIGN KEY(userId)
+                REFERENCES member2(userId)
+);
+
+-- 파일테이블
+CREATE TABLE cboard_File (
+    fileNum  NUMBER NOT NULL
+    ,num  NUMBER NOT NULL
+    ,saveFilename VARCHAR2(255) NOT NULL
+    ,originalFilename VARCHAR2(255) NOT NULL
+    ,fileSize  NUMBER
+    ,PRIMARY KEY(fileNum)
+    ,FOREIGN KEY(num)
+        REFERENCES cboard(num)
+);
+
+-- 게시물좋아요테이블
+CREATE TABLE cboard_Like (
+    num  NUMBER NOT NULL
+    ,userId   VARCHAR2(50) NOT NULL
+    ,boradLike NUMBER(1) NOT NULL
+    ,PRIMARY KEY(num, userId)
+    ,FOREIGN KEY(num)
+            REFERENCES cboard(num) ON DELETE CASCADE
+    ,FOREIGN KEY(userId)
+            REFERENCES member2(userId) ON DELETE CASCADE
+);
+
+-- 리플테이블
+CREATE TABLE cboard_Reply (
+    replyNum NUMBER NOT NULL
+    ,num NUMBER NOT NULL
+    ,userId VARCHAR2(50) NOT NULL
+    ,content VARCHAR2(4000) NOT NULL
+    ,created DATE DEFAULT SYSDATE
+    ,answer   NUMBER NOT NULL
+    ,PRIMARY KEY(replyNum)
+    ,FOREIGN KEY(userId)
+          REFERENCES member2(userId) ON DELETE CASCADE
+    ,FOREIGN KEY(num)
+          REFERENCES cboard(num) ON DELETE CASCADE
+);
+
+-- 리플좋아요테이블
+CREATE TABLE cboard_ReplyLike (
+    replyNum  NUMBER NOT NULL
+    ,userId   VARCHAR2(50) NOT NULL
+    ,replyLike NUMBER(1) NOT NULL
+    ,PRIMARY KEY(replyNum, userId)
+    ,FOREIGN KEY(replyNum)
+            REFERENCES cboard_Reply(replyNum) ON DELETE CASCADE
+    ,FOREIGN KEY(userId)
+            REFERENCES member2(userId) ON DELETE CASCADE
+);

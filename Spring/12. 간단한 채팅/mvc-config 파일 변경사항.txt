@@ -1,0 +1,7 @@
+mvc-config 파일에 추가
+
+<!--  웹소켓 환경설정 -->
+    <bean id="mySocketHandler" class="com.sp.chat.MySocketHandler"></bean>
+    <websocket:handlers>
+    	<websocket:mapping handler="mySocketHandler" path="/chat.msg"/>
+</websocket:handlers>

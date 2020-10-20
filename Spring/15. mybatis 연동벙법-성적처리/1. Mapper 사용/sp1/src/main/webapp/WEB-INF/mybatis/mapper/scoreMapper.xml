@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sp.persistence.score.ScoreMapper">
+	<!-- dto 이름과 테이블 컬럼명이 다를 때 사용 / 그냥 select시 별명 주는게 더 편함  -->
+	<resultMap type="com.sp.score.Score" id="scoreResult">	
+		<result property="hak" column="hak"/>
+		<result property="name" column="name"/>
+		<result property="birth" column="birth"/>
+		<result property="kor" column="kor"/>
+		<result property="eng" column="eng"/>
+		<result property="mat" column="mat"/>
+		<result property="tot" column="tot"/>
+		<result property="ave" column="ave"/>
+	</resultMap>
+
+	<!-- ID와 동일한 이름의 메소드를 인터페이스에 선언 하면 자동으로 매핑 -->
+	<insert id="insertScore" parameterType="com.sp.score.Score">
+		INSERT INTO score(hak, name, birth, kor, eng, mat)
+			VALUES (#{hak}, #{name}, #{birth}, #{kor}, #{eng}, #{mat})
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='hak' ">
+			hak=#{keyword}
+		</if>
+		<if test="condition=='name' ">
+			INSTR(name, #{keyword}) &gt;= 1
+		</if>
+		<if test="condition=='birth' ">
+			( TO_CHAR(birth, 'YYYY-MM-DD') = #{keyword} OR
+				TO_CHAR(birth, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM score
+		<where>
+			<if test="keyword !=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+    
+    <select id="listScore" parameterType="map" resultMap="scoreResult">
+		SELECT hak, name, 
+		       TO_CHAR(birth, 'YYYY-MM-DD') birth,
+		       kor, eng, mat, (kor+eng+mat) tot, (kor+eng+mat)/3 ave
+		FROM score
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY hak ASC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+    </select>
+    
+	<select id="readScore" parameterType="String" resultType="com.sp.score.Score">
+		SELECT hak, name, 
+			TO_CHAR(birth, 'YYYY-MM-DD') birth,
+			kor, eng, mat
+		FROM score
+		WHERE hak=#{hak}
+	</select>
+	
+	<update id="updateScore" parameterType="com.sp.score.Score">
+		UPDATE score SET name=#{name},  birth=#{birth}, kor=#{kor}, eng=#{eng}, mat=#{mat}
+		WHERE hak=#{hak}
+	</update>
+	
+	<delete id="deleteScore" parameterType="String">
+		DELETE FROM score WHERE hak=#{hak}
+	</delete>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="table">
+	<update id="createBoardTable" parameterType="map">
+		CREATE TABLE ${tableName} (
+			num NUMBER NOT NULL,
+			name VARCHAR2(50) NOT NULL,
+			subject VARCHAR2(500) NOT NULL,
+			content VARCHAR2(4000) NOT NULL,
+			hitCount NUMBER DEFAULT 0,
+			created DATE DEFAULT SYSDATE,
+			PRIMARY KEY (num)
+		)
+	</update>
+	
+	<update id="createBoardSeq" parameterType="map">
+		CREATE SEQUENCE ${tableName}_seq 
+		INCREMENT BY 1 
+		START WITH 1 
+		NOMAXVALUE 
+		NOCYCLE
+		NOCACHE
+	</update>
+	
+	<update id="dropBoardTable" parameterType="map">
+		DROP TABLE ${tableName} PURGE
+	</update>
+	
+	<update id="dropBoardSeq" parameterType="map">
+		DROP SEQUENCE ${tableName}_seq 
+	</update>
+	
+	<select id="listBoardTable" resultType="map">
+		SELECT tname 
+		FROM tab
+		WHERE INSTR(tname, UPPER('sp_')) = 1
+	</select>
+
+</mapper>

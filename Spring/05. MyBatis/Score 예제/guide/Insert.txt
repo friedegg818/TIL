@@ -1,0 +1,73 @@
+DTO > 인터페이스 Service (@Service) > 인터페이스 DAO(@Repository) > Impl 생성 
+
+<List>
+
+[scoreMapper]
+
+<mapper namespace="score">  <!-- 확장자 들어가도 됨  -->
+	<insert id="insertScore" parameterType="com.sp.score.Score">
+		INSERT INTO score(hak, name, birth, kor, eng, mat) VALUES (#{hak}, #{name}, #{birth}, #{kor}, #{eng}, #{mat})
+	</insert>
+
+
+
+[ScoreController]
+
+@Autowired
+private ScoreService service;
+
+@GetMapping("insert")
+	public String insertForm(Model model) throws Exception {
+		model.addAttribute("mode", "insert");
+		return "score/write";
+	}
+	
+	@PostMapping("insert")
+	public String insertSubmit(Score dto, Model model) throws Exception {
+		
+		try {
+			service.insertScore(dto);
+		} catch (Exception e) {
+			model.addAttribute("mode", "insert");
+			model.addAttribute("msg", "학번 중복 등으로 추가 실패!!!");
+			return "score/write";
+		}
+		return "redirect:/score/list";
+	}
+	
+	
+
+[ScoreDAOImpl] 
+
+@Resource(name="sqlSession")		[@Autowired]	
+private SqlSession sqlSession;	
+
+	@Override
+	public int insertScore(Score dto) throws Exception {
+		int result = 0;
+		try {
+			result = sqlSession.insert("score.insertScore", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e; 			
+		} 
+		return result;
+	}
+	
+
+[ScoreServiceImpl]
+
+@Autowired
+	private ScoreDAO scoreDAO;
+	
+	@Override
+	public int insertScore(Score dto) throws Exception {
+		
+		int result = 0;
+		try {
+			result = scoreDAO.insertScore(dto);
+		} catch (Exception e) {
+			throw e;
+		}		
+		return result;
+	}

@@ -1,0 +1,127 @@
+<SPRING>
+
+- 실행 파일에서 
+  - 스프링 컨테이너 생성 
+    AbstractApplicationContext context = new GenericXmlApplicationContext("classpath:com/user1/applicationContext.xml");
+  - 컨테이너에서 해당 객체 가져오기 
+    UserBean bean = (UserBean)context.getBean("userBean");
+  
+- xml 파일 
+  - 객체 생성 
+    - <bean> 태그 이용 
+       -> <bean id="userService" class="com.user1.UserServiceImpl"/>  
+    
+		- 디폴트 생성자
+		  <bean id="userService" class="com.user2.UserServiceImpl">
+				<property name="name" value="우우진"/>
+				<property name="tel" value="010"/>
+				<property name="age" value="25"/>
+		  </bean>		
+	
+		- 인자가 있는 생성자 
+		  <bean id="userService" class="com.user2.UserServiceImpl">
+				<constructor-arg value="자바"/>
+				<constructor-arg value="010"/>
+				<constructor-arg value="19"/>
+		  </bean> 		
+
+    - 컬렉션 객체 생성하기 (Map/List/Set)	
+	
+		 <bean id="userService" class="com.user4.UserServiceImpl">
+			<property name="name" value="홍자바"/>
+			<property name="address">
+				<map>				
+					<entry>  *entry = key + value
+						<key><value>박지송아</value></key>					
+						<ref bean="user1"/>    
+					</entry>
+					<entry key="혜화" value-ref="user2"/>
+					<entry key="우진" value-ref="user3"/>			
+				</map>	
+			</property>
+			<property name="hobby">
+				<list>				
+					<value>걷기</value>    
+					<value>영화보기</value>
+					<value>음악듣기</value>
+					<value>맛있는 것 먹기</value>		*객체인 경우 : <ref bean="객체명"/>
+				</list>
+			</property>
+		</bean>  
+
+    - scope 타입 
+	  - singleton : 기본. 호출(getBean) 할 때마다 동일한 객체 반환 
+	  - prototype : 객체를 호출 할 때마다 새로운 객체를 생성하여 반환 
+	     <bean id="music" class="com.user6.Music" scope="prototype"/> 	
+		 - <aop:scoped-proxy/> 
+		    : 해당 객체의 메소드 등에 접근 할 때 마다 새로운 객체를 생성 
+			  <bean id="music" class="com.user7.Music" scope="prototype">
+					<aop:scoped-proxy/>
+			  </bean>	
+
+    - 외부 설정 파일 가져오기 : 1번만 가능함 
+      1) 
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 		<property name="locations">
+	 			<value>classpath:com/user9/user.properties</value>
+	 		</property> 	
+ 		</bean>  
+
+      2) 
+        <context:property-placeholder location="classpath:com/user9/user.properties"/>	  		
+		
+		* 환경설정 후 EL 태그 사용하여 값 넣기
+			<bean id="userService" class="com.user9.UserServiceImpl">
+				<property name="name" value="${name}"/>
+				<property name="tel"  value="${tel}"/>
+				<property name="age"  value="${age}"/>
+			</bean>
+	 
+	 
+- DI(의존관계) 설정
+    1) 생성자 이용 <constructor-arg> 태그  
+	   - <ref> : 빈 객체 전달
+	   - <value> : 기본 데이터 타입 or String 타입 값 전달 
+	
+		  <bean id="userBean" class="com.user1.UserBean">        	
+				<constructor-arg ref="userService"/>		
+		  </bean>
+	  
+	2) 프로퍼티 이용 (setter 필요)
+	   - <property> : 값 전달 
+	   - <ref> : 객체 전달 
+	   
+		  <bean id="userBean" class="com.user2.UserBean">
+				<property name="userService" ref="userService"/>	
+		  </bean>
+  
+    3) P 네임스페이스 이용 
+		<bean id="userBean" class="com.user3.UserBean" p:userService-ref="userService"/>
+		
+	4) look-up method 인젝션 
+       - 컨테이너가 관리하는 빈의 메소드를 override 하여 컨테이너 안에 있는 다른 빈을 찾을 수 있게 하는 기능 
+	   - 규칙 
+	     - 접근 제어자 : public , protected 만 가능 
+		 - 리턴 타입 : void 가 아님 
+		 - 인자를 갖지 않음 
+		 - 추상 메소드도 가능 
+		 - final 은 아님 
+		 
+		 <bean id="pizzaShop" class="com.user8.PizzaShop">
+			<lookup-method name="makePizza" bean="pizza"/>
+			<lookup-method name="makeVeggiePizza" bean="veggiePizza"/>
+		</bean>
+	  
+	5) 의존 관계 자동 설정 
+	  - autowire 
+	    - 생성자  
+	      - 생성자 타입과 동일한 타입을 갖는 객체
+	      - 동일한 타입의 빈 객체를 한개만 설정 가능 
+			<bean id="userBean1" class="com.user5.UserBean" autowire="constructor"/>
+	  
+	   - byName 
+	     - 프로퍼티와 동일한 이름을 갖는 객체 (setter 이름과 동일 해야 함)
+		  <bean id="userBean2" class="com.user5.UserBean2" autowire="byName"/>	
+       - byType 
+	     - 프로퍼티와 동일한 타입을 갖는 객체			
+	  

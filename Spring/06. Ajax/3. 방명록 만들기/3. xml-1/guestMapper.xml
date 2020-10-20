@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="guest">
+	<insert id="insertGuest" parameterType="com.sp.guest.Guest">
+		INSERT INTO guest(num, name, content, created) VALUES (guest_seq.NEXTVAL, #{name}, #{content}, SYSDATE)
+	</insert>
+	
+	<select id="dataCount" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM guest 
+	</select>
+	
+	<select id="listGuest" parameterType="map" resultType="com.sp.guest.Guest">
+		SELECT num, name, content, created FROM guest 
+		ORDER BY num DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY 	
+	</select>
+	
+	<delete id="deleteGuest" parameterType="Integer">
+		DELETE FROM guest WHERE num = #{num}	
+	</delete>
+</mapper>

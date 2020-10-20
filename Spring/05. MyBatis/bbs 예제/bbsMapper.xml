@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs">
+   <insert id="insertBoard" parameterType="com.sp.bbs.Board">
+      INSERT INTO bbs(num, name, subject, content, ipAddr, pwd, hitCount, created)
+      VALUES(bbs_seq.nextval, #{name}, #{subject}, #{content}, #{ipAddr}, #{pwd}, 0, SYSDATE)
+   </insert>
+   
+   <!-- ${}: 테이블명(동적)이나 컬럼명이 가변일 경우 사용 -->
+   <!-- <![CDATA[]] 이걸 사용 안하려면 ROWNUM <= 이걸 &lt;=로 변경해주면 됨 아래껀 &gt;= 사용하면 됨 -->
+   <sql id="where-list">
+      <choose>
+         <when test="condition == 'all'"> <!-- all: 제목, 내용 -->
+            (INSTR(subject, #{keyword}) &gt; 0
+               OR INSTR(content, #{keyword}) &gt; 0)
+         </when>
+         
+         <!-- 이름검사 -->
+         <when test="condition == 'name'">
+            name = #{keyword}
+         </when>
+         
+         <!-- 날짜검사 -->
+         <when test="condition == 'created'">
+            (TO_CHAR(created, 'YYYY-MM-DD') = #{keyword}
+               OR TO_CHAR(created, 'YYYYMMDD') = #{keyword})
+         </when>
+         
+         <otherwise> <!-- 위에 조건을 만족하지 않을때 -->
+            INSTR(${condition}, #{keyword}) &gt; 0
+         </otherwise>
+      </choose>
+   </sql>
+
+   <select id="dataCount" parameterType="map" resultType="Integer">
+      SELECT NVL(COUNT(*), 0) FROM bbs
+      <where>
+         <if test="keyword != null and keyword != ''">
+            <include refid="where-list" />
+         </if>
+      </where>
+   </select>
+   
+   <select id="listBoard" parameterType="map" resultType="com.sp.bbs.Board">
+      SELECT  * FROM (
+          SELECT ROWNUM rnum, tb.* FROM (
+              SELECT num, subject, name, hitCount, TO_CHAR(created, 'YYYY-MM-DD') created
+                FROM bbs
+            <where>
+               <if test="keyword != null and keyword != ''">
+                  <include refid="where-list" />
+               </if>
+            </where>
+                ORDER BY num DESC  
+   <![CDATA[
+          ) tb WHERE ROWNUM <= #{end}
+      ) WHERE rnum >= #{start}
+   ]]>
+   </select>
+   
+   <select id="readBoard" parameterType="Integer" resultType="com.sp.bbs.Board">
+	   	SELECT num, name, subject, content, pwd, hitCount, ipAddr, created 
+	   	FROM bbs WHERE num = #{num}   
+   </select>
+   
+   <select id="preReadBoard" parameterType="map" resultType="com.sp.bbs.Board">
+   		SELECT tb.* FROM (
+   			SELECT num, subject 
+   			FROM bbs
+   			<where>
+   				<if test="keyword != null and keyword != ''">
+   					<include refid="where-list"/>
+   				</if>
+   				AND (num &gt; #{num})
+   			</where>
+   			ORDER BY num ASC 
+   		) tb WHERE ROWNUM=1   
+   </select>
+   
+   <select id="nextReadBoard" parameterType="map" resultType="com.sp.bbs.Board">
+   		SELECT tb.* FROM (
+   			SELECT num, subject 
+   			FROM bbs
+   			<where>
+   				<if test="keyword != null and keyword != ''">
+   					<include refid="where-list"/>
+   				</if>
+   				AND (num &lt; #{num})
+   			</where>
+   			ORDER BY num DESC 
+   		) tb WHERE ROWNUM=1      
+   </select>
+   
+   <select id="updateHitCount" parameterType="Integer">
+   		UPDATE bbs SET hitCount = hitCount + 1 WHERE num=#{num}
+   </select>   
+   
+</mapper>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cboard">
+	<select id="maxNum" parameterType="map" resultType="Integer">
+		SELECT NVL(MAX(num), 0) FROM ${tableName}
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.sp.cboard.Board">
+		INSERT INTO ${tableName} (num, userId, subject, content, notice,
+				groupNum, orderNo, depth, parent, hitCount, created)
+			VALUES (#{num}, #{userId}, #{subject}, #{content}, #{notice},
+				#{groupNum}, #{orderNo}, #{depth}, #{parent}, 0, SYSDATE)
+	</insert>
+
+	<update id="updateOrderNo" parameterType="map">
+		UPDATE ${tableName} SET orderNo=orderNo+1
+		WHERE groupNum = #{groupNum} AND orderNo &gt; #{orderNo}
+	</update>
+
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject' ">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content' ">
+			DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userName' ">
+			userName=#{keyword} = 1
+		</if>
+		<if test="condition=='created' ">
+			( TO_CHAR(cb.created, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(cb.created, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<!--  데이터개수  -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM ${tableName} cb
+		JOIN member2 m ON cb.userId=m.userId
+		<where>
+			<if test="keyword != null and keyword!=''  ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="listBoard" parameterType="map" resultType="com.sp.cboard.Board">
+		SELECT cb.num, userName, cb.userId, subject, cb.created, notice,
+			hitCount, groupNum, orderNo, depth,
+			NVL(replyCount, 0) replyCount
+		FROM ${tableName} cb
+		JOIN member2 m ON cb.userId=m.userId
+		LEFT OUTER JOIN (
+			SELECT num, COUNT(*) replyCount FROM ${tableName}_Reply
+			WHERE answer = 0
+			GROUP BY num
+		) rc ON cb.num = rc.num
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		<if test="answer == 0 ">
+			ORDER BY num DESC
+		</if>
+		<if test="answer == 1 ">
+			ORDER BY groupNum DESC, orderNo ASC
+		</if>
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<!-- 공지 글  리스트 -->
+	<select id="listBoardTop" parameterType="map" resultType="com.sp.cboard.Board">
+		SELECT cb.num, notice, cb.userId, userName, subject,
+			hitCount, cb.created
+		FROM ${tableName} cb
+		JOIN member2 m ON cb.userId=m.userId 
+		WHERE notice = 1
+		ORDER BY num DESC
+	</select>
+
+	<!-- 글보기 -->
+    <select id="readBoard" parameterType="map" resultType="com.sp.cboard.Board">
+		SELECT num, cb.userId, userName, subject, content, notice, groupNum, 
+			depth, orderNo, parent, hitCount, cb.created
+		FROM ${tableName} cb
+		JOIN member2 m ON cb.userId=m.userId
+		WHERE num = #{num}
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="map">
+		UPDATE ${tableName} SET hitCount=hitCount+1 WHERE num = #{num}
+	</update>
+
+	<!-- 이전글 -->
+	<select id="preReadBoard" parameterType="map" resultType="com.sp.cboard.Board">
+		SELECT num, subject
+		FROM ${tableName} cb
+		JOIN member2 m ON cb.userId=m.userId
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			<if test="answer == 0 ">
+				AND (num &gt; #{num})
+			</if>
+			<if test="answer == 1 ">
+				<![CDATA[
+					AND ( ( groupNum = #{groupNum} AND orderNo < #{orderNo})
+						OR (groupNum > #{groupNum} ) )
+				]]>
+			</if>
+		</where>
+		<if test="answer == 0 ">
+			ORDER BY num ASC
+		</if>
+		<if test="answer == 1 ">
+			ORDER BY groupNum ASC, orderNo DESC
+		</if>
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+
+    <!-- 다음글 -->
+    <select id="nextReadBoard" parameterType="map" resultType="com.sp.cboard.Board">
+		SELECT num, subject
+		FROM ${tableName} cb
+		JOIN member2 m ON cb.userId=m.userId
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			<if test="answer == 0 ">
+				AND (num &lt; #{num})
+			</if>
+			<if test="answer == 1 ">
+				<![CDATA[
+					AND ( ( groupNum = #{groupNum} AND orderNo > #{orderNo})
+						OR (groupNum < #{groupNum} ) )
+				]]>
+			</if>
+		</where>
+		<if test="answer == 0 ">
+			ORDER BY num DESC
+		</if>
+		<if test="answer == 1 ">
+			ORDER BY groupNum DESC, orderNo ASC
+		</if>
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+    
+	<!-- 수정 -->
+	<update id="updateBoard" parameterType="com.sp.cboard.Board">
+		UPDATE ${tableName} SET subject=#{subject}, notice=#{notice},
+			content=#{content}
+		WHERE num=#{num}
+	</update>
+    
+	<!-- 삭제 -->
+	<delete id="deleteBoard" parameterType="map">
+		DELETE FROM ${tableName}
+		WHERE num IN 
+			( SELECT num FROM ${tableName} START WITH  num = #{num}
+				CONNECT BY PRIOR num = parent )
+	</delete>
+	
+	<!-- 게시물 좋아요 -->
+	<insert id="insertBoardLike" parameterType="com.sp.cboard.Board">
+		INSERT INTO ${tableName}_Like(num, userId, boardLike)
+			VALUES (#{num}, #{userId}, #{boardLike})
+	</insert>
+
+	<select id="boardLikeCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(DECODE(boardLike, 1, 1)), 0) boardCountLike
+		FROM ${tableName}_Like WHERE num=#{num}
+	</select>
+	
+	<!-- 파일 -->
+	<select id="maxFileNum" parameterType="map" resultType="Integer">
+		SELECT NVL(MAX(fileNum), 0) FROM ${tableName}_File
+	</select>
+	
+	<insert id="insertFile" parameterType="com.sp.cboard.Board">
+		INSERT INTO ${tableName}_File (fileNum, num, saveFilename, 
+				originalFilename, fileSize)
+			VALUES (#{fileNum}, #{num}, #{saveFilename},
+				#{originalFilename}, #{fileSize})
+	</insert>
+	
+	<select id="listFile" parameterType="map" resultType="com.sp.cboard.Board">
+		SELECT fileNum, num, saveFilename, originalFilename, fileSize
+		FROM ${tableName}_File WHERE  num=#{num}    
+	</select>
+	
+	<select id="readFile" parameterType="map" resultType="com.sp.cboard.Board">
+		SELECT fileNum, num, saveFilename, originalFilename, fileSize
+		FROM ${tableName}_File WHERE fileNum=#{fileNum}      
+	</select>
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM ${tableName}_File WHERE ${field} = #{num}
+	</delete>
+	
+	<!-- 댓글 -->
+	<select id="maxReplyNum" parameterType="map" resultType="Integer">
+		SELECT NVL(MAX(replyNum), 0) FROM ${tableName}_Reply
+	</select>
+
+	<!-- 댓글 추가 -->
+	<insert id="insertReply" parameterType="com.sp.cboard.Reply">
+		INSERT INTO ${tableName}_Reply(replyNum, num, userId, content, answer, created)
+			VALUES (#{replyNum}, #{num},#{userId}, #{content}, #{answer}, SYSDATE)
+	</insert>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM ${tableName}_Reply WHERE num=#{num} AND answer=0
+	</select>
+	
+	<!-- 댓글 리스트 -->
+	<select id="listReply" parameterType="map" resultType="com.sp.cboard.Reply">
+		SELECT r.replyNum, r.userId, userName, num, content, r.created, 
+		       NVL(answerCount, 0) answerCount,
+		       NVL(likeCount, 0) likeCount,
+		       NVL(disLikeCount, 0) disLikeCount
+		FROM ${tableName}_Reply r
+		JOIN member2 m ON r.userId = m.userId
+		LEFT OUTER JOIN (
+			SELECT answer, COUNT(*) answerCount
+			FROM ${tableName}_Reply WHERE answer!=0 GROUP BY answer
+		) a ON r.replyNum = a.answer
+		LEFT OUTER JOIN (
+			SELECT replyNum, COUNT(DECODE(replyLike, 1, 1)) likeCount,
+				   COUNT(DECODE(replyLike, 0, 1)) disLikeCount
+			FROM ${tableName}_ReplyLike GROUP BY replyNum
+		) c ON r.replyNum = c.replyNum
+		WHERE num=#{num} AND r.answer=0
+		ORDER BY r.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+    <!-- 댓글별 답글 리스트 -->
+	<select id="listReplyAnswer" parameterType="map" resultType="com.sp.cboard.Reply">
+		SELECT replyNum, num, r.userId, userName, content, created, answer
+		FROM ${tableName}_Reply r 
+		JOIN member2 m ON r.userId=m.userId
+		WHERE answer=#{answer}
+		ORDER BY replyNum DESC
+	</select>
+	
+	<!-- 댓글별 답글 개수 -->
+	<select id="replyAnswerCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM ${tableName}_Reply WHERE answer=#{answer}
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE ${tableName}_Reply
+		WHERE
+			<if test="mode == 'num' ">
+				num=#{num}
+			</if>
+			<if test="mode == 'reply' ">
+				replyNum IN 
+					( SELECT replyNum FROM ${tableName}_Reply START WITH  replyNum = #{replyNum}
+						CONNECT BY PRIOR replyNum = answer )
+			</if>
+			<if test="mode == 'answer' ">
+				replyNum=#{replyNum}
+			</if>
+	</delete>
+	
+	<!-- 댓글 좋아요/싫어요 처리 -->
+	<insert id="insertReplyLike" parameterType="map">
+		INSERT INTO ${tableName}_ReplyLike(replyNum, userId, replyLike)
+			VALUES (#{replyNum}, #{userId}, #{replyLike})
+	</insert>
+
+	<select id="replyLikeCount" parameterType="map" resultType="map">
+		SELECT NVL(COUNT(DECODE(replyLike, 1, 1)), 0) likeCount,
+			NVL(COUNT(DECODE(replyLike, 0, 1)), 0) disLikeCount
+		FROM ${tableName}_ReplyLike WHERE replyNum=#{replyNum}
+	</select>
+</mapper>
