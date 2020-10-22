@@ -7,7 +7,7 @@
  + [**Markdown 사용법**](https://github.com/friedegg818/TIL/blob/master/git/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4%20%EC%82%AC%EC%9A%A9%EB%B2%95)
 * * *
 ### JavaScript 
-+ Basic 
++ **Basic** 
 > - [**변수** / **Data Type & 정렬**](https://github.com/friedegg818/TIL/blob/master/JavaScript/Basic/01.%20Theory.js.md)
 > - [**Function**](https://github.com/friedegg818/TIL/blob/master/JavaScript/Basic/02.%20Function.js.md)
 > - [**Event 처리**](https://github.com/friedegg818/TIL/blob/master/JavaScript/Basic/03.%20Event.js.md)
