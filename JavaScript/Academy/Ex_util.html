@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript" src="util.js"></script>
+
+<script type="text/javascript">
+function send() {
+	var f = document.myForm;
+	
+	if(! isImageFile(f.inputFile.value)) {
+		alert("이미지파일만 가능합니다.");
+		return;
+	}
+	
+	alert(f.inputFile.value+"파일 선택");
+}
+</script>
+</head>
+<body>
+
+<form name="myForm">
+<p> <input type="file" name="inputFile"></p>
+<p> <button type="button" onclick="send();">확인</button></p>
+</form>
+
+</body>
+</html>
