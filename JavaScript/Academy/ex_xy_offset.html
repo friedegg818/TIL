@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+* {
+   margin: 0px; padding: 0px;
+}
+
+#layout {
+    width: 500px;
+    height: 180px;
+    margin:5px;
+    border: 1px solid #333;
+    background: #FFFCF1;
+    text-align: center;
+    padding: 72px 0;
+    box-sizing: border-box;
+}
+</style>
+
+</head>
+<body>
+
+<div style="height: 100px; margin:5px;">
+    <h3>마우스 위치 : event.offsetX, event.offsetY</h3>
+    <p>
+         이벤트가 발생한 element 내부의 마우스 포인터의 x, y값
+        (local x, y 로 이해하면 됨)
+    </p>
+</div>
+
+<div id="layout"></div>
+
+<script type="text/javascript">
+document.getElementById("layout").onclick = function() {
+	var x = event.offsetX;
+    var y = event.offsetY; 
+    alert('x좌표:' +x + ', y좌표:' + y);
+}
+</script>
+
+</body>
+</html>
