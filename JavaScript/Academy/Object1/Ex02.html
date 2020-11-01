@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<script type="text/javascript">
+
+/* [객체생성방법]
+   2. 생성자 함수를 이용한 객체 생성  */
+
+// 생성자 작성 
+function User(arg) {	// 생성자	
+	this.name = arg;	// 프로퍼티(속성)
+	this.getName = function() {	// 메소드
+		return this.name;
+	};
+	this.setName = function(name) {	// 메소드
+		this.name = name;
+	}
+}
+
+var obj = new User("스프링"); // 생성자 함수를 이용한 객체 생성 
+console.log(obj.getName());
+
+obj.setName("자바");
+console.log(obj.getName());
+
+
+
+/* [객체생성방법]
+   3. Object.create() 메소드를 이용한 객체 생성  */
+var Book = {	// 이니셜라이저로 객체 생성 
+	subject:"자바",
+	getSubject: function() {
+		return this.subject;
+	}
+};   
+
+var book1 = Object.create(Book);	// 새로운 객체 생성 
+var book2 = Object.create(Book);
+book2.subject = "CSS";
+
+console.log(book1.getSubject());	// 자바
+console.log(book2.getSubject());	// CSS 
+   
+
+</script>
+
+
+<body>
+
+</body>
+</html>

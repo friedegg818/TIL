@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script type="text/javascript">
+var s1, s2; 
+s1 = "seoul korea";
+
+s2 = s1.length; // 문자열 길이 
+console.log(s2); // 11 
+
+s2 = s1.charAt(2);
+console.log(s2); // o 
+
+s2 = s1.substring(6,9);	// 6 인덱스부터 9-1 인덱스까지 
+console.log(s2); // kor 
+
+s2 = s1.substring(6); 
+console.log(s2); // korea 
+
+s2 = s1.substr(6,3); // 6 인덱스부터 문자 3개
+console.log(s2); // kor
+
+s2 = s1.substr(6); 
+console.log(s2); // korea
+
+s2 = s1.indexOf("o");
+console.log(s2); // 2 
+
+s2 = s1.lastIndexOf("o");
+console.log(s2); // 7
+
+s2 = s1.indexOf("abc");
+console.log(s2); // 없으면 -1 
+
+s2 = s1.toUpperCase(); 
+console.log(s2); 
+console.log(s2.toLowerCase());
+
+
+s1 = "  자    바    ";
+s2 = ":"+s1+":";
+console.log(s2); // :  자   바   :
+
+s2 = ":"+s1.trim()+":";
+console.log(s2); // :자   바:  양쪽 공백 삭제 (가운데는 유지)
+
+
+s1 = "자바,스프링,오라클";
+s2 = s1.split(",");
+for(var n=0; n<s2.length; n++) {
+	console.log(s2[n]);
+}
+
+
+s1 = "대한 우리대한 한국 대한";
+s2 = s1.replace(/대한/g, "大韓");
+console.log(s2);
+
+</script>
+
+
+</head>
+<body>
+
+</body>
+</html>

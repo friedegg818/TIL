@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+function User(name) {
+	this.name = name;
+	this.getName = function() {
+		return this.name;
+	};
+}
+
+User.fun = function() {
+	return "안녕...";
+};
+
+// console.log(User.getName());	// 에러 
+console.log(User.fun());	// 정적 메소드 호출 (정적 메소드는 new를 하지 않아도 됨)
+
+var objs = new User("자바");
+console.log(objs.getName());
+
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

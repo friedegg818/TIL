@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+* {
+	margin:0px;
+	padding:0px;
+}
+
+body {
+	font-size: 14px;
+	font-family:맑은 고딕, 돋움;
+}
+.btn {
+	 font-size: 12px;
+	 color:#333;
+ 	 font-weight:500;
+	 font-family: NanumGothic, 나눔고딕, "Malgun Gothic", "맑은 고딕", 돋움, sans-serif;
+	 border:1px solid #ccc;
+	 background-color:#FFF;
+	 vertical-align:middle;
+	 text-align:text-align;
+	 cursor:pointer;
+	 padding:4px 8px;
+	 border-radius:4px;
+	 margin-bottom: 3px;
+}
+.btn:active, .btn:focus, .btn:hover {
+	 background-color:#e6e6e6;
+	 border-color: #adadad;
+	 color: #333;
+}
+.boxTF {
+	border:1px solid #999;
+	padding:4px 6px;
+	border-radius:4px;
+	background-color:#ffffff;
+	font-family: NanumGothic, 나눔고딕, "Malgun Gothic", "맑은 고딕", 돋움, sans-serif;
+	font-size: 9pt;
+}
+
+#resultLayout table {
+	margin:10px auto;
+	width: 210px;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+#resultLayout table tr{
+	height: 25px;
+	text-align: center;
+}
+
+#resultLayout table td{
+	width: 30px;
+	color: black;
+}
+
+#resultLayout table td:nth-child(7n+1){
+	color: red;
+}
+#resultLayout table td:nth-child(7n){
+	color: blue;
+}
+
+#resultLayout table td.gray {
+	color: #cccccc;
+}
+
+</style>
+
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script type="text/javascript">
+// 월의 마지막 날짜
+function lastDayMonth(y, m) {
+	var date = new Date(y, m, 1-1);
+	return date.getDate();
+}
+
+function calendar(){	
+	var objYear = document.getElementById("inputYear");
+	var objMonth = document.getElementById("inputMonth");
+	var objResult = document.getElementById("resultLayout");
+	
+	if(!/^(\d){4}$/.test(objYear.value)) {
+		objYear.focus();
+		return;
+	}
+	
+	if(!/^(\d){1,2}$/.test(objMonth.value)) {
+		objMonth.focus();
+		return;
+	}
+	
+	var y = parseInt(objYear.value);
+	var m = parseInt(objMonth.value);
+	if(m<1||m>12) {
+		objMonth.focus();
+		return;
+	}
+	
+	var s = calendarCreate(y, m);
+	
+	objResult.innerHTML = s;
+}
+
+function calendarCreate(y, m) {
+	var now = new Date();
+	var ny = now.getFullYear();
+	var nm = now.getMonth()+1;
+	var nd = now.getDate();
+	
+	var date = new Date(y, m-1, 1);
+	var w = date.getDay(); // 요일(일~토, 0~6)
+	
+	var week = ["일","월","화","수","목","금","토"];
+	
+	var html = "";
+	
+	html = ' <table border="1"> ';
+	
+	html += ' <tr> ';
+	for(var i=0; i < week.length; i++) {
+		html += '<td>'+week[i]+'</td>';
+	}
+	html += '</tr>';
+	
+	html += ' <tr> ';
+	
+	var last = lastDayMonth(y, m-1); 
+	last = last - w + 1; 
+	for(var i=0; i < w; i++) {
+	/* 	html += '<td>&nbsp;</td>'; */
+		html += '<td class="gray">'+(last+i)+'</td>';
+	}
+	
+	var n=1;
+	color="";
+	while(true) {
+		html += '<td>'+n+'</td>';
+		
+		n++;
+		date.setDate(n);
+		if(date.getMonth()+1 != m) {
+			break;	
+		}
+		
+		if(++w % 7 == 0) {
+			html += '</tr><tr> ';
+		}
+	}
+
+	n = 0;
+	for(var i=w%7; i<6; i++) {
+		/* html += '<td>&nbsp;</td>'; */
+		html += '<td class="gray">'+(++n)+'</td>';
+	}
+	html += "</tr>"
+	
+	
+	html += '</table>';
+	
+	return html;
+}
+
+</script>
+</head>
+<body>
+
+<div style="margin: 30px auto; text-align: center;">
+	<input type="text" id="inputYear" class="boxTF" placeholder="년도 입력">
+	<input type="text" id="inputMonth" class="boxTF" placeholder="월 입력">
+	<button type="button" onclick="calendar();" class="btn">확인</button>
+</div>
+<hr>
+<div id="resultLayout"></div>
+
+</body>
+</html>
