@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script type="text/javascript">
+
+function sub() {
+	var s;
+	var subject = document.getElementsByName("subject")[0].value;  // 결과는 배열 (1개만 있어도)
+	s = "이름접근:" + subject;
+	
+	var id = document.getElementById("inputId").value;
+	s += ",아이디접근:" + id;
+	
+	var c = document.querySelector(".boxTF").value;	// 조건을 만족하는 첫번쨰 요소만 가져옴 
+	s += ",선택자로 접근:" + c;
+	
+	alert(s);
+	
+}
+
+
+
+</script>
+</head>
+<body>
+
+
+
+<p> 이름으로 접근 : <input type="text" name="subject"></p>
+<p> 아이디로 접근 : <input type="text" id="inputId"></p>
+<p> 선택자로 접근 : <input type="text" class="boxTF"></p>
+<p>
+	<button type="button" onclick="sub();">확인</button>
+</p>
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+var p = null;
+
+function openPop() {
+	var flag;
+	var url = "https://www.naver.com";
+	
+	flag = "left=10, top=10,";
+	flag += "width=700, height=600";
+	
+	p = window.open(url, "popup", flag);
+}
+
+function closePop() {
+	if(p != null) {
+		p.close();
+	}
+	
+	p = null;
+}
+
+
+</script>
+
+
+</head>
+<body>
+
+<p> <a href="javascript:openPop();">팝업열기</a> </p>
+<p> <a href="javascript:closePop();">팝업 종료</a> </p>
+
+
+</body>
+</html>
