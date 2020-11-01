@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<script type="text/javascript">
+
+/* 함수 선언문 형식으로 함수 만들기 */
+function sub1(x,y) {
+	var s = x+y;
+	// return s;
+};
+
+var f = sub1(10,5);	// 함수 호출 
+console.log(f);
+
+
+/* 함수 표현식 방법으로 함수 만들기 */
+var sub2 = function(x,y) {	// 익명 함수 
+	return x*y;
+};
+var mul = sub2; 
+
+console.log(sub2(10,5)); // 함수 호출
+console.log(mul(10,5)); // 함수 호출
+
+var sub3 = function sum(x,y) { // 기명 함수 
+	return x+y;
+};
+
+console.log(sub3(10,5));
+// console.log(sum(10,5)); error: 함수표현식의 함수 이름으로는 외부에서 호출 불가 */
+
+
+var sub4 = function hap(n) { // 기명 함수 
+	return n>1 ? n+hap(n-1):1; // 재귀호출 
+};
+console.log(sub4(10,5))
+
+
+/* Function()을 이용한 함수 만들기 */
+var sub5 = Function('x', 'y', 'return x+y;');
+console.log(sub5(10,5));
+
+
+/* 함수 선언에서의 함수 호이스팅 */
+ var x = sub6(10,5);
+ console.log(x);
+ function sub6(a,b) {
+	return a-b;
+}; 
+
+// console.log(sub7(10,7)); error // 함수 표현식 방법으로 만든 함수는 호이스팅이 불가능하다. 
+ var sub7 = function(x,y) {
+	 return x+y;
+ };
+ 
+ /*  즉시 실행 함수  */
+(function(name) {
+	 console.log(name);
+})('test');
+
+ 
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>
