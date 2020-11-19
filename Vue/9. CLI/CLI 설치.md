@@ -23,7 +23,7 @@
 
 ### 설치 시 문제점 해결 
 - permission 에러 : 설치한 라이브러리가 위치하는 폴더에 파일 쓰기 권한이 없기 때문에 발생 
-  - 앞에 sudo 를 붙여주기 → **sudo** npm install -g @vue/cli 
+  - 해결 : 앞에 sudo 를 붙여주기 → **sudo** npm install -g @vue/cli 
  
 - 해당 루트 참고 (mac / windows 순)
 
