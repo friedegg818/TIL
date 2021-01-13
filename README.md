@@ -12,6 +12,9 @@
 > - [**Function**](https://github.com/friedegg818/TIL/blob/master/JavaScript/Basic/02.%20Function.js.md)
 > - [**Event 처리**](https://github.com/friedegg818/TIL/blob/master/JavaScript/Basic/03.%20Event.js.md)
 * * *
+### kafka 
++ [**기본 개념**](https://github.com/friedegg818/TIL/blob/master/kafka/%EA%B8%B0%EB%B3%B8%20%EA%B0%9C%EB%85%90.md)
+* * * 
 ### MongoDB
  + [**MongoDB 란?**](https://github.com/friedegg818/TIL/blob/master/MongoDB/01.%20MongoDB%20%EA%B0%9C%EC%9A%94.md)
  + [**설치 및 실행**](https://github.com/friedegg818/TIL/blob/master/MongoDB/02.%20%EC%84%A4%EC%B9%98%20%EB%B0%8F%20%EC%8B%A4%ED%96%89.md)
