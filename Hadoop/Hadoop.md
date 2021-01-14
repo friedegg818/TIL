@@ -81,7 +81,12 @@
 
   
 <img src="./img/YARN.png" width="570" height="446">
+
+* **핵심 구성 요소** 
+
+  * ResourceManager 
   
+  * NodeManager 
   
 <br>
 
