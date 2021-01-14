@@ -6,7 +6,8 @@
 ### Git 
  + [**Markdown 사용법**](https://github.com/friedegg818/TIL/blob/master/git/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4%20%EC%82%AC%EC%9A%A9%EB%B2%95)
 * * *
-### [Hadoop](https://github.com/friedegg818/TIL/blob/master/Hadoop/Hadoop.md) 
+### Hadoop
+ + [**기본 개념**](https://github.com/friedegg818/TIL/blob/master/Hadoop/Hadoop.md) 
 * * * 
 ### JavaScript 
 + **Basic** 
