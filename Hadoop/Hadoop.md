@@ -21,7 +21,7 @@
 
 <img src="./img/HDFS.png" width="570" height="322">
 
-* Master(NameNode) - Slave(DataNode) 
+* **Master(NameNode) - Slave(DataNode)** 
 
   * NameNode 
   
@@ -35,5 +35,30 @@
     * 실제 저장되는 데이터 
 
  
+### MapReduce 
+- 대용량 데이터 처리를 위한 분산 프로그래밍 모델 
+- 분산 병렬 처리를 위한 분석 시스템 
+- Data → 분산 DB에 저장 → 통합 처리 vs 분산 처리 
+
+<img src="./img/HDFS.png" width="590" height="308">
+
+* **Map-Reduce 시스템** 
+ 
+  * Map 
+   
+    * 각각의 분산된 컴퓨터에서 처리하는 것 
+    * 분산할 데이터를 저장한 서버에서 진행 
+    * 흩어져 있는 데이터를 (key,value) 형태로 연관성 있는 데이터 분류로 묶는 작업 
+      * key : 키워드 / value : 갯수 
+ 
+  * Reduce 
+  
+    * 각각의 분석 결과를 모아서 통합 
+    * 분석 결과를 도출할 서버에서 진행 
+    * Filtering과 Sortinㅎ을 거쳐 데이터를 추출 
+    * Map화한 작업 중 중복 데이터를 제거하고 원하는 데이터를 추출하는 작업 
     
+
+
+
 
