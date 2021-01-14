@@ -70,6 +70,10 @@
 #
 
 ### YARN
+- Yest Another Resource Negotiator 
+- MapReduce의 단점을 극복하기 위해 하둡 2.0부터 등장 
+
+<img src="./img/YARN.png" width="570" height="446">
   
 <br>
 
