@@ -91,23 +91,42 @@
   <img src="./img/yarn2.png" width="700" height="415">
 
 **MasterNode**
-* ResourceManager 
+* **ResourceManager** 
 
   * JobTracker의 역할 
   * 클러스터 전체 리소스 내에서 다양한 종류의 애플리케이션이 동작할 수 있도록 총괄 
   * 수집한 노드의 리소스 정보를 바탕으로 애플리케이션이 동적할 때 어떤 노드에서 얼만큼의 리소스를 할당할지 결정 
   * 클러스터 내의 NodeManager들과 통신하여 할당된 자원과 사용중인 자원의 상황을 알 수 있음 
   
-  * ApplicationManager 
+  * **ApplicationManager** 
   
     * 애플리케이션 실행 
     * 실행하기 위한 리소스 컨테이너를 Scheduler에게 요청 
     
-  * Scheduler 
+  * **Scheduler** 
   
     * 스케줄링 
     * 애플리케이션의 실행을 스케줄링하면서 노드의 자원 상태에 따라 컨테이너를 할당 
       → YARN 클러스터의 리소스를 사용하고자 하는 다른 플랫폼으로부터 요청을 받아 리소스를 할당함 
+      
+<br>
+
+**WorkerNode**
+* **NodeManager** 
+
+  * TaskTracker의 역할 
+  * YARN 클러스터의 Worker 서버로, ResourceManager를 제외한 모든 서버에 실행 
+  * 노드당 한개씩 존재 
+  * 노드의 cpu 메모리, 네트워크 상태 정보와 같은 리소스를 관제하고 ResourceManager에게 주기적으로 리포팅 및 heartbeat를 보냄 
+  * 워커 노드에 컨테이너 생성 
+  
+  * **Container** 
+    * 한정된 리소스를 사용하여 ApplicationMaster의 워커 노드로써 애플리케이션을 실행 
+  
+  * **ApplicationMaster** 
+    * 실행 상태를 관제하면서 컨테이너의 상태를 추적 
+    * 실행이 완료되면 ApplicationManager에게 완료되었음을 알림 
+    * 완료 되기 전에 문재가 발생하여 비정상 종료가 되면, 다른 워커 노드에 다시 할당하여 애플리케이션이 재시작할 수 있도록 함 
   
 <br>
 
