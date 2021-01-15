@@ -70,6 +70,10 @@
 #
 
 ### YARN
+
+<img src="./img/YARN.png" width="570" height="446">
+
+
 - Yet Another Resource Negotiator 
 * **MapReduce의 단점을 극복**하기 위해 하둡 2.0부터 등장 
 
@@ -79,14 +83,11 @@
 * 기존 MapReduce보다는 기능적으로 간단
 * 범용적인 분산 리소스 시스템을 위해 MapReduce의 클러스터 관리 체계보다 더 복잡하고 다양한 기능을 제공함 
 
-  
-<img src="./img/YARN.png" width="570" height="446">
-
 
 #
 
 
-* 역할에 따라 컴포넌트 세분화 
+### YARN - Component 
   
   <img src="./img/yarn2.png" width="700" height="415">
 
@@ -127,6 +128,17 @@
     * 실행 상태를 관제하면서 컨테이너의 상태를 추적 
     * 실행이 완료되면 ApplicationManager에게 완료되었음을 알림 
     * 완료 되기 전에 문재가 발생하여 비정상 종료가 되면, 다른 워커 노드에 다시 할당하여 애플리케이션이 재시작할 수 있도록 함 
+  
+<br>
+
+* YARN은 외부로의 특별한 요청이 없으면 아무런 동작도 수행하지 않음
+  
+  * NodeManager - 자신의 상태만 계속해서 ResourceManager로 보냄 
+  * ResourceManager - 클러스터 전체 리소스 상황에 대한 현황 관리만 수행 
+  
+* YARN 자체만으로는 할 수 있는 것이 아무것도 없고, YARN을 사용하는 또 다른 무언가가 있어야 함 
+
+  * MapReduce나 Spark 같은 분산 컴퓨팅 플랫폼이나, Hbase 등과 같은 클러스터 기반 시스템 등 
   
 <br>
 
