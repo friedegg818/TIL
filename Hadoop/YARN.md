@@ -1,4 +1,6 @@
-### YARN
+# YARN 
+
+### YARN 은 무엇인가 
 
 <img src="./img/YARN.png" width="570" height="446">
 
@@ -19,7 +21,7 @@
 #
 
 
-### YARN - Component 
+### Component 
   
   <img src="./img/yarn2.png" width="700" height="415">
 
