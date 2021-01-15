@@ -70,7 +70,7 @@
 #
 
 ### YARN
-- Yest Another Resource Negotiator 
+- Yet Another Resource Negotiator 
 * **MapReduce의 단점을 극복**하기 위해 하둡 2.0부터 등장 
 
   * 기존 MapReduce에서는 JobTracker에 의해 리소스가 관리되기 때문에 Hadoop이 설치된 클러스터 서버들의 리소스를 사용하려는 다른 컴퓨팅 클러스터와 연동하기가 어려웠음 
@@ -85,8 +85,8 @@
 
 #
 
-* **핵심 구성 요소** 
-  * 역할에 따라 컴포넌트 세분화 
+
+* 역할에 따라 컴포넌트 세분화 
   
   <img src="./img/yarn2.png" width="700" height="415">
 
