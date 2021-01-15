@@ -82,7 +82,13 @@
   
 <img src="./img/YARN.png" width="570" height="446">
 
+
+#
+
 * **핵심 구성 요소** 
+  * 역할에 따라 컴포넌트 세분화 
+  
+  <img src="./img/yarn2.png" width="700" height="415">
 
   * ResourceManager 
   
